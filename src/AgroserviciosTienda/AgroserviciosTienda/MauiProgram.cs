@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Maui;
+﻿using AgroserviciosTienda.VistaModelos;
+using AgroserviciosTienda.Vistas;
+using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 
 namespace AgroserviciosTienda;
@@ -15,7 +17,10 @@ public static class MauiProgram
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+				fonts.AddFont("MaterialDesignIcons.ttf", "MaterialDesignIcons");
 			});
+		builder.Services.AddTransient<PgSuscripcionVistaModelo>();
+		builder.Services.AddTransient<PgSuscripcion>();
 
 #if DEBUG
 		builder.Logging.AddDebug();
