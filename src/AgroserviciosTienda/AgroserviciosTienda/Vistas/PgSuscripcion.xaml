@@ -19,10 +19,15 @@
                 Text="Welcome to Agro Servicios - Tienda!"
                 VerticalOptions="Center" />
             <Grid RowDefinitions="auto,auto,auto" RowSpacing="8">
-                <Label Grid.Row="0" Text="Correo:" />
+                <Label
+                    Grid.Row="0"
+                    Text="Correo:"
+                    TextColor="{StaticResource BackgroundPageFont}" />
                 <Entry
                     Grid.Row="1"
+                    BackgroundColor="{StaticResource Tertiary}"
                     Placeholder="Escriba su correo electrónico"
+                    PlaceholderColor="{StaticResource SecondaryFont}"
                     Text="{Binding Correo, Mode=OneWayToSource}" />
                 <HorizontalStackLayout Grid.Row="2" Spacing="4">
                     <Image
@@ -37,11 +42,16 @@
                 </HorizontalStackLayout>
             </Grid>
             <Grid RowDefinitions="auto,auto,auto" RowSpacing="8">
-                <Label Grid.Row="0" Text="Contraseña:" />
+                <Label
+                    Grid.Row="0"
+                    Text="Contraseña:"
+                    TextColor="{StaticResource BackgroundPageFont}" />
                 <Entry
                     Grid.Row="1"
+                    BackgroundColor="{StaticResource Tertiary}"
                     IsPassword="True"
                     Placeholder="Escriba su contraseña"
+                    PlaceholderColor="{StaticResource SecondaryFont}"
                     Text="{Binding Clave, Mode=OneWayToSource}" />
                 <HorizontalStackLayout Grid.Row="2" Spacing="4">
                     <Image
@@ -62,7 +72,7 @@
                 Padding="8"
                 HorizontalOptions="Center"
                 VerticalOptions="Center">
-                <Label Text="by RandA Media Lab, Group" TextColor="{StaticResource Secondary}" />
+                <Label Text="by RandA Media Lab, Group" TextColor="{StaticResource PrimaryFont}" />
             </HorizontalStackLayout>
         </Grid>
 

@@ -12,6 +12,7 @@
                 <ResourceDictionary Source="Resources/Styles/Glyphs.xaml" />
                 <ResourceDictionary Source="Resources/Styles/FontImagesSource.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>
