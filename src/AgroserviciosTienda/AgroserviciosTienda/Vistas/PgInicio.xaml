@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AgroserviciosTienda.Vistas.PgInicio"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
+    Title="Inicio"
+    x:DataType="vm:PgInicioVistaModelo">
+
+    <Grid RowDefinitions="*,auto">
+        <VerticalStackLayout
+            Grid.Row="0"
+            HorizontalOptions="Center"
+            Spacing="24"
+            VerticalOptions="Center">
+            <Frame>
+                <VerticalStackLayout>
+                    <Label
+                        FontSize="Title"
+                        LineBreakMode="NoWrap"
+                        Text="Entrada de Productos" />
+                    <Label Text="Tipos de productos: 0" />
+                    <HorizontalStackLayout
+                        Padding="8,8,8,0"
+                        HorizontalOptions="EndAndExpand"
+                        Spacing="8">
+                        <Button Command="{Binding AgregarEntradaCommand}" Text="Agregar" />
+                        <Button Command="{Binding VerEntradasCommand}" Text="Ver" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+            <Frame>
+                <VerticalStackLayout>
+                    <Label
+                        FontSize="Title"
+                        LineBreakMode="NoWrap"
+                        Text="Venta de Productos" />
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Ventas de hoy: 0" />
+                                <Span Text=" | " />
+                                <Span Text="Total: 0" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Ventas en el mes: 0" />
+                                <Span Text=" | " />
+                                <Span Text="Total: 0" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <HorizontalStackLayout
+                        Padding="8,8,8,0"
+                        HorizontalOptions="EndAndExpand"
+                        Spacing="8">
+                        <Button Command="{Binding AgregarVentaCommand}" Text="Agregar" />
+                        <Button Command="{Binding VerVentasCommand}" Text="Ver" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+        <Grid
+            Grid.Row="1"
+            Padding="16"
+            BackgroundColor="{StaticResource Primary}">
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="8">
+                <Label
+                    FontSize="Micro"
+                    Text="by RandA Media Lab, Group"
+                    TextColor="{StaticResource White}" />
+            </HorizontalStackLayout>
+        </Grid>
+    </Grid>
+</ContentPage>

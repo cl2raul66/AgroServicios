@@ -8,7 +8,7 @@
 
     <ShellContent
         Title="Principal"
-        ContentTemplate="{DataTemplate v:PgPrincipal}"
-        Route="PgPrincipal" />
+        ContentTemplate="{DataTemplate v:PgInicio}"
+        Route="PgInicio" />
 
 </Shell>

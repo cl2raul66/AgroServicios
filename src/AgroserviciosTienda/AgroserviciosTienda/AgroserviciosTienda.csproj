@@ -58,11 +58,41 @@
 	  <Folder Include="Modelos\" />
 	  <Folder Include="Servicios\" />
 	  <Folder Include="Utiles\Convertidores\" />
-	  <Folder Include="VistaModelos\" />
+	  <Folder Include="VistaModelos\Ventas\" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Vistas\Entradas\PgEntAddEdit.xaml.cs">
+	    <DependentUpon>PgEntAddEdit.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Vistas\Ventas\PgVenAddEdit.xaml.cs">
+	    <DependentUpon>PgVenAddEdit.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Vistas\Ventas\PgVenDetalles.xaml.cs">
+	    <DependentUpon>PgVenDetalles.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Vistas\Entradas\PgEntAddEdit.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Vistas\Entradas\PgEntDetalles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Vistas\PgAjustes.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Vistas\PgInicio.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Vistas\PgPrincipal.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Vistas\Ventas\PgVenAddEdit.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Vistas\Ventas\PgVenDetalles.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
