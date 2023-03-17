@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="AgroserviciosTienda.Vistas.Entradas.PgEntDetalles"
+    x:Class="AgroserviciosTienda.Vistas.Entradas.PgVenDetalles"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Entradas">
+    xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos.Ventas"
+    Title="Ventas"
+    x:DataType="vm:PgVenDetallesVistaModelo">
     <VerticalStackLayout>
         <Label
             HorizontalOptions="Center"

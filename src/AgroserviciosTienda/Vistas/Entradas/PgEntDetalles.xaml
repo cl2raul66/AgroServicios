@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AgroserviciosTienda.Vistas.Entradas.PgEntDetalles"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos.Entradas"
+    Title="Entradas"
+    x:DataType="vm:PgEntDetallesVistaModelo"
+    Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="auto,auto,*,auto">
+        <Grid
+            Grid.Row="0"
+            Padding="16"
+            BackgroundColor="{StaticResource Primary}"
+            ColumnDefinitions="*,auto">
+            <Label
+                FontSize="Title"
+                Text="Entradas"
+                TextColor="{StaticResource White}"
+                VerticalOptions="Center" />
+            <HorizontalStackLayout Grid.Column="1" Spacing="24">
+                <Button Text="Agregar" />
+                <Button IsEnabled="False" Text="Modificar" />
+                <Button IsEnabled="False" Text="Eliminar" />
+                <Label
+                    FontSize="Title"
+                    Text="|"
+                    TextColor="{StaticResource White}" />
+                <Button Text="Filtrar" />
+            </HorizontalStackLayout>
+        </Grid>
+        <Grid
+            x:Name="SeccionFiltrar"
+            Grid.Row="1"
+            IsEnabled="True">
+
+            <Label Text="Filtros" />
+        </Grid>
+        <Grid Grid.Row="2">
+            <ListView Margin="16" />
+        </Grid>
+        <Grid
+            Grid.Row="3"
+            Padding="16"
+            BackgroundColor="{StaticResource Primary}">
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="8">
+                <Label
+                    FontSize="Micro"
+                    Text="by RandA Media Lab, Group"
+                    TextColor="{StaticResource White}" />
+            </HorizontalStackLayout>
+        </Grid>
+    </Grid>
+
+</ContentPage>

@@ -58,7 +58,6 @@
 	  <Folder Include="Modelos\" />
 	  <Folder Include="Servicios\" />
 	  <Folder Include="Utiles\Convertidores\" />
-	  <Folder Include="VistaModelos\Ventas\" />
 	</ItemGroup>
 
 	<ItemGroup>
