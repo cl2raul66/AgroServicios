@@ -3,10 +3,18 @@
     x:Class="AgroserviciosTienda.Vistas.Entradas.PgEntDetalles"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:modelo="clr-namespace:AgroserviciosTienda.Modelos"
+    xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos.Entradas"
     Title="Entradas"
     x:DataType="vm:PgEntDetallesVistaModelo"
     Shell.NavBarIsVisible="False">
+
+    <!--<ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="{StaticResource AgregarIcon}" Text="Agrega" />
+        <ToolbarItem IconImageSource="{StaticResource ModificarIcon}" Text="Modificar" />
+        <ToolbarItem IconImageSource="{StaticResource EliminarIcon}" Text="Eliminar" />
+    </ContentPage.ToolbarItems>-->
 
     <Grid RowDefinitions="auto,auto,*,auto">
         <Grid
@@ -20,25 +28,47 @@
                 TextColor="{StaticResource White}"
                 VerticalOptions="Center" />
             <HorizontalStackLayout Grid.Column="1" Spacing="24">
-                <Button Text="Agregar" />
-                <Button IsEnabled="False" Text="Modificar" />
-                <Button IsEnabled="False" Text="Eliminar" />
-                <Label
-                    FontSize="Title"
-                    Text="|"
-                    TextColor="{StaticResource White}" />
-                <Button Text="Filtrar" />
+                <Button FontFamily="MaterialDesignIcons" Text="{StaticResource IconPlus}" />
+                <Button
+                    FontFamily="MaterialDesignIcons"
+                    IsEnabled="{Binding SelectedEntrada, Mode=OneWay, Converter={tk:IsNotNullConverter}}"
+                    Text="{StaticResource IconFileEdit}" />
+                <Button
+                    FontFamily="MaterialDesignIcons"
+                    IsEnabled="{Binding SelectedEntrada, Mode=OneWay, Converter={tk:IsNotNullConverter}}"
+                    Text="{StaticResource IconDelete}" />
             </HorizontalStackLayout>
         </Grid>
-        <Grid
-            x:Name="SeccionFiltrar"
-            Grid.Row="1"
-            IsEnabled="True">
-
-            <Label Text="Filtros" />
+        <Grid Grid.Row="1" Margin="16">
+            <tk:Expander>
+                <tk:Expander.Header>
+                    <Label
+                        Padding="16"
+                        BackgroundColor="AliceBlue"
+                        FontFamily="MaterialDesignIcons"
+                        FontSize="24"
+                        HorizontalOptions="Fill"
+                        HorizontalTextAlignment="Center"
+                        Text="{StaticResource IconFilter}" />
+                </tk:Expander.Header>
+                <tk:Expander.Content>
+                    <VerticalStackLayout>
+                        <Label Text="Filtrar" />
+                    </VerticalStackLayout>
+                </tk:Expander.Content>
+            </tk:Expander>
         </Grid>
-        <Grid Grid.Row="2">
-            <ListView Margin="16" />
+        <Grid Grid.Row="2" Margin="16">
+            <ListView
+                ItemsSource="{Binding Entradas, Mode=OneWay}"
+                SelectedItem="{Binding SelectedEntrada}"
+                SelectionMode="Single">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="modelo:EntradaView">
+                        <TextCell Detail="{Binding Detalle}" Text="{Binding Texto}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
         <Grid
             Grid.Row="3"

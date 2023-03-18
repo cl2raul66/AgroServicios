@@ -3,6 +3,7 @@ using AgroserviciosTienda.VistaModelos.Entradas;
 using AgroserviciosTienda.VistaModelos.Ventas;
 using AgroserviciosTienda.Vistas;
 using AgroserviciosTienda.Vistas.Entradas;
+using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 
 namespace AgroserviciosTienda;
@@ -14,10 +15,12 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
+            .UseMauiCommunityToolkit()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+				fonts.AddFont("MaterialDesignIcons.ttf", "MaterialDesignIcons");
 			});
 		builder.Services.AddTransient<PgInicioVistaModelo>();
 		builder.Services.AddTransient<PgEntDetallesVistaModelo>();
