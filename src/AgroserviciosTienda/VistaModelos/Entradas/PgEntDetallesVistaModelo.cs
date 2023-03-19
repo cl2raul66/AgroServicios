@@ -1,13 +1,10 @@
 ﻿using AgroserviciosTienda.Modelos;
 using AgroserviciosTienda.Vistas.Entradas;
+using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AgroserviciosTienda.VistaModelos.Entradas;
 
@@ -20,14 +17,27 @@ public partial class PgEntDetallesVistaModelo : ObservableObject
     EntradaView? selectedEntrada;
 
     [RelayCommand]
-    private async Task AgregarEntrada()
+    private async Task Agregar()
     {
-        await Shell.Current.GoToAsync($"{nameof(PgEntDetalles)}/{nameof(PgEntAddEdit)}", new Dictionary<string, object>() { { "t", true as object } });
+        await Shell.Current.GoToAsync($"{nameof(PgEntDetalles)}/{nameof(PgEntAddEdit)}", new Dictionary<string, object>() { { "entrada", selectedEntrada as object } });
     }
 
     [RelayCommand]
-    private async Task ModificarEntrada()
+    private async Task Modificar()
     {
-        await Shell.Current.GoToAsync($"{nameof(PgEntDetalles)}/{nameof(PgEntAddEdit)}", new Dictionary<string, object>() { { "t", false as object } });
+        await Shell.Current.GoToAsync($"{nameof(PgEntDetalles)}/{nameof(PgEntAddEdit)}", new Dictionary<string, object>() { { "entrada", selectedEntrada as object } });
+    }
+
+    [RelayCommand]
+    private async Task Eliminar()
+    {
+        bool resul = Entradas.Remove(selectedEntrada);
+
+        CancellationTokenSource cancellationTokenSource = new();
+        string text = resul ? "Se elimino correctamente" : "No se pudo eliminar";
+        ToastDuration duration = ToastDuration.Short;
+        double fontSize = 14;
+        var toast = Toast.Make(text, duration, fontSize);
+        await toast.Show(cancellationTokenSource.Token);
     }
 }

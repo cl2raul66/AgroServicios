@@ -28,15 +28,23 @@
                 TextColor="{StaticResource White}"
                 VerticalOptions="Center" />
             <HorizontalStackLayout Grid.Column="1" Spacing="24">
-                <Button FontFamily="MaterialDesignIcons" Text="{StaticResource IconPlus}" />
                 <Button
+                    Command="{Binding AgregarCommand}"
+                    FontFamily="MaterialDesignIcons"
+                    Text="{StaticResource IconPlus}"
+                    ToolTipProperties.Text="Agregar entrada" />
+                <Button
+                    Command="{Binding ModificarCommand}"
                     FontFamily="MaterialDesignIcons"
                     IsEnabled="{Binding SelectedEntrada, Mode=OneWay, Converter={tk:IsNotNullConverter}}"
-                    Text="{StaticResource IconFileEdit}" />
+                    Text="{StaticResource IconFileEdit}"
+                    ToolTipProperties.Text="Modificar entrada seleccionada" />
                 <Button
+                    Command="{Binding EliminarCommand}"
                     FontFamily="MaterialDesignIcons"
                     IsEnabled="{Binding SelectedEntrada, Mode=OneWay, Converter={tk:IsNotNullConverter}}"
-                    Text="{StaticResource IconDelete}" />
+                    Text="{StaticResource IconDelete}"
+                    ToolTipProperties.Text="Eliminar entrada seleccionada" />
             </HorizontalStackLayout>
         </Grid>
         <Grid Grid.Row="1" Margin="16">

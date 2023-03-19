@@ -4,12 +4,132 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos.Entradas"
-    Title="{Binding Titulo, Mode=OneWay}"
-    x:DataType="vm:PgEntAddEditVistaModelo">
-    <VerticalStackLayout>
-        <Label
-            HorizontalOptions="Center"
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" />
-    </VerticalStackLayout>
+    Title="EntAddEdit"
+    x:DataType="vm:PgEntAddEditVistaModelo"
+    Shell.PresentationMode="ModalAnimated">
+
+    <ScrollView Padding="16">
+        <Frame HorizontalOptions="Center" VerticalOptions="Center">
+            <VerticalStackLayout Spacing="16" WidthRequest="400">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Subtitle"
+                    Text="{Binding Titulo, Mode=OneWay}" />
+                <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                    <Label Grid.Row="0" Text="Fecha:" />
+                    <DatePicker Grid.Row="1" Date="{Binding Fecha}" />
+                </Grid>
+                <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                    <Label Grid.Row="0" Text="Producto:" />
+                    <Entry
+                        Grid.Row="1"
+                        Placeholder="Escariba aqui"
+                        Text="{Binding Producto}" />
+                </Grid>
+                <Grid
+                    ColumnDefinitions="*,auto"
+                    ColumnSpacing="8"
+                    RowDefinitions="auto,auto"
+                    RowSpacing="8">
+                    <Label Grid.Row="0" Text="Cantidad:" />
+                    <Entry
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Text="{Binding Cantidad}" />
+                    <Stepper
+                        x:Name="StpCantidad"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Increment="1"
+                        Maximum="1000"
+                        Minimum="0"
+                        Value="{Binding Cantidad}" />
+                </Grid>
+                <Grid
+                    ColumnDefinitions="*,auto"
+                    ColumnSpacing="8"
+                    RowDefinitions="auto,auto"
+                    RowSpacing="8">
+                    <Label Grid.Row="0" Text="Precio:" />
+                    <Entry
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Text="{Binding Precio, StringFormat='{0:F2}'}" />
+                    <Stepper
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Increment="10.00"
+                        Maximum="19999.99"
+                        Minimum="0.00"
+                        Value="{Binding Precio}" />
+                </Grid>
+                <Label FontSize="Subtitle" Text="Opcionales:" />
+                <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                    <Label Grid.Row="0" Text="No. Factura:" />
+                    <Entry
+                        Grid.Row="1"
+                        Placeholder="Esciba aqui"
+                        Text="{Binding NoFactura}" />
+                </Grid>
+                <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                    <Label Grid.Row="0" Text="Proveedor:" />
+                    <Entry
+                        Grid.Row="1"
+                        Placeholder="Esciba aqui"
+                        Text="{Binding Proveedor}" />
+                </Grid>
+                <Grid
+                    ColumnDefinitions="*,auto"
+                    ColumnSpacing="8"
+                    RowDefinitions="auto,auto"
+                    RowSpacing="8">
+                    <Label Grid.Row="0" Text="Costo de flete:" />
+                    <Entry
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Text="{Binding CostoFlete, StringFormat='{0:F2}'}" />
+                    <Stepper
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Increment="0.5"
+                        Maximum="4999.99"
+                        Minimum="0.00"
+                        Value="{Binding CostoFlete}" />
+                </Grid>
+                <Grid
+                    ColumnDefinitions="*,auto"
+                    ColumnSpacing="8"
+                    RowDefinitions="auto,auto"
+                    RowSpacing="8">
+                    <Label Grid.Row="0" Text="Costo de carga:" />
+                    <Entry
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Text="{Binding CostoCarga, StringFormat='{0:F2}'}" />
+                    <Stepper
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Increment="0.5"
+                        Maximum="4999.99"
+                        Minimum="0.00"
+                        Value="{Binding CostoCarga}" />
+                </Grid>
+                <Grid
+                    ColumnDefinitions="auto,auto"
+                    ColumnSpacing="8"
+                    HorizontalOptions="End">
+                    <Button
+                        Grid.Column="0"
+                        Command="{Binding CancelarCommand}"
+                        Text="Cancelar" />
+                    <Button
+                        Grid.Column="1"
+                        Command="{Binding GuardarCommand}"
+                        IsEnabled="False"
+                        Text="Guardar" />
+                </Grid>
+            </VerticalStackLayout>
+        </Frame>
+    </ScrollView>
+
 </ContentPage>

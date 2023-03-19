@@ -1,4 +1,5 @@
-﻿using AgroserviciosTienda.Vistas.Entradas;
+﻿using AgroserviciosTienda.Modelos;
+using AgroserviciosTienda.Vistas.Entradas;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -16,10 +17,11 @@ public partial class PgInicioVistaModelo : ObservableObject
     {
         await Shell.Current.GoToAsync(nameof(PgEntDetalles));
     }
+
     [RelayCommand]
     private async Task AgregarEntrada()
     {
-        await Shell.Current.GoToAsync($"{nameof(PgEntDetalles)}/{nameof(PgEntAddEdit)}", new Dictionary<string, object>() { { "t", true as object } });
+        await Shell.Current.GoToAsync($"{nameof(PgEntDetalles)}/{nameof(PgEntAddEdit)}", new Dictionary<string, object>() { { "entrada", null as object } });
     }
 
     [RelayCommand]
@@ -27,9 +29,10 @@ public partial class PgInicioVistaModelo : ObservableObject
     {
         await Shell.Current.GoToAsync(nameof(PgVenDetalles));
     }
+
     [RelayCommand]
     private async Task AgregarVenta()
     {
-        await Shell.Current.GoToAsync($"{nameof(PgVenDetalles)}/{nameof(PgVenAddEdit)}", new Dictionary<string, object>() { { "t", true as object } });
+        await Shell.Current.GoToAsync($"{nameof(PgVenDetalles)}/{nameof(PgVenAddEdit)}", new Dictionary<string, object>() { { "entrada", null as object } });
     }
 }
