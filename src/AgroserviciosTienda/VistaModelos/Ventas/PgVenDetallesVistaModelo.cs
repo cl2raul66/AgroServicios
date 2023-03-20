@@ -1,12 +1,58 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AgroserviciosTienda.Modelos;
+using AgroserviciosTienda.Vistas.Entradas;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace AgroserviciosTienda.VistaModelos.Ventas;
 
-public partial class PgVenDetallesVistaModelo : ObservableObject
+public partial class PgVenDetallesVistaModelo : ObservableRecipient
 {
+    public PgVenDetallesVistaModelo()
+    {
+        IsActive = true;
+    }
+
+    protected override void OnActivated()
+    {
+        base.OnActivated();
+        WeakReferenceMessenger.Default.Register<PgVenDetallesVistaModelo, Venta>(this, (r, m) =>
+        {
+            if (m is not null)
+            {
+                Ventas.Add(m);
+            }
+        });
+    }
+
+    protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+    {
+        base.OnPropertyChanged(e);
+    }
+
+    [ObservableProperty]
+    ObservableCollection<Venta> ventas = new();
+
+    [ObservableProperty]
+    Venta? selectedVenta;
+
+    [RelayCommand]
+    private async Task Agregar()
+    {
+        await Shell.Current.GoToAsync($"{nameof(PgVenAddEdit)}");
+    }
+
+    [RelayCommand]
+    private async Task Modificar()
+    {
+        await Shell.Current.GoToAsync($"{nameof(PgVenAddEdit)}", new Dictionary<string, object>() { { "entrada", selectedVenta } });
+    }
+
+    [RelayCommand]
+    private void Eliminar()
+    {
+        Ventas.Remove(selectedVenta);
+    }
 }

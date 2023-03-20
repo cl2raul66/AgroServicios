@@ -1,8 +1,6 @@
 ﻿using AgroserviciosTienda.Modelos;
 using AgroserviciosTienda.Utiles.Extension;
 using AgroserviciosTienda.Vistas.Entradas;
-using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -50,7 +48,7 @@ public partial class PgEntDetallesVistaModelo : ObservableRecipient
     [RelayCommand]
     private async Task Modificar()
     {
-        await Shell.Current.GoToAsync($"{nameof(PgEntAddEdit)}", new Dictionary<string, object>() { { "entrada", selectedEntrada as object } });
+        await Shell.Current.GoToAsync($"{nameof(PgEntAddEdit)}", new Dictionary<string, object>() { { "entrada", selectedEntrada } });
     }
 
     [RelayCommand]

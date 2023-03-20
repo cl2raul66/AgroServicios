@@ -3,13 +3,110 @@
     x:Class="AgroserviciosTienda.Vistas.Entradas.PgVenDetalles"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:modelo="clr-namespace:AgroserviciosTienda.Modelos"
+    xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos.Ventas"
     Title="Ventas"
-    x:DataType="vm:PgVenDetallesVistaModelo">
-    <VerticalStackLayout>
-        <Label
-            HorizontalOptions="Center"
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" />
-    </VerticalStackLayout>
+    x:DataType="vm:PgVenDetallesVistaModelo"
+    Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="auto,auto,*,auto">
+        <Grid
+            Grid.Row="0"
+            Padding="16"
+            BackgroundColor="{StaticResource Primary}"
+            ColumnDefinitions="*,auto">
+            <Label
+                FontSize="Title"
+                Text="Ventas"
+                TextColor="{StaticResource White}"
+                VerticalOptions="Center" />
+            <HorizontalStackLayout Grid.Column="1" Spacing="24">
+                <Button
+                    Command="{Binding AgregarCommand}"
+                    FontFamily="MaterialDesignIcons"
+                    Text="{StaticResource IconPlus}"
+                    ToolTipProperties.Text="Agregar entrada" />
+                <Button
+                    Command="{Binding ModificarCommand}"
+                    FontFamily="MaterialDesignIcons"
+                    IsEnabled="{Binding SelectedVenta, Mode=OneWay, Converter={tk:IsNotNullConverter}}"
+                    Text="{StaticResource IconFileEdit}"
+                    ToolTipProperties.Text="Modificar entrada seleccionada" />
+                <Button
+                    Command="{Binding EliminarCommand}"
+                    FontFamily="MaterialDesignIcons"
+                    IsEnabled="{Binding SelectedVenta, Mode=OneWay, Converter={tk:IsNotNullConverter}}"
+                    Text="{StaticResource IconDelete}"
+                    ToolTipProperties.Text="Eliminar entrada seleccionada" />
+            </HorizontalStackLayout>
+        </Grid>
+        <Grid Grid.Row="1" Margin="16">
+            <tk:Expander>
+                <tk:Expander.Header>
+                    <Frame Padding="12" BackgroundColor="{StaticResource Primary}">
+                        <Label
+                            FontFamily="MaterialDesignIcons"
+                            FontSize="24"
+                            HorizontalOptions="Fill"
+                            HorizontalTextAlignment="Center"
+                            Text="{StaticResource IconFilter}"
+                            TextColor="{StaticResource White}" />
+                    </Frame>
+                </tk:Expander.Header>
+                <tk:Expander.Content>
+                    <VerticalStackLayout>
+                        <Label Text="Filtrar" />
+                    </VerticalStackLayout>
+                </tk:Expander.Content>
+            </tk:Expander>
+        </Grid>
+        <Grid Grid.Row="2" Margin="16">
+            <ListView
+                ItemsSource="{Binding Ventas, Mode=OneWay}"
+                SelectedItem="{Binding SelectedVenta}"
+                SelectionMode="Single">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="modelo:Venta">
+                        <ViewCell>
+                            <VerticalStackLayout Padding="16" Spacing="8">
+                                <Grid ColumnDefinitions="*,auto">
+                                    <Label
+                                        Grid.Column="0"
+                                        FontAttributes="Bold"
+                                        FontSize="Medium"
+                                        Text="{Binding Producto}" />
+                                    <Label
+                                        x:Name="LabFactura"
+                                        Grid.Column="0"
+                                        FontSize="Medium"
+                                        IsVisible="{Binding NoFactura, Mode=OneWay, Converter={tk:IsStringNotNullOrEmptyConverter}}"
+                                        Text="{Binding NoFactura, Mode=OneWay, StringFormat='No.Factura: {0}'}" />
+                                </Grid>
+                                <HorizontalStackLayout>
+                                    <Label FontSize="Body" Text="{Binding Cantidad, Mode=OneWay}" />
+                                    <Label FontSize="Body" Text="{Binding Precio, Mode=OneWay}" />
+                                    <Label
+                                        FontSize="Body"
+                                        IsVisible="{Binding Source={x:Reference LabFactura}, Path=IsVisible}"
+                                        Text="{Binding Cliente, Mode=OneWay}" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        <Grid
+            Grid.Row="3"
+            Padding="16"
+            BackgroundColor="{StaticResource Primary}">
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="8">
+                <Label
+                    FontSize="Micro"
+                    Text="by RandA Media Lab, Group"
+                    TextColor="{StaticResource White}" />
+            </HorizontalStackLayout>
+        </Grid>
+    </Grid>
 </ContentPage>

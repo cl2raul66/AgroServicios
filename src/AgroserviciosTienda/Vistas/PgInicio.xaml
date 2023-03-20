@@ -8,61 +8,73 @@
     x:DataType="vm:PgInicioVistaModelo">
 
     <Grid RowDefinitions="*,auto">
-        <VerticalStackLayout
-            Grid.Row="0"
-            HorizontalOptions="Center"
-            Spacing="24"
-            VerticalOptions="Center">
-            <Frame>
-                <VerticalStackLayout>
-                    <Label
-                        FontSize="Title"
-                        LineBreakMode="NoWrap"
-                        Text="Entrada de Productos" />
-                    <Label Text="Tipos de productos: 0" />
-                    <HorizontalStackLayout
-                        Padding="8,8,8,0"
-                        HorizontalOptions="EndAndExpand"
-                        Spacing="8">
-                        <Button Command="{Binding AgregarEntradaCommand}" Text="Agregar" />
-                        <Button Command="{Binding VerEntradasCommand}" Text="Ver" />
-                    </HorizontalStackLayout>
-                </VerticalStackLayout>
-            </Frame>
-            <Frame>
-                <VerticalStackLayout>
-                    <Label
-                        FontSize="Title"
-                        LineBreakMode="NoWrap"
-                        Text="Venta de Productos" />
-                    <Label>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="Ventas de hoy: 0" />
-                                <Span Text=" | " />
-                                <Span Text="Total: 0" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
-                    <Label>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="Ventas en el mes: 0" />
-                                <Span Text=" | " />
-                                <Span Text="Total: 0" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
-                    <HorizontalStackLayout
-                        Padding="8,8,8,0"
-                        HorizontalOptions="EndAndExpand"
-                        Spacing="8">
-                        <Button Command="{Binding AgregarVentaCommand}" Text="Agregar" />
-                        <Button Command="{Binding VerVentasCommand}" Text="Ver" />
-                    </HorizontalStackLayout>
-                </VerticalStackLayout>
-            </Frame>
-        </VerticalStackLayout>
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout
+                HorizontalOptions="Center"
+                Spacing="24"
+                VerticalOptions="Center">
+                <Frame>
+                    <VerticalStackLayout>
+                        <Label
+                            FontSize="Title"
+                            LineBreakMode="NoWrap"
+                            Text="Entrada de Productos" />
+                        <Label Text="Tipos de productos: 0" />
+                        <HorizontalStackLayout
+                            Padding="8,8,8,0"
+                            HorizontalOptions="EndAndExpand"
+                            Spacing="8">
+                            <Button Command="{Binding AgregarEntradaCommand}" Text="Agregar" />
+                            <Button Command="{Binding VerEntradasCommand}" Text="Ver" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Frame>
+                <Frame>
+                    <VerticalStackLayout Spacing="8">
+                        <Label
+                            FontSize="Title"
+                            LineBreakMode="NoWrap"
+                            Text="Venta de Productos" />
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Ventas de hoy: 0" />
+                                    <Span Text=" | " />
+                                    <Span Text="Facturación: 0" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Ventas en la semana: 0" />
+                                    <Span Text=" | " />
+                                    <Span Text="Facturación: 0" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Ventas en el mes: 0" />
+                                    <Span Text=" | " />
+                                    <Span Text="Facturación: 0" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <HorizontalStackLayout
+                            Padding="8,8,8,0"
+                            HorizontalOptions="Fill"
+                            Spacing="8">
+                            <Button Command="{Binding}" Text="Ver resumen" />
+                            <Button Command="{Binding VerVentasCommand}" Text="Ver" />
+                            <Button Command="{Binding AgregarVentaCommand}" Text="Agregar" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Frame>
+            </VerticalStackLayout>
+        </ScrollView>
+
         <Grid
             Grid.Row="1"
             Padding="16"
