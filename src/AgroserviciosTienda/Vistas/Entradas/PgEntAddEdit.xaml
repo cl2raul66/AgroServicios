@@ -3,6 +3,7 @@
     x:Class="AgroserviciosTienda.Vistas.Entradas.PgEntAddEdit"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos.Entradas"
     Title="EntAddEdit"
     x:DataType="vm:PgEntAddEditVistaModelo"
@@ -114,16 +115,26 @@
                         Minimum="0.00"
                         Value="{Binding CostoCarga}" />
                 </Grid>
-                <Grid
-                    ColumnDefinitions="auto,auto"
-                    ColumnSpacing="8"
-                    HorizontalOptions="End">
-                    <Button
+                <Grid ColumnDefinitions="*,auto,auto" ColumnSpacing="8">
+                    <Label
                         Grid.Column="0"
+                        FontSize="Micro"
+                        IsVisible="{Binding VisibleError, Mode=OneWay}"
+                        TextColor="Red"
+                        VerticalOptions="Center">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span FontFamily="MaterialDesignIcons" Text="{StaticResource IconAlert}" />
+                                <Span Text=" Datos incorrectos." />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Button
+                        Grid.Column="1"
                         Command="{Binding CancelarCommand}"
                         Text="Cancelar" />
                     <Button
-                        Grid.Column="1"
+                        Grid.Column="2"
                         Command="{Binding GuardarCommand}"
                         IsEnabled="False"
                         Text="Guardar" />

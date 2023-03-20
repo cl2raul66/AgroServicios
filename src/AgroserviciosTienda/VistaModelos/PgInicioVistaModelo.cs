@@ -21,7 +21,7 @@ public partial class PgInicioVistaModelo : ObservableObject
     [RelayCommand]
     private async Task AgregarEntrada()
     {
-        await Shell.Current.GoToAsync($"{nameof(PgEntDetalles)}/{nameof(PgEntAddEdit)}", new Dictionary<string, object>() { { "entrada", null as object } });
+        await Shell.Current.GoToAsync($"{nameof(PgEntDetalles)}/{nameof(PgEntAddEdit)}");
     }
 
     [RelayCommand]
@@ -33,6 +33,6 @@ public partial class PgInicioVistaModelo : ObservableObject
     [RelayCommand]
     private async Task AgregarVenta()
     {
-        await Shell.Current.GoToAsync($"{nameof(PgVenDetalles)}/{nameof(PgVenAddEdit)}", new Dictionary<string, object>() { { "entrada", null as object } });
+        await Shell.Current.GoToAsync($"{nameof(PgVenDetalles)}/{nameof(PgVenAddEdit)}");
     }
 }

@@ -1,17 +1,42 @@
 ﻿using AgroserviciosTienda.Modelos;
+using AgroserviciosTienda.Utiles.Extension;
 using AgroserviciosTienda.Vistas.Entradas;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace AgroserviciosTienda.VistaModelos.Entradas;
 
-public partial class PgEntDetallesVistaModelo : ObservableObject
+public partial class PgEntDetallesVistaModelo : ObservableRecipient
 {
+    public PgEntDetallesVistaModelo()
+    {
+        IsActive = true;
+    }
+
+    protected override void OnActivated()
+    {
+        base.OnActivated();
+        WeakReferenceMessenger.Default.Register<PgEntDetallesVistaModelo, Entrada>(this, (r, m) =>
+        {
+            if (m is not null)
+            {
+                Entradas.Add(m.ToEntradaView());
+            }
+        });
+    }
+
+    protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+    {
+        base.OnPropertyChanged(e);
+    }
+
     [ObservableProperty]
-    ObservableCollection<EntradaView> entradas;
+    ObservableCollection<EntradaView> entradas = new();
 
     [ObservableProperty]
     EntradaView? selectedEntrada;
@@ -19,25 +44,18 @@ public partial class PgEntDetallesVistaModelo : ObservableObject
     [RelayCommand]
     private async Task Agregar()
     {
-        await Shell.Current.GoToAsync($"{nameof(PgEntDetalles)}/{nameof(PgEntAddEdit)}", new Dictionary<string, object>() { { "entrada", selectedEntrada as object } });
+        await Shell.Current.GoToAsync($"{nameof(PgEntAddEdit)}");
     }
 
     [RelayCommand]
     private async Task Modificar()
     {
-        await Shell.Current.GoToAsync($"{nameof(PgEntDetalles)}/{nameof(PgEntAddEdit)}", new Dictionary<string, object>() { { "entrada", selectedEntrada as object } });
+        await Shell.Current.GoToAsync($"{nameof(PgEntAddEdit)}", new Dictionary<string, object>() { { "entrada", selectedEntrada as object } });
     }
 
     [RelayCommand]
-    private async Task Eliminar()
+    private void Eliminar()
     {
-        bool resul = Entradas.Remove(selectedEntrada);
-
-        CancellationTokenSource cancellationTokenSource = new();
-        string text = resul ? "Se elimino correctamente" : "No se pudo eliminar";
-        ToastDuration duration = ToastDuration.Short;
-        double fontSize = 14;
-        var toast = Toast.Make(text, duration, fontSize);
-        await toast.Show(cancellationTokenSource.Token);
+        Entradas.Remove(selectedEntrada);
     }
 }

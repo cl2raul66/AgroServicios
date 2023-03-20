@@ -10,12 +10,6 @@
     x:DataType="vm:PgEntDetallesVistaModelo"
     Shell.NavBarIsVisible="False">
 
-    <!--<ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="{StaticResource AgregarIcon}" Text="Agrega" />
-        <ToolbarItem IconImageSource="{StaticResource ModificarIcon}" Text="Modificar" />
-        <ToolbarItem IconImageSource="{StaticResource EliminarIcon}" Text="Eliminar" />
-    </ContentPage.ToolbarItems>-->
-
     <Grid RowDefinitions="auto,auto,*,auto">
         <Grid
             Grid.Row="0"
@@ -73,7 +67,15 @@
                 SelectionMode="Single">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="modelo:EntradaView">
-                        <TextCell Detail="{Binding Detalle}" Text="{Binding Texto}" />
+                        <ViewCell>
+                            <VerticalStackLayout Padding="16" Spacing="8">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="Medium"
+                                    Text="{Binding Texto}" />
+                                <Label FontSize="Body" Text="{Binding Detalle}" />
+                            </VerticalStackLayout>
+                        </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
