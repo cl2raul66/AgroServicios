@@ -31,22 +31,7 @@ public partial class PgVenAddEditVistaModelo : ObservableValidator
     public string Titulo => currentVenta is null ? "Nueva - Venta" : "Modificar - Venta";
 
     [ObservableProperty]
-    DateTime fecha = DateTime.Now;
-
-    [ObservableProperty]
-    [Required]
-    [MinLength(3)]
-    string productoNombre;
-
-    [ObservableProperty]
-    [Required]
-    [Range(1, 1000)]
-    double cantidad;
-
-    [ObservableProperty]
-    [Required]
-    [Range(1, 19999.99)]
-    double precio;
+    DateTime fecha = DateTime.Now;    
 
     [ObservableProperty]
     ObservableCollection<Producto> productos = new();

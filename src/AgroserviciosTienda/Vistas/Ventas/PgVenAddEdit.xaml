@@ -5,7 +5,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:modelo="clr-namespace:AgroserviciosTienda.Modelos"
     xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    Title="{Binding Titulo, Mode=OneWay}">
+    xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos.Ventas"
+    Title="{Binding Titulo, Mode=OneWay}"
+    x:DataType="vm:PgVenAddEditVistaModelo">
 
     <ScrollView Padding="16">
         <Frame HorizontalOptions="Center" VerticalOptions="Center">
