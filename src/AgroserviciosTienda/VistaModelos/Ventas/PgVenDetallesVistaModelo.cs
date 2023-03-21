@@ -18,11 +18,11 @@ public partial class PgVenDetallesVistaModelo : ObservableRecipient
     protected override void OnActivated()
     {
         base.OnActivated();
-        WeakReferenceMessenger.Default.Register<PgVenDetallesVistaModelo, Venta>(this, (r, m) =>
+        WeakReferenceMessenger.Default.Register<PgVenDetallesVistaModelo, VentaView>(this, (r, m) =>
         {
             if (m is not null)
             {
-                Ventas.Add(m);
+                Ventas.Insert(0, m);
             }
         });
     }
@@ -33,10 +33,10 @@ public partial class PgVenDetallesVistaModelo : ObservableRecipient
     }
 
     [ObservableProperty]
-    ObservableCollection<Venta> ventas = new();
+    ObservableCollection<VentaView> ventas = new();
 
     [ObservableProperty]
-    Venta? selectedVenta;
+    VentaView selectedVenta;
 
     [RelayCommand]
     private async Task Agregar()

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="AgroserviciosTienda.Vistas.Entradas.PgVenAddEdit"
+    x:Class="AgroserviciosTienda.Vistas.PgProductosAddEdit"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:modelo="clr-namespace:AgroserviciosTienda.Modelos"
-    xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    Title="{Binding Titulo, Mode=OneWay}">
+    Title="PgProductosAddEdit">
 
     <ScrollView Padding="16">
         <Frame HorizontalOptions="Center" VerticalOptions="Center">
@@ -62,22 +60,6 @@
                         Minimum="0.00"
                         Value="{Binding Precio}" />
                 </Grid>
-                <ListView
-                    ItemsSource="{Binding Productos, Mode=OneWay}"
-                    SelectedItem="{Binding SelectedProducto}"
-                    SelectionMode="Single">
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="modelo:Producto">
-                            <ViewCell>
-                                <HorizontalStackLayout Padding="16" Spacing="8">
-                                    <Label Text="{Binding Nombre, StringFormat='Producto: {0}'}" />
-                                    <Label Text="{Binding Cantidad, StringFormat='Cantidad: {0}'}" />
-                                    <Label Text="{Binding Precio, StringFormat='Precio: {0}'}" />
-                                </HorizontalStackLayout>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
                 <Label
                     FontSize="Micro"
                     HorizontalOptions="Center"

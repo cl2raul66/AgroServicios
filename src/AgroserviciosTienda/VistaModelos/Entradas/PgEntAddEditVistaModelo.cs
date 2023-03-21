@@ -82,7 +82,7 @@ public partial class PgEntAddEditVistaModelo : ObservableValidator
 
         var newEntrada = new Entrada(fecha,producto, (int)cantidad, (decimal)precio, noFactura, proveedor, (decimal)costoFlete, (decimal)costoCarga);
         WeakReferenceMessenger.Default.Send<Entrada>(newEntrada);
-        await Shell.Current.GoToAsync("..");
+        await Cancelar();
     }
 
     [RelayCommand]

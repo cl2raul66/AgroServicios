@@ -8,7 +8,7 @@
     x:DataType="vm:PgInicioVistaModelo">
 
     <Grid RowDefinitions="*,auto">
-        <ScrollView Grid.Row="0">
+        <ScrollView Grid.Row="0" Padding="16">
             <VerticalStackLayout
                 HorizontalOptions="Center"
                 Spacing="24"
