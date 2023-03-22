@@ -1,4 +1,5 @@
-﻿using AgroserviciosTienda.Vistas.Entradas;
+﻿using AgroserviciosTienda.Vistas;
+using AgroserviciosTienda.Vistas.Entradas;
 
 namespace AgroserviciosTienda;
 
@@ -12,5 +13,6 @@ public partial class AppShell : Shell
         Routing.RegisterRoute($"{nameof(PgEntAddEdit)}", typeof(PgEntAddEdit));
         Routing.RegisterRoute(nameof(PgVenDetalles), typeof(PgVenDetalles));
         Routing.RegisterRoute($"{nameof(PgVenAddEdit)}", typeof(PgVenAddEdit));
+        Routing.RegisterRoute($"{nameof(PgProductosAddEdit)}", typeof(PgProductosAddEdit));
     }
 }

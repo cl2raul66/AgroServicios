@@ -1,4 +1,5 @@
 ﻿using AgroserviciosTienda.Modelos;
+using AgroserviciosTienda.Vistas;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -11,6 +12,17 @@ namespace AgroserviciosTienda.VistaModelos.Ventas;
 [QueryProperty(nameof(CurrentVenta), "venta")]
 public partial class PgVenAddEditVistaModelo : ObservableValidator
 {
+    public PgVenAddEditVistaModelo()
+    {
+        WeakReferenceMessenger.Default.Register<PgVenAddEditVistaModelo, Producto>(this, (r, m) =>
+        {
+            if (m is not null)
+            {
+                Productos.Insert(0, m);
+            }
+        });
+    }
+
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
     {
         base.OnPropertyChanged(e);
@@ -31,37 +43,14 @@ public partial class PgVenAddEditVistaModelo : ObservableValidator
     public string Titulo => currentVenta is null ? "Nueva - Venta" : "Modificar - Venta";
 
     [ObservableProperty]
-    DateTime fecha = DateTime.Now;    
-
-    [ObservableProperty]
-    ObservableCollection<Producto> productos = new();
-
-    [ObservableProperty]
-    Producto selectedProducto;
+    [Required]
+    DateTime fecha = DateTime.Now;
 
     [ObservableProperty]
     bool visibleError;
 
     [RelayCommand]
-    private async void Guardar()
-    {
-        ValidateAllProperties();
-        if (HasErrors)
-        {
-            VisibleError = true;
-            await Task.Delay(5000);
-            VisibleError = false;
-            return;
-        }
-
-        Productos.Add(new(productoNombre, (int)cantidad, (decimal)precio));
-        ProductoNombre = string.Empty;
-        Cantidad = 0;
-        Precio = 0;
-    }
-
-    [RelayCommand]
-    private async void GuardarSalir()
+    async void Guardar()
     {
         ValidateAllProperties();
         if (HasErrors)
@@ -78,8 +67,36 @@ public partial class PgVenAddEditVistaModelo : ObservableValidator
     }
 
     [RelayCommand]
-    private async Task Cancelar()
+    async Task Cancelar()
     {
         await Shell.Current.GoToAsync("..");
     }
+
+    #region productos
+    [ObservableProperty]
+    [Required]
+    [MinLength(1)]
+    ObservableCollection<Producto> productos = new();
+
+    [ObservableProperty]
+    Producto selectedProducto;
+
+    [RelayCommand]
+    async Task AgregarProducto()
+    {
+        await Shell.Current.GoToAsync($"{nameof(PgProductosAddEdit)}");
+    }
+
+    [RelayCommand]
+    async Task ModificarProducto()
+    {
+        await Shell.Current.GoToAsync($"{nameof(PgProductosAddEdit)}", new Dictionary<string, object>() { { "producto", selectedProducto } });
+    }
+
+    [RelayCommand]
+    private void EliminarProducto()
+    {
+        productos.Remove(selectedProducto);
+    }
+    #endregion
 }

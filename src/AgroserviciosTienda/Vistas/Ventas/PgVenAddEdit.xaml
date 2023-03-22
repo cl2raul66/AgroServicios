@@ -9,62 +9,33 @@
     Title="{Binding Titulo, Mode=OneWay}"
     x:DataType="vm:PgVenAddEditVistaModelo">
 
-    <ScrollView Padding="16">
-        <Frame HorizontalOptions="Center" VerticalOptions="Center">
-            <VerticalStackLayout Spacing="16" WidthRequest="400">
-                <Label
-                    FontAttributes="Bold"
-                    FontSize="Subtitle"
-                    Text="{Binding Titulo, Mode=OneWay}" />
-                <Grid RowDefinitions="auto,auto" RowSpacing="8">
-                    <Label Grid.Row="0" Text="Fecha:" />
-                    <DatePicker Grid.Row="1" Date="{Binding Fecha}" />
-                </Grid>
-                <Grid RowDefinitions="auto,auto" RowSpacing="8">
-                    <Label Grid.Row="0" Text="Producto:" />
-                    <Entry
-                        Grid.Row="1"
-                        Placeholder="Escariba aqui"
-                        Text="{Binding Producto}" />
-                </Grid>
-                <Grid
-                    ColumnDefinitions="*,auto"
-                    ColumnSpacing="8"
-                    RowDefinitions="auto,auto"
-                    RowSpacing="8">
-                    <Label Grid.Row="0" Text="Cantidad:" />
-                    <Entry
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        Text="{Binding Cantidad}" />
-                    <Stepper
-                        x:Name="StpCantidad"
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Increment="1"
-                        Maximum="1000"
-                        Minimum="0"
-                        Value="{Binding Cantidad}" />
-                </Grid>
-                <Grid
-                    ColumnDefinitions="*,auto"
-                    ColumnSpacing="8"
-                    RowDefinitions="auto,auto"
-                    RowSpacing="8">
-                    <Label Grid.Row="0" Text="Precio:" />
-                    <Entry
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        Text="{Binding Precio, Mode=TwoWay, StringFormat='{0:F2}'}" />
-                    <Stepper
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Increment="10.00"
-                        Maximum="19999.99"
-                        Minimum="0.00"
-                        Value="{Binding Precio}" />
-                </Grid>
+    <Grid Padding="16" RowDefinitions="auto,*,auto">
+        <Grid
+            Grid.Row="0"
+            RowDefinitions="auto,auto"
+            RowSpacing="8">
+            <Label Grid.Row="0" Text="Fecha:" />
+            <DatePicker Grid.Row="1" Date="{Binding Fecha}" />
+        </Grid>
+        <ScrollView Grid.Row="1" Padding="16">
+            <Grid RowDefinitions="auto,*">
+                <HorizontalStackLayout
+                    Grid.Row="0"
+                    HorizontalOptions="Fill"
+                    Spacing="8">
+                    <Label Text="Productos:" VerticalOptions="Center" />
+                    <Button Command="{Binding AgregarProductoCommand}" Text="Agregar" />
+                    <Button
+                        Command="{Binding ModificarProductoCommand}"
+                        IsEnabled="{Binding SelectedProducto, Mode=OneWay, Converter={tk:IsNotNullConverter}}"
+                        Text="Modificar" />
+                    <Button
+                        Command="{Binding EliminarProductoCommand}"
+                        IsEnabled="{Binding SelectedProducto, Mode=OneWay, Converter={tk:IsNotNullConverter}}"
+                        Text="Eliminar" />
+                </HorizontalStackLayout>
                 <ListView
+                    Grid.Row="1"
                     ItemsSource="{Binding Productos, Mode=OneWay}"
                     SelectedItem="{Binding SelectedProducto}"
                     SelectionMode="Single">
@@ -80,40 +51,37 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Label
-                    FontSize="Micro"
-                    HorizontalOptions="Center"
-                    IsVisible="{Binding VisibleError, Mode=OneWay}"
-                    TextColor="Red">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span FontFamily="MaterialDesignIcons" Text="{StaticResource IconAlert}" />
-                            <Span Text=" Datos incorrectos." />
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-                <Grid
-                    Margin="0,8,0,0"
-                    ColumnDefinitions="auto,auto,auto"
-                    ColumnSpacing="8"
-                    HorizontalOptions="End">
-                    <Button
-                        Grid.Column="0"
-                        Command="{Binding CancelarCommand}"
-                        Text="Cancelar" />
-                    <Button
-                        Grid.Column="1"
-                        Command="{Binding GuardarCommand}"
-                        IsEnabled="False"
-                        Text="Guardar" />
-                    <Button
-                        Grid.Column="2"
-                        Command="{Binding GuardarSalirCommand}"
-                        IsEnabled="False"
-                        Text="Guardar y salir" />
-                </Grid>
-            </VerticalStackLayout>
-        </Frame>
-    </ScrollView>
+            </Grid>
+        </ScrollView>
+        <Grid
+            Grid.Row="2"
+            Margin="0,8,0,0"
+            ColumnDefinitions="*,auto,auto"
+            ColumnSpacing="8"
+            HorizontalOptions="Fill">
+            <Label
+                Grid.Column="0"
+                FontSize="Micro"
+                HorizontalOptions="Center"
+                IsVisible="{Binding VisibleError, Mode=OneWay}"
+                TextColor="Red">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span FontFamily="MaterialDesignIcons" Text="{StaticResource IconAlert}" />
+                        <Span Text=" Datos incorrectos." />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Button
+                Grid.Column="1"
+                Command="{Binding CancelarCommand}"
+                Text="Cancelar" />
+            <Button
+                Grid.Column="2"
+                Command="{Binding GuardarCommand}"
+                Text="Guardar" />
+        </Grid>
+    </Grid>
+
 
 </ContentPage>

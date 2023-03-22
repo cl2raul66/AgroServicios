@@ -27,12 +27,14 @@ public static class MauiProgram
 		builder.Services.AddTransient<PgEntAddEditVistaModelo>();
 		builder.Services.AddTransient<PgVenDetallesVistaModelo>();
 		builder.Services.AddTransient<PgVenAddEditVistaModelo>();
+		builder.Services.AddTransient<PgProductosAddEditVistaModelo>();
 
 		builder.Services.AddTransient<PgInicio>();
 		builder.Services.AddTransient<PgEntDetalles>();
 		builder.Services.AddTransient<PgEntAddEdit>();
 		builder.Services.AddTransient<PgVenDetalles>();
 		builder.Services.AddTransient<PgVenAddEdit>();
+		builder.Services.AddTransient<PgProductosAddEdit>();
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
