@@ -3,25 +3,19 @@
     x:Class="AgroserviciosTienda.Vistas.PgProductosAddEdit"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="PgProductosAddEdit">
+    xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
+    Title="{Binding Titulo, Mode=OneWay}"
+    x:DataType="vm:PgProductosAddEditVistaModelo">
 
     <ScrollView Padding="16">
         <Frame HorizontalOptions="Center" VerticalOptions="Center">
             <VerticalStackLayout Spacing="16" WidthRequest="400">
-                <Label
-                    FontAttributes="Bold"
-                    FontSize="Subtitle"
-                    Text="{Binding Titulo, Mode=OneWay}" />
-                <Grid RowDefinitions="auto,auto" RowSpacing="8">
-                    <Label Grid.Row="0" Text="Fecha:" />
-                    <DatePicker Grid.Row="1" Date="{Binding Fecha}" />
-                </Grid>
                 <Grid RowDefinitions="auto,auto" RowSpacing="8">
                     <Label Grid.Row="0" Text="Producto:" />
                     <Entry
                         Grid.Row="1"
                         Placeholder="Escariba aqui"
-                        Text="{Binding Producto}" />
+                        Text="{Binding ProductoNombre}" />
                 </Grid>
                 <Grid
                     ColumnDefinitions="*,auto"
@@ -83,14 +77,14 @@
                         Text="Cancelar" />
                     <Button
                         Grid.Column="1"
-                        Command="{Binding GuardarCommand}"
+                        Command="{Binding AgregarCommand}"
                         IsEnabled="False"
-                        Text="Guardar" />
+                        Text="Agregar" />
                     <Button
                         Grid.Column="2"
-                        Command="{Binding GuardarSalirCommand}"
+                        Command="{Binding AgregarSalirCommand}"
                         IsEnabled="False"
-                        Text="Guardar y salir" />
+                        Text="Agregar y salir" />
                 </Grid>
             </VerticalStackLayout>
         </Frame>

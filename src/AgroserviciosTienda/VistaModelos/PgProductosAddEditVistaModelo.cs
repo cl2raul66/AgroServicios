@@ -2,17 +2,19 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AgroserviciosTienda.VistaModelos;
 
+[QueryProperty(nameof(CurrentProducto), "producto")]
 public partial class PgProductosAddEditVistaModelo : ObservableValidator
 {
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(Titulo))]
+    Producto currentProducto;
+
+    public string Titulo => currentProducto is null ? "Nueva - producto" : "Modificar - producto";
+
     [ObservableProperty]
     [Required]
     [MinLength(3)]
