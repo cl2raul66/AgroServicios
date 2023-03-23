@@ -12,7 +12,7 @@ public partial class PgEntAddEditVistaModelo : ObservableValidator
 {
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Titulo))]
-    Entrada? currentEntrada;
+    EntradaView currentEntrada;
 
     public string Titulo => currentEntrada is null ? "Nueva - Entrada" : "Modificar - Entrada";
 
@@ -22,17 +22,17 @@ public partial class PgEntAddEditVistaModelo : ObservableValidator
     [ObservableProperty]
     [Required]
     [MinLength(3)]
-    string producto;
+    string productoNombre;
 
     [ObservableProperty]
     [Required]
     [Range(1, 1000)]
-    double cantidad;
+    double cantidad = 0;
 
     [ObservableProperty]
     [Required]
     [Range(1, 19999.99)]
-    double precio;
+    double precio = 0;
 
     [ObservableProperty]
     string noFactura;
@@ -41,10 +41,10 @@ public partial class PgEntAddEditVistaModelo : ObservableValidator
     string proveedor;
 
     [ObservableProperty]
-    double costoFlete;
+    double costoFlete = 0;
 
     [ObservableProperty]
-    double costoCarga;
+    double costoCarga = 0;
 
     [ObservableProperty]
     bool visibleError;
@@ -57,9 +57,9 @@ public partial class PgEntAddEditVistaModelo : ObservableValidator
             if (currentEntrada is not null)
             {
                 Fecha = currentEntrada.Fecha;
-                Producto = currentEntrada.Producto;
-                Cantidad = currentEntrada.Cantidad;
-                Precio = (double)currentEntrada.Precio;
+                ProductoNombre = currentEntrada.Producto.Nombre;
+                Cantidad = currentEntrada.Producto.Cantidad;
+                Precio = (double)currentEntrada.Producto.Precio;
                 NoFactura = currentEntrada.NoFactura;
                 Proveedor = currentEntrada.Proveedor;
                 CostoFlete = (double)currentEntrada.CostoFlete;
@@ -80,8 +80,12 @@ public partial class PgEntAddEditVistaModelo : ObservableValidator
             return;
         }
 
-        var newEntrada = new Entrada(fecha,producto, (int)cantidad, (decimal)precio, noFactura, proveedor, (decimal)costoFlete, (decimal)costoCarga);
-        WeakReferenceMessenger.Default.Send<Entrada>(newEntrada);
+        var newProducto = new ProductoEntrada(productoNombre, (int)cantidad, (decimal)precio);
+        EntradaView newEntrada = string.IsNullOrEmpty(noFactura) 
+            ? new EntradaView() { Fecha = fecha, Producto = newProducto } 
+            : new EntradaView() { Fecha = fecha, Producto = newProducto, NoFactura = noFactura, Proveedor = proveedor, CostoFlete = (decimal)costoFlete, CostoCarga = (decimal)costoCarga };
+
+        WeakReferenceMessenger.Default.Send<EntradaView>(newEntrada);
         await Cancelar();
     }
 

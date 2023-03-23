@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="AgroserviciosTienda.Vistas.Entradas.PgVenAddEdit"
+    x:Class="AgroserviciosTienda.Vistas.Ventas.PgVenAdd"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:modelo="clr-namespace:AgroserviciosTienda.Modelos"
@@ -62,9 +62,9 @@
             <Label
                 Grid.Column="0"
                 FontSize="Micro"
-                HorizontalOptions="Center"
                 IsVisible="{Binding VisibleError, Mode=OneWay}"
-                TextColor="Red">
+                TextColor="Red"
+                VerticalOptions="Center">
                 <Label.FormattedText>
                     <FormattedString>
                         <Span FontFamily="MaterialDesignIcons" Text="{StaticResource IconAlert}" />
@@ -82,6 +82,5 @@
                 Text="Guardar" />
         </Grid>
     </Grid>
-
 
 </ContentPage>

@@ -10,11 +10,11 @@ using System.ComponentModel.DataAnnotations;
 namespace AgroserviciosTienda.VistaModelos.Ventas;
 
 [QueryProperty(nameof(CurrentVenta), "venta")]
-public partial class PgVenAddEditVistaModelo : ObservableValidator
+public partial class PgVenAddVistaModelo : ObservableValidator
 {
-    public PgVenAddEditVistaModelo()
+    public PgVenAddVistaModelo()
     {
-        WeakReferenceMessenger.Default.Register<PgVenAddEditVistaModelo, Producto>(this, (r, m) =>
+        WeakReferenceMessenger.Default.Register<PgVenAddVistaModelo, ProductoVenta>(this, (r, m) =>
         {
             if (m is not null)
             {
@@ -76,10 +76,10 @@ public partial class PgVenAddEditVistaModelo : ObservableValidator
     [ObservableProperty]
     [Required]
     [MinLength(1)]
-    ObservableCollection<Producto> productos = new();
+    ObservableCollection<ProductoVenta> productos = new();
 
     [ObservableProperty]
-    Producto selectedProducto;
+    ProductoVenta selectedProducto;
 
     [RelayCommand]
     async Task AgregarProducto()

@@ -11,7 +11,7 @@ public partial class PgProductosAddEditVistaModelo : ObservableValidator
 {
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Titulo))]
-    Producto currentProducto;
+    ProductoVenta currentProducto;
 
     public string Titulo => currentProducto is null ? "Nueva - producto" : "Modificar - producto";
 
@@ -71,8 +71,8 @@ public partial class PgProductosAddEditVistaModelo : ObservableValidator
             return false;
         }
 
-        var newProucto = new Producto(productoNombre, (int)cantidad, (decimal)precio);
-        var resul = WeakReferenceMessenger.Default.Send<Producto>(newProucto);
+        var newProucto = new ProductoVenta(productoNombre, (int)cantidad, (decimal)precio);
+        var resul = WeakReferenceMessenger.Default.Send<ProductoVenta>(newProucto);
         return resul is not null;
     }
     #endregion

@@ -62,14 +62,15 @@
 	<ItemGroup>
 	  <Folder Include="Servicios\" />
 	  <Folder Include="Utiles\Convertidores\" />
+	  <Folder Include="Utiles\Extension\" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Compile Update="Vistas\Entradas\PgEntAddEdit.xaml.cs">
 	    <DependentUpon>PgEntAddEdit.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Vistas\Ventas\PgVenAddEdit.xaml.cs">
-	    <DependentUpon>PgVenAddEdit.xaml</DependentUpon>
+	  <Compile Update="Vistas\Ventas\PgVenAdd.xaml.cs">
+	    <DependentUpon>PgVenAdd.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Vistas\Ventas\PgVenDetalles.xaml.cs">
 	    <DependentUpon>PgVenDetalles.xaml</DependentUpon>
@@ -101,7 +102,7 @@
 	  <MauiXaml Update="Vistas\PgProductosAddEdit.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Vistas\Ventas\PgVenAddEdit.xaml">
+	  <MauiXaml Update="Vistas\Ventas\PgVenAdd.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Vistas\Ventas\PgVenDetalles.xaml">

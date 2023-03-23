@@ -1,5 +1,4 @@
 ﻿using AgroserviciosTienda.Modelos;
-using AgroserviciosTienda.Utiles.Extension;
 using AgroserviciosTienda.Vistas.Entradas;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -19,11 +18,11 @@ public partial class PgEntDetallesVistaModelo : ObservableRecipient
     protected override void OnActivated()
     {
         base.OnActivated();
-        WeakReferenceMessenger.Default.Register<PgEntDetallesVistaModelo, Entrada>(this, (r, m) =>
+        WeakReferenceMessenger.Default.Register<PgEntDetallesVistaModelo, EntradaView>(this, (r, m) =>
         {
             if (m is not null)
             {
-                Entradas.Add(m.ToEntradaView());
+                Entradas.Add(m);
             }
         });
     }
@@ -37,7 +36,7 @@ public partial class PgEntDetallesVistaModelo : ObservableRecipient
     ObservableCollection<EntradaView> entradas = new();
 
     [ObservableProperty]
-    EntradaView? selectedEntrada;
+    EntradaView selectedEntrada;
 
     [RelayCommand]
     private async Task Agregar()

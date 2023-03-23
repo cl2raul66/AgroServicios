@@ -3,6 +3,7 @@ using AgroserviciosTienda.VistaModelos.Entradas;
 using AgroserviciosTienda.VistaModelos.Ventas;
 using AgroserviciosTienda.Vistas;
 using AgroserviciosTienda.Vistas.Entradas;
+using AgroserviciosTienda.Vistas.Ventas;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 
@@ -26,14 +27,14 @@ public static class MauiProgram
 		builder.Services.AddTransient<PgEntDetallesVistaModelo>();
 		builder.Services.AddTransient<PgEntAddEditVistaModelo>();
 		builder.Services.AddTransient<PgVenDetallesVistaModelo>();
-		builder.Services.AddTransient<PgVenAddEditVistaModelo>();
+		builder.Services.AddTransient<PgVenAddVistaModelo>();
 		builder.Services.AddTransient<PgProductosAddEditVistaModelo>();
 
 		builder.Services.AddTransient<PgInicio>();
 		builder.Services.AddTransient<PgEntDetalles>();
 		builder.Services.AddTransient<PgEntAddEdit>();
 		builder.Services.AddTransient<PgVenDetalles>();
-		builder.Services.AddTransient<PgVenAddEdit>();
+		builder.Services.AddTransient<PgVenAdd>();
 		builder.Services.AddTransient<PgProductosAddEdit>();
 #if DEBUG
 		builder.Logging.AddDebug();

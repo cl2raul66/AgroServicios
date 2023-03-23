@@ -1,5 +1,6 @@
 ﻿using AgroserviciosTienda.Modelos;
 using AgroserviciosTienda.Vistas.Entradas;
+using AgroserviciosTienda.Vistas.Ventas;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -33,6 +34,6 @@ public partial class PgInicioVistaModelo : ObservableObject
     [RelayCommand]
     private async Task AgregarVenta()
     {
-        await Shell.Current.GoToAsync($"{nameof(PgVenDetalles)}/{nameof(PgVenAddEdit)}");
+        await Shell.Current.GoToAsync($"{nameof(PgVenDetalles)}/{nameof(PgVenAdd)}");
     }
 }

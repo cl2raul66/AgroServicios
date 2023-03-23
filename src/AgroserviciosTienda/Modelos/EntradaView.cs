@@ -2,14 +2,26 @@
 
 public class EntradaView
 {
-    public string Texto { get; set; }
-    public string Detalle { get; set; }
+    public DateTime Fecha { get; set; }
+    public ProductoEntrada Producto { get; set; }
+    public string NoFactura { get; set; }
+    public string Proveedor { get; set; }
+    public decimal CostoFlete { get; set; }
+    public decimal CostoCarga { get; set; }
 
     public EntradaView() { }
-
-    public EntradaView(Entrada entrada)
+    public EntradaView(DateTime fecha, ProductoEntrada producto)
     {
-        Texto = entrada.Fecha.ToShortDateString();
-        Detalle = $"Producto: {entrada.Producto} - Cantidad: {entrada.Cantidad} - Precio: {entrada.Precio:C} - Proveedor: {entrada.Proveedor}";
+        Fecha = fecha;
+        Producto = producto;
+    }
+    public EntradaView(DateTime fecha, ProductoEntrada producto, string nofactura, string proveedor, decimal costoflete, decimal costocarga)
+    {
+        Fecha = fecha;
+        Producto = producto;
+        NoFactura = nofactura;
+        Proveedor = proveedor;
+        CostoFlete = costoflete;
+        CostoCarga = costocarga;
     }
 }
