@@ -61,7 +61,6 @@
 
 	<ItemGroup>
 	  <Folder Include="Servicios\" />
-	  <Folder Include="Utiles\Convertidores\" />
 	  <Folder Include="Utiles\Extension\" />
 	</ItemGroup>
 

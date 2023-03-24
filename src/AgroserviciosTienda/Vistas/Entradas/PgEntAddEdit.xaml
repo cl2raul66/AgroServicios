@@ -23,8 +23,8 @@
                     <Label Grid.Row="0" Text="Producto:" />
                     <Entry
                         Grid.Row="1"
-                        Placeholder="Escariba aqui"
-                        Text="{Binding Producto}" />
+                        Placeholder="Escriba aquí"
+                        Text="{Binding ProductoNombre}" />
                 </Grid>
                 <Grid
                     ColumnDefinitions="*,auto"

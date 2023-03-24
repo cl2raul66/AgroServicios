@@ -3,6 +3,7 @@
     x:Class="AgroserviciosTienda.Vistas.PgInicio"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
     Title="Inicio"
     x:DataType="vm:PgInicioVistaModelo">
@@ -13,7 +14,13 @@
                 HorizontalOptions="Center"
                 Spacing="24"
                 VerticalOptions="Center">
-                <Frame>
+                <Border
+                    Padding="12"
+                    Stroke="gray"
+                    StrokeThickness="1">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
                     <VerticalStackLayout>
                         <Label
                             FontSize="Title"
@@ -24,12 +31,18 @@
                             Padding="8,8,8,0"
                             HorizontalOptions="EndAndExpand"
                             Spacing="8">
-                            <Button Command="{Binding AgregarEntradaCommand}" Text="Agregar" />
                             <Button Command="{Binding VerEntradasCommand}" Text="Ver" />
+                            <Button Command="{Binding AgregarEntradaCommand}" Text="Agregar" />
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
-                </Frame>
-                <Frame>
+                </Border>
+                <Border
+                    Padding="12"
+                    Stroke="gray"
+                    StrokeThickness="1">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
                     <VerticalStackLayout Spacing="8">
                         <Label
                             FontSize="Title"
@@ -64,14 +77,36 @@
                         </Label>
                         <HorizontalStackLayout
                             Padding="8,8,8,0"
-                            HorizontalOptions="Fill"
+                            HorizontalOptions="EndAndExpand"
                             Spacing="8">
-                            <Button Command="{Binding}" Text="Ver resumen" />
-                            <Button Command="{Binding VerVentasCommand}" Text="Ver" />
-                            <Button Command="{Binding AgregarVentaCommand}" Text="Agregar" />
+                            <Button Text="Ver">
+                                <FlyoutBase.ContextFlyout>
+                                    <MenuFlyout>
+                                        <MenuFlyoutItem Command="{Binding VerVentasCommand}" Text="Detalles" />
+                                        <MenuFlyoutItem Text="Resumen" />
+                                    </MenuFlyout>
+                                </FlyoutBase.ContextFlyout>
+                            </Button>
+                            <Button Text="Agregar">
+                                <FlyoutBase.ContextFlyout>
+                                    <MenuFlyout>
+                                        <MenuFlyoutItem Command="{Binding AgregarVentaCommand}" Text="Nueva venta" />
+                                        <MenuFlyoutItem Text="Precio de venta" />
+                                    </MenuFlyout>
+                                </FlyoutBase.ContextFlyout>
+                            </Button>
+                            <tk:Expander x:Name="ExpAgregarVenta">
+                                <tk:Expander.Header>
+                                    <Button BackgroundColor="{x:Binding Source={x:Reference ExpAgregarVenta}, Path=IsExpanded, Converter={StaticResource BoolToColor}}" Text="Agregar" />
+                                </tk:Expander.Header>
+                                <VerticalStackLayout>
+                                    <Button Command="{Binding AgregarVentaCommand}" Text="Nueva venta" />
+                                    <Button Text="Precio de venta" />
+                                </VerticalStackLayout>
+                            </tk:Expander>
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
-                </Frame>
+                </Border>
             </VerticalStackLayout>
         </ScrollView>
 

@@ -67,7 +67,7 @@
                 SelectedItem="{Binding SelectedVenta}"
                 SelectionMode="Single">
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="modelo:Venta">
+                    <DataTemplate x:DataType="modelo:VentaView">
                         <ViewCell>
                             <VerticalStackLayout Padding="16" Spacing="8">
                                 <Label
@@ -75,19 +75,8 @@
                                     FontAttributes="Bold"
                                     Text="{Binding Fecha, StringFormat='{0:d}'}" />
                                 <HorizontalStackLayout>
-                                    <Label Grid.Column="0" Text="{Binding Producto}" />
-                                    <Label
-                                        x:Name="LabFactura"
-                                        IsVisible="{Binding NoFactura, Mode=OneWay, Converter={tk:IsStringNotNullOrEmptyConverter}}"
-                                        Text="{Binding NoFactura, Mode=OneWay, StringFormat='No.Factura: {0}'}" />
-                                </HorizontalStackLayout>
-                                <HorizontalStackLayout>
-                                    <Label FontSize="Body" Text="{Binding Cantidad, Mode=OneWay}" />
-                                    <Label FontSize="Body" Text="{Binding Precio, Mode=OneWay}" />
-                                    <Label
-                                        FontSize="Body"
-                                        IsVisible="{Binding Source={x:Reference LabFactura}, Path=IsVisible}"
-                                        Text="{Binding Cliente, Mode=OneWay}" />
+                                    <Label Grid.Column="0" Text="{Binding Productos.Count, Mode=OneWay}" />
+                                    <Label Text="{Binding Productos, Mode=OneWay, Converter={StaticResource ProductosVentaTotal}}" />
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
                         </ViewCell>

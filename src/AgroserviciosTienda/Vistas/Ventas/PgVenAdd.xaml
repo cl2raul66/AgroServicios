@@ -7,7 +7,7 @@
     xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos.Ventas"
     Title="{Binding Titulo, Mode=OneWay}"
-    x:DataType="vm:PgVenAddEditVistaModelo">
+    x:DataType="vm:PgVenAddVistaModelo">
 
     <Grid Padding="16" RowDefinitions="auto,*,auto">
         <Grid
@@ -40,7 +40,7 @@
                     SelectedItem="{Binding SelectedProducto}"
                     SelectionMode="Single">
                     <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="modelo:Producto">
+                        <DataTemplate x:DataType="modelo:ProductoVenta">
                             <ViewCell>
                                 <HorizontalStackLayout Padding="16" Spacing="8">
                                     <Label Text="{Binding Nombre, StringFormat='Producto: {0}'}" />

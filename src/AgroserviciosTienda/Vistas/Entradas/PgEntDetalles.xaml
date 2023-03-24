@@ -43,14 +43,15 @@
         <Grid Grid.Row="1" Margin="16">
             <tk:Expander>
                 <tk:Expander.Header>
-                    <Label
-                        Padding="16"
-                        BackgroundColor="AliceBlue"
-                        FontFamily="MaterialDesignIcons"
-                        FontSize="24"
-                        HorizontalOptions="Fill"
-                        HorizontalTextAlignment="Center"
-                        Text="{StaticResource IconFilter}" />
+                    <Frame Padding="12" BackgroundColor="{StaticResource Primary}">
+                        <Label
+                            FontFamily="MaterialDesignIcons"
+                            FontSize="24"
+                            HorizontalOptions="Fill"
+                            HorizontalTextAlignment="Center"
+                            Text="{StaticResource IconFilter}"
+                            TextColor="{StaticResource White}" />
+                    </Frame>
                 </tk:Expander.Header>
                 <tk:Expander.Content>
                     <VerticalStackLayout>
@@ -71,8 +72,8 @@
                                 <Label
                                     FontAttributes="Bold"
                                     FontSize="Medium"
-                                    Text="{Binding Texto}" />
-                                <Label FontSize="Body" Text="{Binding Detalle}" />
+                                    Text="{Binding Producto.Nombre}" />
+                                <Label FontSize="Body" Text="{Binding Producto, Converter={StaticResource ProductosVentaTotal}}" />
                             </VerticalStackLayout>
                         </ViewCell>
                     </DataTemplate>

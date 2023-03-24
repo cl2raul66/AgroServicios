@@ -3,6 +3,7 @@
     x:Class="AgroserviciosTienda.App"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:cvt="clr-namespace:AgroserviciosTienda.Utiles.Convertidores"
     xmlns:local="clr-namespace:AgroserviciosTienda">
     <Application.Resources>
         <ResourceDictionary>
@@ -12,6 +13,8 @@
                 <ResourceDictionary Source="Resources/Styles/MaterialDesignGlyph.xaml" />
                 <ResourceDictionary Source="Resources/Styles/MaterialDesignFontImageSource.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <cvt:ProductosVentaTotalConverter x:Key="ProductosVentaTotal" />
+            <cvt:BoolToColorConverter x:Key="BoolToColor" />
             <FontImageSource
                 x:Key="AgregarIcon"
                 FontFamily="MaterialDesignIcons"
