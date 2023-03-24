@@ -80,7 +80,7 @@ public partial class PgEntAddEditVistaModelo : ObservableValidator
             return;
         }
 
-        var newProducto = new ProductoEntrada(productoNombre, (int)cantidad, (decimal)precio);
+        var newProducto = new Producto(productoNombre, (int)cantidad, (decimal)precio);
         EntradaView newEntrada = string.IsNullOrEmpty(noFactura) 
             ? new EntradaView() { Fecha = fecha, Producto = newProducto } 
             : new EntradaView() { Fecha = fecha, Producto = newProducto, NoFactura = noFactura, Proveedor = proveedor, CostoFlete = (decimal)costoFlete, CostoCarga = (decimal)costoCarga };

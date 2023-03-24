@@ -14,7 +14,7 @@ public partial class PgVenAddVistaModelo : ObservableValidator
 {
     public PgVenAddVistaModelo()
     {
-        WeakReferenceMessenger.Default.Register<PgVenAddVistaModelo, ProductoVenta>(this, (r, m) =>
+        WeakReferenceMessenger.Default.Register<PgVenAddVistaModelo, Producto>(this, (r, m) =>
         {
             if (m is not null)
             {
@@ -76,10 +76,10 @@ public partial class PgVenAddVistaModelo : ObservableValidator
     [ObservableProperty]
     [Required]
     [MinLength(1)]
-    ObservableCollection<ProductoVenta> productos = new();
+    ObservableCollection<Producto> productos = new();
 
     [ObservableProperty]
-    ProductoVenta selectedProducto;
+    Producto selectedProducto;
 
     [RelayCommand]
     async Task AgregarProducto()

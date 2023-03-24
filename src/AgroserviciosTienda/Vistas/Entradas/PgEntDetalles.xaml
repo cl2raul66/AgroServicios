@@ -9,7 +9,33 @@
     Title="Entradas"
     x:DataType="vm:PgEntDetallesVistaModelo">
 
-    <Grid RowDefinitions="auto,auto,*,auto">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding AgregarCommand}"
+            IconImageSource="{StaticResource IcoFontPlus}"
+            Text="Agregar"
+            ToolTipProperties.Text="Agregar entrada" />
+    </ContentPage.ToolbarItems>
+
+    <ListView
+        ItemsSource="{Binding Entradas, Mode=OneWay}"
+        SelectedItem="{Binding SelectedEntrada}"
+        SelectionMode="Single">
+        <ListView.ItemTemplate>
+            <DataTemplate x:DataType="modelo:EntradaView">
+                <ViewCell>
+                    <VerticalStackLayout Padding="16" Spacing="8">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            Text="{Binding Producto.Nombre}" />
+                        <Label FontSize="Body" Text="{Binding Producto, Converter={StaticResource ProductosVentaTotal}}" />
+                    </VerticalStackLayout>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+    <!--<Grid RowDefinitions="auto,auto,*,auto">
         <Grid
             Grid.Row="0"
             Padding="16"
@@ -91,6 +117,6 @@
                     TextColor="{StaticResource White}" />
             </HorizontalStackLayout>
         </Grid>
-    </Grid>
+    </Grid>-->
 
 </ContentPage>

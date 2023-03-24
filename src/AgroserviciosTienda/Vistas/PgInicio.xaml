@@ -15,29 +15,27 @@
                 Spacing="24"
                 VerticalOptions="Center">
                 <Border
-                    Padding="12"
+                    Padding="16"
                     Stroke="gray"
                     StrokeThickness="1">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="8" />
                     </Border.StrokeShape>
-                    <VerticalStackLayout>
+                    <VerticalStackLayout Spacing="8">
                         <Label
                             FontSize="Title"
                             LineBreakMode="NoWrap"
                             Text="Entrada de Productos" />
                         <Label Text="Tipos de productos: 0" />
-                        <HorizontalStackLayout
-                            Padding="8,8,8,0"
-                            HorizontalOptions="EndAndExpand"
-                            Spacing="8">
-                            <Button Command="{Binding VerEntradasCommand}" Text="Ver" />
-                            <Button Command="{Binding AgregarEntradaCommand}" Text="Agregar" />
-                        </HorizontalStackLayout>
+                        <Button
+                            Margin="0,8,0,0"
+                            Command="{Binding VerEntradasCommand}"
+                            HorizontalOptions="End"
+                            Text="Detalles" />
                     </VerticalStackLayout>
                 </Border>
                 <Border
-                    Padding="12"
+                    Padding="16"
                     Stroke="gray"
                     StrokeThickness="1">
                     <Border.StrokeShape>
@@ -75,36 +73,11 @@
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-                        <HorizontalStackLayout
-                            Padding="8,8,8,0"
-                            HorizontalOptions="EndAndExpand"
-                            Spacing="8">
-                            <Button Text="Ver">
-                                <FlyoutBase.ContextFlyout>
-                                    <MenuFlyout>
-                                        <MenuFlyoutItem Command="{Binding VerVentasCommand}" Text="Detalles" />
-                                        <MenuFlyoutItem Text="Resumen" />
-                                    </MenuFlyout>
-                                </FlyoutBase.ContextFlyout>
-                            </Button>
-                            <Button Text="Agregar">
-                                <FlyoutBase.ContextFlyout>
-                                    <MenuFlyout>
-                                        <MenuFlyoutItem Command="{Binding AgregarVentaCommand}" Text="Nueva venta" />
-                                        <MenuFlyoutItem Text="Precio de venta" />
-                                    </MenuFlyout>
-                                </FlyoutBase.ContextFlyout>
-                            </Button>
-                            <tk:Expander x:Name="ExpAgregarVenta">
-                                <tk:Expander.Header>
-                                    <Button BackgroundColor="{x:Binding Source={x:Reference ExpAgregarVenta}, Path=IsExpanded, Converter={StaticResource BoolToColor}}" Text="Agregar" />
-                                </tk:Expander.Header>
-                                <VerticalStackLayout>
-                                    <Button Command="{Binding AgregarVentaCommand}" Text="Nueva venta" />
-                                    <Button Text="Precio de venta" />
-                                </VerticalStackLayout>
-                            </tk:Expander>
-                        </HorizontalStackLayout>
+                        <Button
+                            Margin="0,8,0,0"
+                            Command="{Binding VerVentasCommand}"
+                            HorizontalOptions="End"
+                            Text="Detalles" />
                     </VerticalStackLayout>
                 </Border>
             </VerticalStackLayout>
