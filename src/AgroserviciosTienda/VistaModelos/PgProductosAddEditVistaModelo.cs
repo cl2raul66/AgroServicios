@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace AgroserviciosTienda.VistaModelos;
@@ -9,6 +10,20 @@ namespace AgroserviciosTienda.VistaModelos;
 [QueryProperty(nameof(CurrentProducto), "producto")]
 public partial class PgProductosAddEditVistaModelo : ObservableValidator
 {
+    protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+    {
+        base.OnPropertyChanged(e);
+        if (e.PropertyName == nameof(CurrentProducto))
+        {
+            if (currentProducto is not null)
+            {
+                ProductoNombre = currentProducto.Nombre;
+                Cantidad = currentProducto.Cantidad;
+                Precio = currentProducto.Precio;
+            }
+        }
+    }
+
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Titulo))]
     Producto currentProducto;
@@ -23,12 +38,12 @@ public partial class PgProductosAddEditVistaModelo : ObservableValidator
     [ObservableProperty]
     [Required]
     [Range(1, 1000)]
-    double cantidad;
+    int cantidad;
 
     [ObservableProperty]
     [Required]
     [Range(1, 19999.99)]
-    double precio;
+    decimal precio;
 
     [ObservableProperty]
     bool visibleError;

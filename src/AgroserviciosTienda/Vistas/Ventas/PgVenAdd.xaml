@@ -40,7 +40,7 @@
                     SelectedItem="{Binding SelectedProducto}"
                     SelectionMode="Single">
                     <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="modelo:ProductoVenta">
+                        <DataTemplate x:DataType="modelo:Producto">
                             <ViewCell>
                                 <HorizontalStackLayout Padding="16" Spacing="8">
                                     <Label Text="{Binding Nombre, StringFormat='Producto: {0}'}" />

@@ -1,7 +1,9 @@
 ﻿using AgroserviciosTienda.Modelos;
+using AgroserviciosTienda.Vistas;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -10,6 +12,25 @@ namespace AgroserviciosTienda.VistaModelos.Entradas;
 [QueryProperty(nameof(CurrentEntrada), "entrada")]
 public partial class PgEntAddEditVistaModelo : ObservableValidator
 {
+    public PgEntAddEditVistaModelo()
+    {
+        WeakReferenceMessenger.Default.Register<PgEntAddEditVistaModelo, Producto>(this, (r, m) =>
+        {
+            if (m is not null)
+            {
+                var idx = productos.IndexOf(productos.FirstOrDefault(x => x.Nombre == m.Nombre));
+                if (idx > -1)
+                {
+                    Productos[idx] = m;
+                }
+                else
+                {
+                    Productos.Insert(0, m);
+                }
+            }
+        });
+    }
+
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Titulo))]
     EntradaView currentEntrada;
@@ -20,31 +41,16 @@ public partial class PgEntAddEditVistaModelo : ObservableValidator
     DateTime fecha = DateTime.Now;
 
     [ObservableProperty]
-    [Required]
-    [MinLength(3)]
-    string productoNombre;
-
-    [ObservableProperty]
-    [Required]
-    [Range(1, 1000)]
-    double cantidad = 0;
-
-    [ObservableProperty]
-    [Required]
-    [Range(1, 19999.99)]
-    double precio = 0;
-
-    [ObservableProperty]
     string noFactura;
 
     [ObservableProperty]
     string proveedor;
 
     [ObservableProperty]
-    double costoFlete = 0;
+    decimal costoFlete = 0;
 
     [ObservableProperty]
-    double costoCarga = 0;
+    decimal costoCarga = 0;
 
     [ObservableProperty]
     bool visibleError;
@@ -57,13 +63,11 @@ public partial class PgEntAddEditVistaModelo : ObservableValidator
             if (currentEntrada is not null)
             {
                 Fecha = currentEntrada.Fecha;
-                ProductoNombre = currentEntrada.Producto.Nombre;
-                Cantidad = currentEntrada.Producto.Cantidad;
-                Precio = (double)currentEntrada.Producto.Precio;
+                Productos = new(currentEntrada.Productos);
                 NoFactura = currentEntrada.NoFactura;
                 Proveedor = currentEntrada.Proveedor;
-                CostoFlete = (double)currentEntrada.CostoFlete;
-                CostoCarga = (double)currentEntrada.CostoCarga;
+                CostoFlete = currentEntrada.CostoFlete;
+                CostoCarga = currentEntrada.CostoCarga;
             }
         }
     }
@@ -80,10 +84,9 @@ public partial class PgEntAddEditVistaModelo : ObservableValidator
             return;
         }
 
-        var newProducto = new Producto(productoNombre, (int)cantidad, (decimal)precio);
-        EntradaView newEntrada = string.IsNullOrEmpty(noFactura) 
-            ? new EntradaView() { Fecha = fecha, Producto = newProducto } 
-            : new EntradaView() { Fecha = fecha, Producto = newProducto, NoFactura = noFactura, Proveedor = proveedor, CostoFlete = (decimal)costoFlete, CostoCarga = (decimal)costoCarga };
+        EntradaView newEntrada = string.IsNullOrEmpty(noFactura)
+            ? new EntradaView(fecha, productos.ToList())
+            : new EntradaView(fecha, productos.ToList(),noFactura,proveedor,costoFlete,costoCarga);
 
         WeakReferenceMessenger.Default.Send<EntradaView>(newEntrada);
         await Cancelar();
@@ -94,4 +97,32 @@ public partial class PgEntAddEditVistaModelo : ObservableValidator
     {
         await Shell.Current.GoToAsync("..");
     }
+
+    #region productos
+    [ObservableProperty]
+    [Required]
+    [MinLength(1)]
+    ObservableCollection<Producto> productos = new();
+
+    [ObservableProperty]
+    Producto selectedProducto;
+
+    [RelayCommand]
+    async Task AgregarProducto()
+    {
+        await Shell.Current.GoToAsync($"{nameof(PgProductosAddEdit)}");
+    }
+
+    [RelayCommand]
+    async Task ModificarProducto()
+    {
+        await Shell.Current.GoToAsync($"{nameof(PgProductosAddEdit)}", new Dictionary<string, object>() { { "producto", selectedProducto } });
+    }
+
+    [RelayCommand]
+    private void EliminarProducto()
+    {
+        productos.Remove(selectedProducto);
+    }
+    #endregion
 }

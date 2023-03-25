@@ -19,41 +19,24 @@
                         Text="{Binding ProductoNombre}" />
                 </Grid>
                 <Grid
-                    ColumnDefinitions="*,auto"
                     ColumnSpacing="8"
                     RowDefinitions="auto,auto"
                     RowSpacing="8">
                     <Label Grid.Row="0" Text="Cantidad:" />
                     <Entry
                         Grid.Row="1"
-                        Grid.Column="0"
-                        Text="{Binding Cantidad}" />
-                    <Stepper
-                        x:Name="StpCantidad"
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Increment="1"
-                        Maximum="1000"
-                        Minimum="0"
-                        Value="{Binding Cantidad}" />
+                        Keyboard="Numeric"
+                        Text="{Binding Cantidad, Mode=TwoWay}" />
                 </Grid>
                 <Grid
-                    ColumnDefinitions="*,auto"
                     ColumnSpacing="8"
                     RowDefinitions="auto,auto"
                     RowSpacing="8">
                     <Label Grid.Row="0" Text="Precio:" />
                     <Entry
                         Grid.Row="1"
-                        Grid.Column="0"
-                        Text="{Binding Precio, Mode=TwoWay, StringFormat='{0:F2}'}" />
-                    <Stepper
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Increment="10.00"
-                        Maximum="19999.99"
-                        Minimum="0.00"
-                        Value="{Binding Precio}" />
+                        Keyboard="Numeric"
+                        Text="{Binding Precio, Mode=TwoWay}" />
                 </Grid>
                 <Label
                     x:Name="LbVisibleError"

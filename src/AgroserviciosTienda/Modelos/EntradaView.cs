@@ -3,22 +3,22 @@
 public class EntradaView
 {
     public DateTime Fecha { get; set; }
-    public Producto Producto { get; set; }
+    public List<Producto> Productos { get; set; }
     public string NoFactura { get; set; }
     public string Proveedor { get; set; }
     public decimal CostoFlete { get; set; }
     public decimal CostoCarga { get; set; }
 
     public EntradaView() { }
-    public EntradaView(DateTime fecha, Producto producto)
+    public EntradaView(DateTime fecha, List<Producto> productos)
     {
         Fecha = fecha;
-        Producto = producto;
+        Productos = productos;
     }
-    public EntradaView(DateTime fecha, Producto producto, string nofactura, string proveedor, decimal costoflete, decimal costocarga)
+    public EntradaView(DateTime fecha, List<Producto> productos, string nofactura, string proveedor, decimal costoflete, decimal costocarga)
     {
         Fecha = fecha;
-        Producto = producto;
+        Productos = productos;
         NoFactura = nofactura;
         Proveedor = proveedor;
         CostoFlete = costoflete;

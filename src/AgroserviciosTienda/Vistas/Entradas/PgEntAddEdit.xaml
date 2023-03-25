@@ -6,214 +6,91 @@
     xmlns:modelo="clr-namespace:AgroserviciosTienda.Modelos"
     xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos.Entradas"
-    Title="EntAddEdit"
+    Title="Nueva - Entrada"
     x:DataType="vm:PgEntAddEditVistaModelo">
 
-    <Grid Padding="16" RowDefinitions="auto,*,auto">
-        <Grid
-            Grid.Row="0"
-            RowDefinitions="auto,auto"
-            RowSpacing="8">
-            <Label Grid.Row="0" Text="Fecha:" />
-            <DatePicker Grid.Row="1" Date="{Binding Fecha}" />
-        </Grid>
-        <ScrollView Grid.Row="1" Padding="16">
-            <Grid RowDefinitions="auto,*">
-                <HorizontalStackLayout
-                    Grid.Row="0"
-                    HorizontalOptions="Fill"
-                    Spacing="8">
-                    <Label Text="Productos:" VerticalOptions="Center" />
-                    <Button Command="{Binding AgregarProductoCommand}" Text="Agregar" />
-                    <Button
-                        Command="{Binding ModificarProductoCommand}"
-                        IsEnabled="{Binding SelectedProducto, Mode=OneWay, Converter={tk:IsNotNullConverter}}"
-                        Text="Modificar" />
-                    <Button
-                        Command="{Binding EliminarProductoCommand}"
-                        IsEnabled="{Binding SelectedProducto, Mode=OneWay, Converter={tk:IsNotNullConverter}}"
-                        Text="Eliminar" />
-                </HorizontalStackLayout>
-                <ListView
-                    Grid.Row="1"
-                    ItemsSource="{Binding Productos, Mode=OneWay}"
-                    SelectedItem="{Binding SelectedProducto}"
-                    SelectionMode="Single">
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="modelo:Producto">
-                            <ViewCell>
-                                <HorizontalStackLayout Padding="16" Spacing="8">
-                                    <Label Text="{Binding Nombre, StringFormat='Producto: {0}'}" />
-                                    <Label Text="{Binding Cantidad, StringFormat='Cantidad: {0}'}" />
-                                    <Label Text="{Binding Precio, StringFormat='Precio: {0}'}" />
-                                </HorizontalStackLayout>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>
-        </ScrollView>
-        <Grid
-            Grid.Row="2"
-            Margin="0,8,0,0"
-            ColumnDefinitions="*,auto,auto"
-            ColumnSpacing="8"
-            HorizontalOptions="Fill">
-            <Label
-                Grid.Column="0"
-                FontSize="Micro"
-                IsVisible="{Binding VisibleError, Mode=OneWay}"
-                TextColor="Red"
-                VerticalOptions="Center">
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span FontFamily="MaterialDesignIcons" Text="{StaticResource IconAlert}" />
-                        <Span Text=" Datos incorrectos." />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
-            <Button
-                Grid.Column="1"
-                Command="{Binding CancelarCommand}"
-                Text="Cancelar" />
-            <Button
-                Grid.Column="2"
-                Command="{Binding GuardarCommand}"
-                Text="Guardar" />
-        </Grid>
-    </Grid>
-    <!--<ScrollView Padding="16">
-        <Frame HorizontalOptions="Center" VerticalOptions="Center">
-            <VerticalStackLayout Spacing="16" WidthRequest="400">
-                <Label
-                    FontAttributes="Bold"
-                    FontSize="Subtitle"
-                    Text="{Binding Titulo, Mode=OneWay}" />
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding GuardarCommand}"
+            IconImageSource="{StaticResource IcoFontContentSave}"
+            Text="Guardar" />
+    </ContentPage.ToolbarItems>
+    <ScrollView>
+        <Border
+            Margin="16"
+            Padding="16"
+            HorizontalOptions="Center"
+            Stroke="Gray"
+            StrokeThickness="1"
+            WidthRequest="400">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="8" />
+            </Border.StrokeShape>
+
+            <VerticalStackLayout Grid.Row="0" Spacing="8">
                 <Grid RowDefinitions="auto,auto" RowSpacing="8">
                     <Label Grid.Row="0" Text="Fecha:" />
                     <DatePicker Grid.Row="1" Date="{Binding Fecha}" />
                 </Grid>
                 <Grid RowDefinitions="auto,auto" RowSpacing="8">
-                    <Label Grid.Row="0" Text="Producto:" />
-                    <Entry
-                        Grid.Row="1"
-                        Placeholder="Escriba aquí"
-                        Text="{Binding ProductoNombre}" />
-                </Grid>
-                <Grid
-                    ColumnDefinitions="*,auto"
-                    ColumnSpacing="8"
-                    RowDefinitions="auto,auto"
-                    RowSpacing="8">
-                    <Label Grid.Row="0" Text="Cantidad:" />
-                    <Entry
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        Text="{Binding Cantidad}" />
-                    <Stepper
-                        x:Name="StpCantidad"
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Increment="1"
-                        Maximum="1000"
-                        Minimum="0"
-                        Value="{Binding Cantidad}" />
-                </Grid>
-                <Grid
-                    ColumnDefinitions="*,auto"
-                    ColumnSpacing="8"
-                    RowDefinitions="auto,auto"
-                    RowSpacing="8">
-                    <Label Grid.Row="0" Text="Precio:" />
-                    <Entry
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        Text="{Binding Precio, StringFormat='{0:F2}'}" />
-                    <Stepper
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Increment="10.00"
-                        Maximum="19999.99"
-                        Minimum="0.00"
-                        Value="{Binding Precio}" />
-                </Grid>
-                <Label FontSize="Subtitle" Text="Opcionales:" />
-                <Grid RowDefinitions="auto,auto" RowSpacing="8">
                     <Label Grid.Row="0" Text="No. Factura:" />
-                    <Entry
-                        Grid.Row="1"
-                        Placeholder="Esciba aqui"
-                        Text="{Binding NoFactura}" />
+                    <Entry Grid.Row="1" Text="{Binding NoFactura}" />
                 </Grid>
                 <Grid RowDefinitions="auto,auto" RowSpacing="8">
                     <Label Grid.Row="0" Text="Proveedor:" />
+                    <Entry Grid.Row="1" Text="{Binding Proveedor}" />
+                </Grid>
+                <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                    <Label Grid.Row="0" Text="Costo flete:" />
                     <Entry
                         Grid.Row="1"
-                        Placeholder="Esciba aqui"
-                        Text="{Binding Proveedor}" />
+                        Keyboard="Numeric"
+                        Text="{Binding CostoFlete}" />
                 </Grid>
-                <Grid
-                    ColumnDefinitions="*,auto"
-                    ColumnSpacing="8"
-                    RowDefinitions="auto,auto"
-                    RowSpacing="8">
-                    <Label Grid.Row="0" Text="Costo de flete:" />
+                <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                    <Label Grid.Row="0" Text="Costo carga:" />
                     <Entry
                         Grid.Row="1"
-                        Grid.Column="0"
-                        Text="{Binding CostoFlete, StringFormat='{0:F2}'}" />
-                    <Stepper
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Increment="0.5"
-                        Maximum="4999.99"
-                        Minimum="0.00"
-                        Value="{Binding CostoFlete}" />
+                        Keyboard="Numeric"
+                        Text="{Binding CostoCarga}" />
                 </Grid>
-                <Grid
-                    ColumnDefinitions="*,auto"
-                    ColumnSpacing="8"
-                    RowDefinitions="auto,auto"
-                    RowSpacing="8">
-                    <Label Grid.Row="0" Text="Costo de carga:" />
-                    <Entry
+                <Grid RowDefinitions="auto,*">
+                    <HorizontalStackLayout
+                        Grid.Row="0"
+                        Margin="0,8"
+                        HorizontalOptions="Fill"
+                        Spacing="8">
+                        <Label Text="Productos:" VerticalOptions="Center" />
+                        <Button Command="{Binding AgregarProductoCommand}" Text="Agregar" />
+                        <Button
+                            Command="{Binding ModificarProductoCommand}"
+                            IsEnabled="{Binding SelectedProducto, Mode=OneWay, Converter={tk:IsNotNullConverter}}"
+                            Text="Modificar" />
+                        <Button
+                            Command="{Binding EliminarProductoCommand}"
+                            IsEnabled="{Binding SelectedProducto, Mode=OneWay, Converter={tk:IsNotNullConverter}}"
+                            Text="Eliminar" />
+                    </HorizontalStackLayout>
+                    <ListView
                         Grid.Row="1"
-                        Grid.Column="0"
-                        Text="{Binding CostoCarga, StringFormat='{0:F2}'}" />
-                    <Stepper
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Increment="0.5"
-                        Maximum="4999.99"
-                        Minimum="0.00"
-                        Value="{Binding CostoCarga}" />
-                </Grid>
-                <Grid ColumnDefinitions="*,auto,auto" ColumnSpacing="8">
-                    <Label
-                        Grid.Column="0"
-                        FontSize="Micro"
-                        IsVisible="{Binding VisibleError, Mode=OneWay}"
-                        TextColor="Red"
-                        VerticalOptions="Center">
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span FontFamily="MaterialDesignIcons" Text="{StaticResource IconAlert}" />
-                                <Span Text=" Datos incorrectos." />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
-                    <Button
-                        Grid.Column="1"
-                        Command="{Binding CancelarCommand}"
-                        Text="Cancelar" />
-                    <Button
-                        Grid.Column="2"
-                        Command="{Binding GuardarCommand}"
-                        IsEnabled="False"
-                        Text="Guardar" />
+                        ItemsSource="{Binding Productos, Mode=OneWay}"
+                        SelectedItem="{Binding SelectedProducto}"
+                        SelectionMode="Single">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="modelo:Producto">
+                                <ViewCell>
+                                    <HorizontalStackLayout Padding="16" Spacing="8">
+                                        <Label Text="{Binding Nombre, StringFormat='Producto: {0}'}" />
+                                        <Label Text="{Binding Cantidad, StringFormat='Cantidad: {0}'}" />
+                                        <Label Text="{Binding Precio, StringFormat='Precio: {0}'}" />
+                                    </HorizontalStackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </Grid>
             </VerticalStackLayout>
-        </Frame>
-    </ScrollView>-->
+        </Border>
+    </ScrollView>
 
 </ContentPage>
