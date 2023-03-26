@@ -7,14 +7,14 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace AgroserviciosTienda.VistaModelos.Ventas;
+namespace AgroserviciosTienda.VistaModelos;
 
 [QueryProperty(nameof(CurrentVenta), "venta")]
-public partial class PgVenAddVistaModelo : ObservableValidator
+public partial class PgAgregarVentaVistaModelo : ObservableValidator
 {
-    public PgVenAddVistaModelo()
+    public PgAgregarVentaVistaModelo()
     {
-        WeakReferenceMessenger.Default.Register<PgVenAddVistaModelo, Producto>(this, (r, m) =>
+        WeakReferenceMessenger.Default.Register<PgAgregarVentaVistaModelo, Producto>(this, (r, m) =>
         {
             if (m is not null)
             {

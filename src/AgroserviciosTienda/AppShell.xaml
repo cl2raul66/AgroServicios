@@ -6,9 +6,28 @@
     xmlns:v="clr-namespace:AgroserviciosTienda.Vistas"
     Shell.FlyoutBehavior="Disabled">
 
-    <ShellContent
-        Title="Principal"
-        ContentTemplate="{DataTemplate v:PgInicio}"
-        Route="PgInicio" />
+    <TabBar>
+        <Tab Title="Inicio">
+            <ShellContent ContentTemplate="{DataTemplate v:PgInicio}" Route="PgInicio" />
+        </Tab>
+        <Tab Title="Venta">
+            <ShellContent
+                x:Name="PgVenta"
+                ContentTemplate="{DataTemplate v:PgVenta}"
+                Route="PgVenta" />
+        </Tab>
+        <Tab Title="Productos">
+            <ShellContent
+                x:Name="PgInventario"
+                Title="Inventario"
+                ContentTemplate="{DataTemplate v:PgInventario}"
+                Route="PgInventario" />
+            <ShellContent
+                x:Name="PgEntrada"
+                Title="Entradas"
+                ContentTemplate="{DataTemplate v:PgEntrada}"
+                Route="PgEntrada" />
+        </Tab>
+    </TabBar>
 
 </Shell>

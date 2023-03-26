@@ -1,13 +1,6 @@
-﻿using AgroserviciosTienda.Modelos;
-using AgroserviciosTienda.Vistas.Entradas;
-using AgroserviciosTienda.Vistas.Ventas;
+﻿using AgroserviciosTienda.Vistas;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AgroserviciosTienda.VistaModelos;
 
@@ -16,24 +9,24 @@ public partial class PgInicioVistaModelo : ObservableObject
     [RelayCommand]
     private async Task VerEntradas()
     {
-        await Shell.Current.GoToAsync(nameof(PgEntDetalles));
+        await Shell.Current.GoToAsync($"//{nameof(PgEntrada)}");
     }
 
     [RelayCommand]
     private async Task AgregarEntrada()
     {
-        await Shell.Current.GoToAsync($"{nameof(PgEntDetalles)}/{nameof(PgEntAddEdit)}");
-    }
-
-    [RelayCommand]
-    private async Task VerVentas()
-    {
-        await Shell.Current.GoToAsync(nameof(PgVenDetalles));
+        await Shell.Current.GoToAsync($"//{nameof(PgEntrada)}/{nameof(PgAgregarEntrada)}");
     }
 
     [RelayCommand]
     private async Task AgregarVenta()
     {
-        await Shell.Current.GoToAsync($"{nameof(PgVenDetalles)}/{nameof(PgVenAdd)}");
+        await Shell.Current.GoToAsync($"//{nameof(PgVenta)}/{nameof(PgAgregarVenta)}");
+    }
+
+    [RelayCommand]
+    private async Task AgregarVentaConFacturacion()
+    {
+        await Shell.Current.GoToAsync($"//{nameof(PgVenta)}/{nameof(PgAgregarVenta)}");
     }
 }

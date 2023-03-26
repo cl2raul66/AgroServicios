@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AgroserviciosTienda.Vistas.PgVenta"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:modelo="clr-namespace:AgroserviciosTienda.Modelos"
+    xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
+    Title="Venta"
+    x:DataType="vm:PgVentaVistaModelo">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding AgregarCommand}"
+            IconImageSource="{StaticResource IcoFontPlus}"
+            Text="Agregar"
+            ToolTipProperties.Text="Agregar venta" />
+    </ContentPage.ToolbarItems>
+
+    <Grid RowDefinitions="*,auto">
+        <ListView
+            ItemsSource="{Binding Ventas, Mode=OneWay}"
+            SelectedItem="{Binding SelectedVenta}"
+            SelectionMode="Single">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="modelo:VentaView">
+                    <ViewCell>
+                        <VerticalStackLayout Padding="16" Spacing="8">
+                            <Label
+                                Grid.Column="0"
+                                FontAttributes="Bold"
+                                Text="{Binding Fecha, StringFormat='{0:d}'}" />
+                            <HorizontalStackLayout>
+                                <Label Grid.Column="0" Text="{Binding Productos.Count, Mode=OneWay}" />
+                                <Label Text="{Binding Productos, Mode=OneWay, Converter={StaticResource ProductosVentaTotal}}" />
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Grid
+            Grid.Row="1"
+            Padding="16"
+            BackgroundColor="{StaticResource Primary}">
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="8">
+                <Label
+                    FontSize="Micro"
+                    Text="by RandA Media Lab, Group"
+                    TextColor="{StaticResource White}" />
+            </HorizontalStackLayout>
+        </Grid>
+    </Grid>
+
+</ContentPage>

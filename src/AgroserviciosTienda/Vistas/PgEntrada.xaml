@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AgroserviciosTienda.Vistas.PgEntrada"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:modelo="clr-namespace:AgroserviciosTienda.Modelos"
+    xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
+    Title="Entrada"
+    x:DataType="vm:PgEntradaVistaModelo">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            IconImageSource="{StaticResource IcoFontPlus}"
+            Text="Agregar"
+            ToolTipProperties.Text="Agregar entrada" />
+    </ContentPage.ToolbarItems>
+
+    <Grid RowDefinitions="*,auto">
+        <ScrollView Grid.Row="0" Padding="16" />
+        <ListView ItemsSource="{Binding Entradas, Mode=OneWay}" SelectionMode="None">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="modelo:EntradaView">
+                    <ViewCell>
+                        <VerticalStackLayout Padding="16" Spacing="8">
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="Medium"
+                                Text="{Binding Fecha, StringFormat='{0:d}'}" />
+                            <HorizontalStackLayout Spacing="8">
+                                <Label FontSize="Body" Text="{Binding Productos.Count, StringFormat='No. Productos: {0}'}" />
+                                <Label FontSize="Body" Text="{Binding Productos, StringFormat='Costo total: {0:N2}', Converter={StaticResource ProductosVentaTotal}}" />
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Grid
+            Grid.Row="1"
+            Padding="16"
+            BackgroundColor="{StaticResource Primary}">
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="8">
+                <Label
+                    FontSize="Micro"
+                    Text="by RandA Media Lab, Group"
+                    TextColor="{StaticResource White}" />
+            </HorizontalStackLayout>
+        </Grid>
+    </Grid>
+
+</ContentPage>

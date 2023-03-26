@@ -65,46 +65,34 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Vistas\Entradas\PgEntAddEdit.xaml.cs">
-	    <DependentUpon>PgEntAddEdit.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Vistas\Ventas\PgVenAdd.xaml.cs">
-	    <DependentUpon>PgVenAdd.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Vistas\Ventas\PgVenDetalles.xaml.cs">
-	    <DependentUpon>PgVenDetalles.xaml</DependentUpon>
-	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
 	  <MauiXaml Update="Resources\Styles\MaterialDesignGlyph.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Resources\Styles\MaterialDesignFontImageSource.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Vistas\Entradas\PgEntAddEdit.xaml">
+	  <MauiXaml Update="Vistas\PgAgregarEntrada.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Vistas\Entradas\PgEntDetalles.xaml">
+	  <MauiXaml Update="Vistas\PgAgregarVenta.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Vistas\PgAjustes.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Vistas\PgEntrada.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Vistas\PgInicio.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Vistas\PgPrincipal.xaml">
+	  <MauiXaml Update="Vistas\PgInventario.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Vistas\PgProductosAddEdit.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Vistas\Ventas\PgVenAdd.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Vistas\Ventas\PgVenDetalles.xaml">
+	  <MauiXaml Update="Vistas\PgVenta.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

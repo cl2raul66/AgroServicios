@@ -1,17 +1,15 @@
 ﻿using AgroserviciosTienda.Modelos;
-using AgroserviciosTienda.Vistas.Entradas;
-using AgroserviciosTienda.Vistas.Ventas;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-namespace AgroserviciosTienda.VistaModelos.Ventas;
+namespace AgroserviciosTienda.VistaModelos;
 
-public partial class PgVenDetallesVistaModelo : ObservableRecipient
+public partial class PgVentaVistaModelo : ObservableRecipient
 {
-    public PgVenDetallesVistaModelo()
+    public PgVentaVistaModelo()
     {
         IsActive = true;
     }
@@ -19,7 +17,7 @@ public partial class PgVenDetallesVistaModelo : ObservableRecipient
     protected override void OnActivated()
     {
         base.OnActivated();
-        WeakReferenceMessenger.Default.Register<PgVenDetallesVistaModelo, VentaView>(this, (r, m) =>
+        WeakReferenceMessenger.Default.Register<PgVentaVistaModelo, VentaView>(this, (r, m) =>
         {
             if (m is not null)
             {

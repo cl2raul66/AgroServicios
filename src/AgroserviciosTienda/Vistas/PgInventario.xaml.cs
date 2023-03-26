@@ -1,8 +1,8 @@
 namespace AgroserviciosTienda.Vistas;
 
-public partial class PgPrincipal : ContentPage
+public partial class PgInventario : ContentPage
 {
-	public PgPrincipal()
+	public PgInventario()
 	{
 		InitializeComponent();
 	}
