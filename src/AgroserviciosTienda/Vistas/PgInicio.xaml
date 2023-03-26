@@ -10,77 +10,125 @@
 
     <Grid RowDefinitions="*,auto">
         <ScrollView Grid.Row="0" Padding="16">
-            <VerticalStackLayout
-                HorizontalOptions="Center"
-                Spacing="24"
-                VerticalOptions="Center">
-                <Border
-                    Padding="16"
-                    Stroke="gray"
-                    StrokeThickness="1">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="8" />
-                    </Border.StrokeShape>
-                    <VerticalStackLayout Spacing="8">
-                        <Label
-                            FontSize="Title"
-                            LineBreakMode="NoWrap"
-                            Text="Entrada de Productos" />
-                        <Label Text="Tipos de productos: 0" />
-                        <Button
-                            Margin="0,8,0,0"
-                            Command="{Binding VerEntradasCommand}"
-                            HorizontalOptions="End"
-                            Text="Detalles" />
-                    </VerticalStackLayout>
-                </Border>
-                <Border
-                    Padding="16"
-                    Stroke="gray"
-                    StrokeThickness="1">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="8" />
-                    </Border.StrokeShape>
-                    <VerticalStackLayout Spacing="8">
-                        <Label
-                            FontSize="Title"
-                            LineBreakMode="NoWrap"
-                            Text="Venta de Productos" />
-                        <Label>
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="Ventas de hoy: 0" />
-                                    <Span Text=" | " />
-                                    <Span Text="Facturación: 0" />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <Label>
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="Ventas en la semana: 0" />
-                                    <Span Text=" | " />
-                                    <Span Text="Facturación: 0" />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <Label>
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="Ventas en el mes: 0" />
-                                    <Span Text=" | " />
-                                    <Span Text="Facturación: 0" />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <Button
-                            Margin="0,8,0,0"
-                            Command="{Binding VerVentasCommand}"
-                            HorizontalOptions="End"
-                            Text="Detalles" />
-                    </VerticalStackLayout>
-                </Border>
-            </VerticalStackLayout>
+            <FlexLayout
+                AlignContent="SpaceAround"
+                AlignItems="Start"
+                JustifyContent="SpaceAround"
+                Wrap="Wrap">
+                <VerticalStackLayout Spacing="24">
+                    <Border
+                        Padding="16"
+                        Stroke="gray"
+                        StrokeThickness="1">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="8" />
+                        </Border.StrokeShape>
+                        <Grid RowDefinitions="auto,auto,auto" RowSpacing="8">
+                            <Label
+                                Grid.Row="0"
+                                FontSize="Title"
+                                LineBreakMode="NoWrap"
+                                Text="Existencia de productos" />
+                            <HorizontalStackLayout Grid.Row="1" Spacing="8">
+                                <Label Text="Semana pasada: 0" />
+                                <Label Text="Mes actual: 0" />
+                            </HorizontalStackLayout>
+                            <Button
+                                Grid.Row="2"
+                                Command="{Binding VerEntradasCommand}"
+                                HorizontalOptions="End"
+                                Text="Detalles" />
+                        </Grid>
+                    </Border>
+                    <Border
+                        Padding="16"
+                        Stroke="gray"
+                        StrokeThickness="1">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="8" />
+                        </Border.StrokeShape>
+                        <Grid RowDefinitions="auto,auto,auto" RowSpacing="8">
+                            <Label
+                                Grid.Row="0"
+                                FontSize="Title"
+                                LineBreakMode="NoWrap"
+                                Text="Entrada de productos" />
+                            <HorizontalStackLayout Grid.Row="1" Spacing="8">
+                                <Label Text="Semana pasada: 0" />
+                                <Label Text="Mes actual: 0" />
+                            </HorizontalStackLayout>
+                            <Button
+                                Grid.Row="2"
+                                Command="{Binding VerEntradasCommand}"
+                                HorizontalOptions="End"
+                                Text="Detalles" />
+                        </Grid>
+                    </Border>
+                    <Border
+                        Padding="16"
+                        Stroke="gray"
+                        StrokeThickness="1">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="8" />
+                        </Border.StrokeShape>
+                        <Grid RowDefinitions="auto,auto,auto" RowSpacing="8">
+                            <Label
+                                Grid.Row="0"
+                                FontSize="Title"
+                                LineBreakMode="NoWrap"
+                                Text="Resumen de ventas" />
+                            <HorizontalStackLayout Grid.Row="1" Spacing="8">
+                                <Label>
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Ayer: 0" />
+                                            <Span Text=" | " />
+                                            <Span Text="Facturación: 0" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label>
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Hoy: 0" />
+                                            <Span Text=" | " />
+                                            <Span Text="Facturación: 0" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label>
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Semana actual: 0" />
+                                            <Span Text=" | " />
+                                            <Span Text="Facturación: 0" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label>
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Mes actual: 0" />
+                                            <Span Text=" | " />
+                                            <Span Text="Facturación: 0" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </HorizontalStackLayout>
+                            <Button
+                                Grid.Row="2"
+                                Command="{Binding VerVentasCommand}"
+                                HorizontalOptions="End"
+                                Text="Detalles" />
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+                <VerticalStackLayout Spacing="24">
+                    <Button Text="Agregar entrada" />
+                    <Button Text="Agregar venta" />
+                    <Button Text="Generar factura" />
+                </VerticalStackLayout>
+            </FlexLayout>
         </ScrollView>
 
         <Grid

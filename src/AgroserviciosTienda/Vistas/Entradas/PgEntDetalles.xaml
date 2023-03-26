@@ -28,8 +28,12 @@
                         <Label
                             FontAttributes="Bold"
                             FontSize="Medium"
-                            Text="{Binding Fecha, StringFormat='{0:f}'}" />
-                        <Label FontSize="Body" Text="{Binding Productos, StringFormat='Costo total: {0:c2}', Converter={StaticResource ProductosVentaTotal}}" />
+                            Text="{Binding Fecha, StringFormat='{0:d}'}" />
+                        <HorizontalStackLayout Spacing="8">
+                            <Label FontSize="Body" Text="{Binding Productos.Count, StringFormat='No. Productos: {0}'}" />
+                            <Label FontSize="Body" Text="{Binding Productos, StringFormat='Costo total: {0:N2}', Converter={StaticResource ProductosVentaTotal}}" />
+                        </HorizontalStackLayout>
+
                     </VerticalStackLayout>
                 </ViewCell>
             </DataTemplate>
