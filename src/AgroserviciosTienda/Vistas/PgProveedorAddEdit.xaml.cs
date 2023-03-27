@@ -1,8 +1,10 @@
+using AgroserviciosTienda.VistaModelos;
+
 namespace AgroserviciosTienda.Vistas;
 
 public partial class PgProveedorAddEdit : ContentPage
 {
-	public PgProveedorAddEdit(PgProveedorAddEditvistamodelo vm)
+	public PgProveedorAddEdit(PgProveedorAddEditVistaModelo vm)
 	{
 		InitializeComponent();
 

@@ -17,98 +17,102 @@
             ToolTipProperties.Text="Agregar productos" />
     </ContentPage.ToolbarItems>-->
 
-    <ScrollView Grid.Row="0" Padding="16">
-        <Border
-            Padding="12"
-            HorizontalOptions="Center"
-            Stroke="Gray"
-            StrokeThickness="1"
-            WidthRequest="400">
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="8" />
-            </Border.StrokeShape>
+    <Grid Padding="16">
+        <ScrollView>
+            <Border
+                Padding="12"
+                HorizontalOptions="Center"
+                Stroke="Gray"
+                StrokeThickness="1"
+                VerticalOptions="Center"
+                WidthRequest="400">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
 
-            <Grid Grid.Row="0">
-                <Grid RowDefinitions="auto,auto" RowSpacing="8">
-                    <Label Grid.Row="0" Text="Fecha:" />
-                    <DatePicker Grid.Row="1" Date="{Binding Fecha}" />
-                </Grid>
-                <tk:Expander x:Name="ExpTieneFactura">
-                    <tk:Expander.Header>
-                        <Grid ColumnDefinitions="auto,*">
-                            <CheckBox Grid.Column="0" IsChecked="{Binding Source={x:Reference ExpTieneFactura}, Path=IsExpanded, Mode=TwoWay}" />
-                            <Label
-                                Grid.Column="1"
-                                Text="Con factura"
-                                VerticalOptions="Center" />
-                        </Grid>
-                    </tk:Expander.Header>
-                    <VerticalStackLayout Spacing="8">
-                        <Grid RowDefinitions="auto,auto" RowSpacing="8">
-                            <Label Grid.Row="0" Text="No. Factura:" />
-                            <Entry Grid.Row="1" Text="{Binding NoFactura}" />
-                        </Grid>
-                        <Grid ColumnDefinitions="*,auto" RowSpacing="8">
-                            <Picker
-                                Title="Proveedor:"
-                                Grid.Column="0"
-                                ItemDisplayBinding="{Binding Nombre}"
-                                ItemsSource="{Binding Proveedores, Mode=OneWay}"
-                                SelectedItem="{Binding SelectedProveedor}" />
-                            <Button
-                                Grid.Column="1"
-                                Command="{Binding AgregarProveedorCommand}"
-                                FontFamily="MaterialDesignIcons"
-                                Text="{StaticResource IconPlus}"
-                                VerticalOptions="End" />
-                        </Grid>
-                        <Grid RowDefinitions="auto,auto" RowSpacing="8">
-                            <Label Grid.Row="0" Text="Costo flete:" />
-                            <Entry
-                                Grid.Row="1"
-                                Keyboard="Numeric"
-                                Placeholder="0.00"
-                                Text="{Binding CostoFlete}" />
-                        </Grid>
-                        <Grid RowDefinitions="auto,auto" RowSpacing="8">
-                            <Label Grid.Row="0" Text="Costo carga:" />
-                            <Entry
-                                Grid.Row="1"
-                                Keyboard="Numeric"
-                                Placeholder="0.00"
-                                Text="{Binding CostoCarga}" />
-                        </Grid>
-                    </VerticalStackLayout>
-                </tk:Expander>
-                <Grid ColumnDefinitions="*,auto">
-                    <Label
-                        Grid.Column="0"
-                        Text="Productos:"
-                        VerticalOptions="Center" />
-                    <Button
-                        Grid.Column="1"
-                        Command="{Binding AgregarProductoCommand}"
-                        FontFamily="MaterialDesignIcons"
-                        Text="{StaticResource IconPlus}" />
-                </Grid>
-                <ListView
-                    ItemsSource="{Binding Productos, Mode=OneWay}"
-                    SelectedItem="{Binding SelectedProducto}"
-                    SelectionMode="Single">
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="modelo:Producto">
-                            <ViewCell>
-                                <HorizontalStackLayout Padding="16" Spacing="8">
-                                    <Label Text="{Binding Nombre, StringFormat='Producto: {0}'}" />
-                                    <Label Text="{Binding Cantidad, StringFormat='Cantidad: {0}'}" />
-                                    <Label Text="{Binding Precio, StringFormat='Precio: {0}'}" />
-                                </HorizontalStackLayout>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>
-        </Border>
-    </ScrollView>
+                <VerticalStackLayout Padding="12" Spacing="16">
+                    <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                        <Label Grid.Row="0" Text="Fecha:" />
+                        <DatePicker Grid.Row="1" Date="{Binding Fecha}" />
+                    </Grid>
+                    <tk:Expander x:Name="ExpTieneFactura">
+                        <tk:Expander.Header>
+                            <Grid ColumnDefinitions="auto,*">
+                                <CheckBox Grid.Column="0" IsChecked="{Binding Source={x:Reference ExpTieneFactura}, Path=IsExpanded, Mode=TwoWay}" />
+                                <Label
+                                    Grid.Column="1"
+                                    Text="Con factura"
+                                    VerticalOptions="Center" />
+                            </Grid>
+                        </tk:Expander.Header>
+                        <VerticalStackLayout Spacing="8">
+                            <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                                <Label Grid.Row="0" Text="No. Factura:" />
+                                <Entry Grid.Row="1" Text="{Binding NoFactura}" />
+                            </Grid>
+                            <Grid ColumnDefinitions="*,auto" RowSpacing="8">
+                                <Picker
+                                    Title="Proveedor:"
+                                    Grid.Column="0"
+                                    ItemDisplayBinding="{Binding Nombre}"
+                                    ItemsSource="{Binding Proveedores, Mode=OneWay}"
+                                    SelectedItem="{Binding SelectedProveedor}" />
+                                <Button
+                                    Grid.Column="1"
+                                    Command="{Binding AgregarProveedorCommand}"
+                                    FontFamily="MaterialDesignIcons"
+                                    Text="{StaticResource IconPlus}"
+                                    VerticalOptions="End" />
+                            </Grid>
+                            <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                                <Label Grid.Row="0" Text="Costo flete:" />
+                                <Entry
+                                    Grid.Row="1"
+                                    Keyboard="Numeric"
+                                    Placeholder="0.00"
+                                    Text="{Binding CostoFlete}" />
+                            </Grid>
+                            <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                                <Label Grid.Row="0" Text="Costo carga:" />
+                                <Entry
+                                    Grid.Row="1"
+                                    Keyboard="Numeric"
+                                    Placeholder="0.00"
+                                    Text="{Binding CostoCarga}" />
+                            </Grid>
+                        </VerticalStackLayout>
+                    </tk:Expander>
+                    <Grid ColumnDefinitions="*,auto">
+                        <Label
+                            Grid.Column="0"
+                            Text="Productos:"
+                            VerticalOptions="Center" />
+                        <Button
+                            Grid.Column="1"
+                            Command="{Binding AgregarProductoCommand}"
+                            FontFamily="MaterialDesignIcons"
+                            Text="{StaticResource IconPlus}" />
+                    </Grid>
+                    <ListView
+                        ItemsSource="{Binding Productos, Mode=OneWay}"
+                        SelectedItem="{Binding SelectedProducto}"
+                        SelectionMode="Single">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="modelo:Producto">
+                                <ViewCell>
+                                    <HorizontalStackLayout Padding="16" Spacing="8">
+                                        <Label Text="{Binding Nombre, StringFormat='Producto: {0}'}" />
+                                        <Label Text="{Binding Cantidad, StringFormat='Cantidad: {0}'}" />
+                                        <Label Text="{Binding Precio, StringFormat='Precio: {0}'}" />
+                                    </HorizontalStackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </VerticalStackLayout>
+            </Border>
+        </ScrollView>
+
+    </Grid>
 
 </ContentPage>

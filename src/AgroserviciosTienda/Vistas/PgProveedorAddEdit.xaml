@@ -91,9 +91,9 @@
                 </Label>
                 <Grid
                     Margin="0,8,0,0"
-                    ColumnDefinitions="*,*,*"
+                    ColumnDefinitions="auto,auto,auto"
                     ColumnSpacing="8"
-                    HorizontalOptions="FillAndExpand"
+                    HorizontalOptions="EndAndExpand"
                     IsVisible="{Binding Source={x:Reference LbVisibleError}, Path=IsVisible, Converter={tk:InvertedBoolConverter}}">
                     <Button
                         Grid.Column="0"
@@ -102,12 +102,11 @@
                     <Button
                         Grid.Column="1"
                         Command="{Binding AgregarCommand}"
-                        IsEnabled="False"
+                        IsVisible="{Binding VisibleAgregar, Mode=OneWay}"
                         Text="Agregar" />
                     <Button
                         Grid.Column="2"
                         Command="{Binding AgregarSalirCommand}"
-                        IsEnabled="False"
                         Text="Agregar y salir" />
                 </Grid>
             </VerticalStackLayout>

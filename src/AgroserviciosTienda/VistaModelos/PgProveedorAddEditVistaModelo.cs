@@ -7,6 +7,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AgroserviciosTienda.VistaModelos;
 
+[QueryProperty(nameof(CurrentProveedor), "proveedor")]
+[QueryProperty(nameof(VisibleAgregar), "visibleagregar")]
 public partial class PgProveedorAddEditVistaModelo : ObservableValidator
 {
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
@@ -56,6 +58,9 @@ public partial class PgProveedorAddEditVistaModelo : ObservableValidator
 
     [ObservableProperty]
     bool visibleError;
+
+    [ObservableProperty]
+    bool visibleAgregar = true;
 
     [RelayCommand]
     private async void Agregar()

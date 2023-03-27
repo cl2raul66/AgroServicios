@@ -104,7 +104,7 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     [RelayCommand]
     private async Task AgregarProveedor()
     {
-        await Shell.Current.GoToAsync($"{nameof(PgProveedorAddEdit)}");
+        await Shell.Current.GoToAsync($"{nameof(PgProveedorAddEdit)}", new Dictionary<string, object>() { { "visibleagregar", false } });
     }
 
     #region productos
