@@ -7,43 +7,52 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AgroserviciosTienda.VistaModelos;
 
-[QueryProperty(nameof(CurrentProducto), "producto")]
-public partial class PgProductosAddEditVistaModelo : ObservableValidator
+public partial class PgProveedorAddEditVistaModelo : ObservableValidator
 {
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
     {
         base.OnPropertyChanged(e);
-        if (e.PropertyName == nameof(CurrentProducto))
+        if (e.PropertyName == nameof(CurrentProveedor))
         {
-            if (currentProducto is not null)
+            if (currentProveedor is not null)
             {
-                ProductoNombre = currentProducto.Nombre;
-                Cantidad = currentProducto.Cantidad;
-                Precio = currentProducto.Precio;
+                Nombre = currentProveedor.Nombre;
+                Nit = currentProveedor.Nit;
+                Telefono = currentProveedor.Telefono;
+                Email = currentProveedor.EMail;
+                Direccion = currentProveedor.Direccion;
             }
         }
     }
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Titulo))]
-    Producto currentProducto;
+    Proveedor currentProveedor;
 
-    public string Titulo => currentProducto is null ? "Nueva - Producto" : "Modificar - Producto";
+    public string Titulo => currentProveedor is null ? "Nueva - Proveedor" : "Modificar - Proveedor";
 
     [ObservableProperty]
     [Required]
     [MinLength(3)]
-    string productoNombre;
+    string nombre;
 
     [ObservableProperty]
     [Required]
-    [Range(1, 1000)]
-    int cantidad;
+    [MinLength(3)]
+    string nit;
+
+    [ObservableProperty]
+    [Phone]
+    string telefono;
+
+    [ObservableProperty]
+    [EmailAddress]
+    string email;
 
     [ObservableProperty]
     [Required]
-    [Range(1, 19999.99)]
-    decimal precio;
+    [MinLength(3)]
+    string direccion;
 
     [ObservableProperty]
     bool visibleError;
@@ -53,9 +62,11 @@ public partial class PgProductosAddEditVistaModelo : ObservableValidator
     {
         if (await Guardar())
         {
-            ProductoNombre = string.Empty;
-            Cantidad = 0;
-            Precio = 0;
+            Nombre = string.Empty;
+            Nit = string.Empty;
+            Telefono = string.Empty;
+            Email = string.Empty;
+            Direccion = string.Empty;
         }
     }
 
@@ -86,8 +97,8 @@ public partial class PgProductosAddEditVistaModelo : ObservableValidator
             return false;
         }
 
-        var newProucto = new Producto(productoNombre, (int)cantidad, (decimal)precio);
-        var resul = WeakReferenceMessenger.Default.Send<Producto>(newProucto);
+        var newProveedor = new Proveedor(nombre, nit, telefono, email, direccion);
+        var resul = WeakReferenceMessenger.Default.Send<Proveedor>(newProveedor);
         return resul is not null;
     }
     #endregion

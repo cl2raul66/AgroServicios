@@ -1,67 +1,80 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="AgroserviciosTienda.Vistas.PgProductosAddEdit"
+    x:Class="AgroserviciosTienda.Vistas.PgProveedorAddEdit"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
     Title="{Binding Titulo, Mode=OneWay}"
-    x:DataType="vm:PgProductosAddEditVistaModelo"
+    x:DataType="vm:PgProveedorAddEditVistaModelo"
     Shell.PresentationMode="ModalAnimated">
 
     <ScrollView Padding="16">
-        <Border
-            Padding="12"
-            HorizontalOptions="Center"
-            Stroke="Gray"
-            StrokeThickness="1"
-            WidthRequest="400">
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="8" />
-            </Border.StrokeShape>
-            <VerticalStackLayout Spacing="8">
-                <Grid RowDefinitions="auto,auto" RowSpacing="8">
-                    <Grid Grid.Row="0" ColumnDefinitions="*,auto">
-                        <Label
-                            Grid.Column="0"
-                            Text="Producto:"
-                            VerticalOptions="Center" />
-                        <Button
-                            Grid.Column="1"
-                            Command="{Binding}"
-                            FontFamily="MaterialDesignIcons"
-                            Text="{StaticResource IconViewList}"
-                            VerticalOptions="End" />
-                    </Grid>
-                    <Picker
-                        Grid.Row="1"
-                        ItemDisplayBinding="{Binding}"
-                        ItemsSource="{Binding}"
-                        SelectedItem="{Binding}" />
+        <Frame HorizontalOptions="Center" VerticalOptions="Center">
+            <VerticalStackLayout Spacing="16" WidthRequest="400">
+                <Grid RowDefinitions="auto,auto,auto" RowSpacing="8">
+                    <Label Grid.Row="0" Text="Proveedor:" />
                     <Entry
                         Grid.Row="1"
+                        Keyboard="Text"
                         Placeholder="Escriba aquí"
-                        Text="{Binding ProductoNombre}" />
+                        Text="{Binding Nombre}" />
                 </Grid>
                 <Grid
                     ColumnSpacing="8"
                     RowDefinitions="auto,auto"
                     RowSpacing="8">
-                    <Label Grid.Row="0" Text="Cantidad:" />
+                    <Label Grid.Row="0" Text="Nit:" />
                     <Entry
                         Grid.Row="1"
-                        Keyboard="Numeric"
-                        Text="{Binding Cantidad, Mode=TwoWay}" />
+                        Keyboard="Text"
+                        Text="{Binding Nit, Mode=TwoWay}"
+                        TextTransform="Uppercase" />
                 </Grid>
                 <Grid
                     ColumnSpacing="8"
                     RowDefinitions="auto,auto"
                     RowSpacing="8">
-                    <Label Grid.Row="0" Text="Precio:" />
+                    <Label Grid.Row="0" Text="Teléfono:" />
                     <Entry
                         Grid.Row="1"
-                        Keyboard="Numeric"
-                        Text="{Binding Precio, Mode=TwoWay}" />
+                        Keyboard="Telephone"
+                        Placeholder="0000000"
+                        Text="{Binding Telefono, Mode=TwoWay}" />
+                </Grid>
+                <Grid
+                    ColumnSpacing="8"
+                    RowDefinitions="auto,auto"
+                    RowSpacing="8">
+                    <Label Grid.Row="0" Text="Correo electrónico:" />
+                    <Entry
+                        Grid.Row="1"
+                        Keyboard="Email"
+                        Placeholder="direccion@servidor.com"
+                        Text="{Binding Email, Mode=TwoWay}"
+                        TextTransform="Lowercase" />
+                </Grid>
+                <Grid
+                    ColumnSpacing="8"
+                    RowDefinitions="auto,auto"
+                    RowSpacing="8">
+                    <Label Grid.Row="0" Text="Dirección:" />
+                    <Editor
+                        Grid.Row="1"
+                        IsSpellCheckEnabled="True"
+                        IsTextPredictionEnabled="True"
+                        MaximumHeightRequest="250"
+                        Placeholder="Escriba aquí"
+                        Text="{Binding Direccion, Mode=TwoWay}"
+                        VerticalTextAlignment="Start">
+                        <Editor.Keyboard>
+                            <Keyboard x:FactoryMethod="Create">
+                                <x:Arguments>
+                                    <KeyboardFlags>All</KeyboardFlags>
+                                </x:Arguments>
+                            </Keyboard>
+                        </Editor.Keyboard>
+                    </Editor>
                 </Grid>
                 <Label
                     x:Name="LbVisibleError"
@@ -98,7 +111,7 @@
                         Text="Agregar y salir" />
                 </Grid>
             </VerticalStackLayout>
-        </Border>
+        </Frame>
     </ScrollView>
 
 </ContentPage>

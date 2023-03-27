@@ -44,13 +44,16 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     string noFactura;
 
     [ObservableProperty]
-    string proveedor;
+    Proveedor selectedProveedor;
 
     [ObservableProperty]
-    decimal costoFlete = 0;
+    ObservableCollection<Proveedor> proveedores;
 
     [ObservableProperty]
-    decimal costoCarga = 0;
+    decimal costoFlete;
+
+    [ObservableProperty]
+    decimal costoCarga;
 
     [ObservableProperty]
     bool visibleError;
@@ -65,7 +68,7 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
                 Fecha = currentEntrada.Fecha;
                 Productos = new(currentEntrada.Productos);
                 NoFactura = currentEntrada.NoFactura;
-                Proveedor = currentEntrada.Proveedor;
+                SelectedProveedor = currentEntrada.Proveedor;
                 CostoFlete = currentEntrada.CostoFlete;
                 CostoCarga = currentEntrada.CostoCarga;
             }
@@ -86,7 +89,7 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
 
         EntradaView newEntrada = string.IsNullOrEmpty(noFactura)
             ? new EntradaView(fecha, productos.ToList())
-            : new EntradaView(fecha, productos.ToList(),noFactura,proveedor,costoFlete,costoCarga);
+            : new EntradaView(fecha, productos.ToList(), noFactura, selectedProveedor, costoFlete, costoCarga);
 
         WeakReferenceMessenger.Default.Send<EntradaView>(newEntrada);
         await Cancelar();
@@ -96,6 +99,12 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     private async Task Cancelar()
     {
         await Shell.Current.GoToAsync("..");
+    }
+
+    [RelayCommand]
+    private async Task AgregarProveedor()
+    {
+        await Shell.Current.GoToAsync($"{nameof(PgProveedorAddEdit)}");
     }
 
     #region productos

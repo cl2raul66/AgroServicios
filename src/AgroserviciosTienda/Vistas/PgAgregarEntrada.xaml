@@ -9,103 +9,106 @@
     Title="Agregar - Entrada"
     x:DataType="vm:PgAgregarEntradaVistaModelo">
 
-    <ContentPage.ToolbarItems>
+    <!--<ContentPage.ToolbarItems>
         <ToolbarItem
+            Command="{Binding AgregarProductoCommand}"
             IconImageSource="{StaticResource IcoFontPlus}"
             Text="Agregar"
             ToolTipProperties.Text="Agregar productos" />
-    </ContentPage.ToolbarItems>
+    </ContentPage.ToolbarItems>-->
 
-    <Grid RowDefinitions="*,auto">
-        <ScrollView Grid.Row="0" Padding="16">
-            <Border
-                Margin="16"
-                Padding="16"
-                HorizontalOptions="Center"
-                Stroke="Gray"
-                StrokeThickness="1"
-                WidthRequest="400">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="8" />
-                </Border.StrokeShape>
+    <ScrollView Grid.Row="0" Padding="16">
+        <Border
+            Padding="12"
+            HorizontalOptions="Center"
+            Stroke="Gray"
+            StrokeThickness="1"
+            WidthRequest="400">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="8" />
+            </Border.StrokeShape>
 
-                <VerticalStackLayout Grid.Row="0" Spacing="8">
-                    <Grid RowDefinitions="auto,auto" RowSpacing="8">
-                        <Label Grid.Row="0" Text="Fecha:" />
-                        <DatePicker Grid.Row="1" Date="{Binding Fecha}" />
-                    </Grid>
-                    <Grid RowDefinitions="auto,auto" RowSpacing="8">
-                        <Label Grid.Row="0" Text="No. Factura:" />
-                        <Entry Grid.Row="1" Text="{Binding NoFactura}" />
-                    </Grid>
-                    <Grid RowDefinitions="auto,auto" RowSpacing="8">
-                        <Label Grid.Row="0" Text="Proveedor:" />
-                        <Entry Grid.Row="1" Text="{Binding Proveedor}" />
-                    </Grid>
-                    <Grid RowDefinitions="auto,auto" RowSpacing="8">
-                        <Label Grid.Row="0" Text="Costo flete:" />
-                        <Entry
-                            Grid.Row="1"
-                            Keyboard="Numeric"
-                            Text="{Binding CostoFlete}" />
-                    </Grid>
-                    <Grid RowDefinitions="auto,auto" RowSpacing="8">
-                        <Label Grid.Row="0" Text="Costo carga:" />
-                        <Entry
-                            Grid.Row="1"
-                            Keyboard="Numeric"
-                            Text="{Binding CostoCarga}" />
-                    </Grid>
-                    <Grid RowDefinitions="auto,*">
-                        <HorizontalStackLayout
-                            Grid.Row="0"
-                            Margin="0,8"
-                            HorizontalOptions="Fill"
-                            Spacing="8">
-                            <Label Text="Productos:" VerticalOptions="Center" />
-                            <Button Command="{Binding AgregarProductoCommand}" Text="Agregar" />
+            <Grid Grid.Row="0">
+                <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                    <Label Grid.Row="0" Text="Fecha:" />
+                    <DatePicker Grid.Row="1" Date="{Binding Fecha}" />
+                </Grid>
+                <tk:Expander x:Name="ExpTieneFactura">
+                    <tk:Expander.Header>
+                        <Grid ColumnDefinitions="auto,*">
+                            <CheckBox Grid.Column="0" IsChecked="{Binding Source={x:Reference ExpTieneFactura}, Path=IsExpanded, Mode=TwoWay}" />
+                            <Label
+                                Grid.Column="1"
+                                Text="Con factura"
+                                VerticalOptions="Center" />
+                        </Grid>
+                    </tk:Expander.Header>
+                    <VerticalStackLayout Spacing="8">
+                        <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                            <Label Grid.Row="0" Text="No. Factura:" />
+                            <Entry Grid.Row="1" Text="{Binding NoFactura}" />
+                        </Grid>
+                        <Grid ColumnDefinitions="*,auto" RowSpacing="8">
+                            <Picker
+                                Title="Proveedor:"
+                                Grid.Column="0"
+                                ItemDisplayBinding="{Binding Nombre}"
+                                ItemsSource="{Binding Proveedores, Mode=OneWay}"
+                                SelectedItem="{Binding SelectedProveedor}" />
                             <Button
-                                Command="{Binding ModificarProductoCommand}"
-                                IsEnabled="{Binding SelectedProducto, Mode=OneWay, Converter={tk:IsNotNullConverter}}"
-                                Text="Modificar" />
-                            <Button
-                                Command="{Binding EliminarProductoCommand}"
-                                IsEnabled="{Binding SelectedProducto, Mode=OneWay, Converter={tk:IsNotNullConverter}}"
-                                Text="Eliminar" />
-                        </HorizontalStackLayout>
-                        <ListView
-                            Grid.Row="1"
-                            ItemsSource="{Binding Productos, Mode=OneWay}"
-                            SelectedItem="{Binding SelectedProducto}"
-                            SelectionMode="Single">
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="modelo:Producto">
-                                    <ViewCell>
-                                        <HorizontalStackLayout Padding="16" Spacing="8">
-                                            <Label Text="{Binding Nombre, StringFormat='Producto: {0}'}" />
-                                            <Label Text="{Binding Cantidad, StringFormat='Cantidad: {0}'}" />
-                                            <Label Text="{Binding Precio, StringFormat='Precio: {0}'}" />
-                                        </HorizontalStackLayout>
-                                    </ViewCell>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </Grid>
-                </VerticalStackLayout>
-            </Border>
-        </ScrollView>
-
-        <Grid
-            Grid.Row="1"
-            Padding="16"
-            BackgroundColor="{StaticResource Primary}">
-            <HorizontalStackLayout HorizontalOptions="Center" Spacing="8">
-                <Label
-                    FontSize="Micro"
-                    Text="by RandA Media Lab, Group"
-                    TextColor="{StaticResource White}" />
-            </HorizontalStackLayout>
-        </Grid>
-    </Grid>
+                                Grid.Column="1"
+                                Command="{Binding AgregarProveedorCommand}"
+                                FontFamily="MaterialDesignIcons"
+                                Text="{StaticResource IconPlus}"
+                                VerticalOptions="End" />
+                        </Grid>
+                        <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                            <Label Grid.Row="0" Text="Costo flete:" />
+                            <Entry
+                                Grid.Row="1"
+                                Keyboard="Numeric"
+                                Placeholder="0.00"
+                                Text="{Binding CostoFlete}" />
+                        </Grid>
+                        <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                            <Label Grid.Row="0" Text="Costo carga:" />
+                            <Entry
+                                Grid.Row="1"
+                                Keyboard="Numeric"
+                                Placeholder="0.00"
+                                Text="{Binding CostoCarga}" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </tk:Expander>
+                <Grid ColumnDefinitions="*,auto">
+                    <Label
+                        Grid.Column="0"
+                        Text="Productos:"
+                        VerticalOptions="Center" />
+                    <Button
+                        Grid.Column="1"
+                        Command="{Binding AgregarProductoCommand}"
+                        FontFamily="MaterialDesignIcons"
+                        Text="{StaticResource IconPlus}" />
+                </Grid>
+                <ListView
+                    ItemsSource="{Binding Productos, Mode=OneWay}"
+                    SelectedItem="{Binding SelectedProducto}"
+                    SelectionMode="Single">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="modelo:Producto">
+                            <ViewCell>
+                                <HorizontalStackLayout Padding="16" Spacing="8">
+                                    <Label Text="{Binding Nombre, StringFormat='Producto: {0}'}" />
+                                    <Label Text="{Binding Cantidad, StringFormat='Cantidad: {0}'}" />
+                                    <Label Text="{Binding Precio, StringFormat='Precio: {0}'}" />
+                                </HorizontalStackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Border>
+    </ScrollView>
 
 </ContentPage>

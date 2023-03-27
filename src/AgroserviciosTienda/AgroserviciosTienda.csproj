@@ -92,6 +92,9 @@
 	  <MauiXaml Update="Vistas\PgProductosAddEdit.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Vistas\PgProveedorAddEdit.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Vistas\PgVenta.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -10,6 +10,7 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem
+            Command="{Binding AgregarCommand}"
             IconImageSource="{StaticResource IcoFontPlus}"
             Text="Agregar"
             ToolTipProperties.Text="Agregar entrada" />
