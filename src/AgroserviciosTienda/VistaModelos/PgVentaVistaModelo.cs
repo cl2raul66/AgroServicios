@@ -1,4 +1,5 @@
 ﻿using AgroserviciosTienda.Modelos;
+using AgroserviciosTienda.Vistas;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -40,18 +41,7 @@ public partial class PgVentaVistaModelo : ObservableRecipient
     [RelayCommand]
     private async Task Agregar()
     {
-        await Shell.Current.GoToAsync($"{nameof(PgVenAddEdit)}");
-    }
-
-    private object PgVenAddEdit()
-    {
-        throw new NotImplementedException();
-    }
-
-    [RelayCommand]
-    private async Task Modificar()
-    {
-        await Shell.Current.GoToAsync($"{nameof(PgVenAddEdit)}", new Dictionary<string, object>() { { "entrada", selectedVenta } });
+        await Shell.Current.GoToAsync($"{nameof(PgAgregarVenta)}");
     }
 
     [RelayCommand]

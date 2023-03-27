@@ -9,13 +9,13 @@
     Title="Agregar - Entrada"
     x:DataType="vm:PgAgregarEntradaVistaModelo">
 
-    <!--<ContentPage.ToolbarItems>
+    <ContentPage.ToolbarItems>
         <ToolbarItem
-            Command="{Binding AgregarProductoCommand}"
-            IconImageSource="{StaticResource IcoFontPlus}"
-            Text="Agregar"
-            ToolTipProperties.Text="Agregar productos" />
-    </ContentPage.ToolbarItems>-->
+            Command="{Binding GuardarCommand}"
+            IconImageSource="{StaticResource IcoFontContentSave}"
+            Text="Guardar"
+            ToolTipProperties.Text="Guardar operacion" />
+    </ContentPage.ToolbarItems>
 
     <Grid Padding="16">
         <ScrollView>
@@ -30,7 +30,7 @@
                     <RoundRectangle CornerRadius="8" />
                 </Border.StrokeShape>
 
-                <VerticalStackLayout Padding="12" Spacing="16">
+                <VerticalStackLayout Spacing="16">
                     <Grid RowDefinitions="auto,auto" RowSpacing="8">
                         <Label Grid.Row="0" Text="Fecha:" />
                         <DatePicker Grid.Row="1" Date="{Binding Fecha}" />

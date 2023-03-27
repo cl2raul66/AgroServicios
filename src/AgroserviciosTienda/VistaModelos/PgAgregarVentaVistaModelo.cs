@@ -47,6 +47,15 @@ public partial class PgAgregarVentaVistaModelo : ObservableValidator
     DateTime fecha = DateTime.Now;
 
     [ObservableProperty]
+    string noFactura;
+
+    [ObservableProperty]
+    Cliente selectedCliente;
+
+    [ObservableProperty]
+    ObservableCollection<Cliente> clientes;
+
+    [ObservableProperty]
     bool visibleError;
 
     [RelayCommand]
@@ -70,6 +79,12 @@ public partial class PgAgregarVentaVistaModelo : ObservableValidator
     async Task Cancelar()
     {
         await Shell.Current.GoToAsync("..");
+    }
+
+    [RelayCommand]
+    private async Task AgregarCliente()
+    {
+        await Shell.Current.GoToAsync($"{nameof(PgProveedorAddEdit)}", new Dictionary<string, object>() { { "visibleagregar", false } });
     }
 
     #region productos
