@@ -8,13 +8,20 @@
     xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
     Title="Agregar - Venta"
     x:DataType="vm:PgAgregarVentaVistaModelo">
-
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" />
+    </Shell.BackButtonBehavior>
     <ContentPage.ToolbarItems>
         <ToolbarItem
             Command="{Binding GuardarCommand}"
             IconImageSource="{StaticResource IcoFontContentSave}"
             Text="Guardar"
             ToolTipProperties.Text="Guardar operacion" />
+        <ToolbarItem
+            Command="{Binding CancelarCommand}"
+            IconImageSource="{StaticResource IcoFontCancel}"
+            Text="Cancelar"
+            ToolTipProperties.Text="Cancelar operacion" />
     </ContentPage.ToolbarItems>
 
     <Grid Padding="16">

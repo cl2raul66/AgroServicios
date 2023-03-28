@@ -8,6 +8,9 @@
     Title="{Binding Titulo, Mode=OneWay}"
     x:DataType="vm:PgProductosAddEditVistaModelo"
     Shell.PresentationMode="ModalAnimated">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" />
+    </Shell.BackButtonBehavior>
 
     <Grid Padding="16">
         <ScrollView>

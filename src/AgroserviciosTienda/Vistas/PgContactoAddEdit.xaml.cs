@@ -2,9 +2,9 @@ using AgroserviciosTienda.VistaModelos;
 
 namespace AgroserviciosTienda.Vistas;
 
-public partial class PgProveedorAddEdit : ContentPage
+public partial class PgContactoAddEdit : ContentPage
 {
-	public PgProveedorAddEdit(PgProveedorAddEditVistaModelo vm)
+	public PgContactoAddEdit(PgContactoAddEditVistaModelo vm)
 	{
 		InitializeComponent();
 

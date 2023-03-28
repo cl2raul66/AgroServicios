@@ -77,10 +77,6 @@
                     Command="{Binding AgregarVentaCommand}"
                     Text="Agregar venta"
                     ToolTipProperties.Text="Agregar venta de productos" />
-                <Button
-                    Command="{Binding AgregarVentaConFacturacionCommand}"
-                    Text="Agregar venta con factura"
-                    ToolTipProperties.Text="Agregar venta de productos con factura" />
             </VerticalStackLayout>
         </ScrollView>
 

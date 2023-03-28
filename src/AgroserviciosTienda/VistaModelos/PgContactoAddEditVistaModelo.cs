@@ -7,31 +7,34 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AgroserviciosTienda.VistaModelos;
 
-[QueryProperty(nameof(CurrentProveedor), "proveedor")]
+[QueryProperty(nameof(DatosNav), "contacto")]
 [QueryProperty(nameof(VisibleAgregar), "visibleagregar")]
-public partial class PgProveedorAddEditVistaModelo : ObservableValidator
+public partial class PgContactoAddEditVistaModelo : ObservableValidator
 {
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
     {
         base.OnPropertyChanged(e);
-        if (e.PropertyName == nameof(CurrentProveedor))
+        if (e.PropertyName == nameof(CurrentContacto))
         {
-            if (currentProveedor is not null)
+            if (currentContacto is not null)
             {
-                Nombre = currentProveedor.Nombre;
-                Nit = currentProveedor.Nit;
-                Telefono = currentProveedor.Telefono;
-                Email = currentProveedor.EMail;
-                Direccion = currentProveedor.Direccion;
+                Nombre = currentContacto.Nombre;
+                Nit = currentContacto.Nit;
+                Telefono = currentContacto.Telefono;
+                Email = currentContacto.EMail;
+                Direccion = currentContacto.Direccion;
             }
         }
     }
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(Titulo))]
-    Proveedor currentProveedor;
+    Tuple<Contacto, bool> datosNav; //objeto Contacto y esCliente bool
 
-    public string Titulo => currentProveedor is null ? "Nueva - Proveedor" : "Modificar - Proveedor";
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(Titulo))]
+    Contacto currentContacto;
+
+    public string Titulo => currentContacto is null ? "Nueva - Proveedor" : "Modificar - Proveedor";
 
     [ObservableProperty]
     [Required]
