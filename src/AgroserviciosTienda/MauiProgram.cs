@@ -25,7 +25,7 @@ public static class MauiProgram
 		builder.Services.AddTransient<PgVentaVistaModelo>();
 		builder.Services.AddTransient<PgAgregarVentaVistaModelo>();
 		builder.Services.AddTransient<PgProductosAddEditVistaModelo>();
-		builder.Services.AddTransient<PgProveedorAddEditVistaModelo>();
+		builder.Services.AddTransient<PgContactoAddEditVistaModelo>();
 
 		builder.Services.AddTransient<PgInicio>();
 		builder.Services.AddTransient<PgEntrada>();
@@ -33,7 +33,7 @@ public static class MauiProgram
 		builder.Services.AddTransient<PgVenta>();
 		builder.Services.AddTransient<PgAgregarVenta>();
 		builder.Services.AddTransient<PgProductosAddEdit>();
-		builder.Services.AddTransient<PgProveedorAddEdit>();
+		builder.Services.AddTransient<PgContactoAddEdit>();
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif

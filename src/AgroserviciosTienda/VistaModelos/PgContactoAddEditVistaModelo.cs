@@ -7,13 +7,22 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AgroserviciosTienda.VistaModelos;
 
-[QueryProperty(nameof(DatosNav), "contacto")]
-[QueryProperty(nameof(VisibleAgregar), "visibleagregar")]
+[QueryProperty(nameof(DatosNav), "contactodatosnav")]
 public partial class PgContactoAddEditVistaModelo : ObservableValidator
 {
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
     {
         base.OnPropertyChanged(e);
+        if (e.PropertyName == nameof(DatosNav))
+        {
+            if (datosNav is not null)
+            {
+                CurrentContacto = datosNav.Item1;
+                visibleAgregar = datosNav.Item2;
+                Titulo = $"{(datosNav.Item3 ? "Cliente" : "Proveedor")} - {(datosNav.Item1 is null ? "Nuevo" :"Modificar" )}";
+            }
+        }
+
         if (e.PropertyName == nameof(CurrentContacto))
         {
             if (currentContacto is not null)
@@ -28,13 +37,13 @@ public partial class PgContactoAddEditVistaModelo : ObservableValidator
     }
 
     [ObservableProperty]
-    Tuple<Contacto, bool> datosNav; //objeto Contacto y esCliente bool
+    Tuple<Contacto, bool, bool> datosNav; //objeto Contacto, visibleAgregar bool y esCliente bool
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(Titulo))]
     Contacto currentContacto;
 
-    public string Titulo => currentContacto is null ? "Nueva - Proveedor" : "Modificar - Proveedor";
+    [ObservableProperty]
+    public string titulo;
 
     [ObservableProperty]
     [Required]
@@ -60,10 +69,13 @@ public partial class PgContactoAddEditVistaModelo : ObservableValidator
     string direccion;
 
     [ObservableProperty]
+    bool esEmpresa;
+
+    [ObservableProperty]
     bool visibleError;
 
     [ObservableProperty]
-    bool visibleAgregar = true;
+    bool visibleAgregar;
 
     [RelayCommand]
     private async void Agregar()
@@ -79,7 +91,7 @@ public partial class PgContactoAddEditVistaModelo : ObservableValidator
     }
 
     [RelayCommand]
-    private async void AgregarSalir()
+    private async void GuardarSalir()
     {
         if (await Guardar())
         {
@@ -93,8 +105,7 @@ public partial class PgContactoAddEditVistaModelo : ObservableValidator
         await Shell.Current.GoToAsync("..");
     }
 
-    #region extra
-    async Task<bool> Guardar()
+    private async Task<bool> Guardar()
     {
         ValidateAllProperties();
         if (HasErrors)
@@ -105,9 +116,8 @@ public partial class PgContactoAddEditVistaModelo : ObservableValidator
             return false;
         }
 
-        var newProveedor = new Proveedor(nombre, nit, telefono, email, direccion);
-        var resul = WeakReferenceMessenger.Default.Send<Proveedor>(newProveedor);
+        var newContacto = new Contacto(nombre, nit, telefono, email, direccion, esEmpresa);
+        var resul = WeakReferenceMessenger.Default.Send<Contacto>(newContacto);
         return resul is not null;
     }
-    #endregion
 }

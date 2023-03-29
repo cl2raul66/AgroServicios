@@ -8,109 +8,127 @@
     Title="{Binding Titulo, Mode=OneWay}"
     x:DataType="vm:PgContactoAddEditVistaModelo"
     Shell.PresentationMode="ModalAnimated">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" />
+    </Shell.BackButtonBehavior>
 
-    <ScrollView Padding="16">
-        <Frame HorizontalOptions="Center" VerticalOptions="Center">
-            <VerticalStackLayout Spacing="16" WidthRequest="400">
-                <Grid RowDefinitions="auto,auto,auto" RowSpacing="8">
-                    <Label Grid.Row="0" Text="Proveedor:" />
-                    <Entry
-                        Grid.Row="1"
-                        Keyboard="Text"
-                        Placeholder="Escriba aquí"
-                        Text="{Binding Nombre}" />
-                </Grid>
-                <Grid
-                    ColumnSpacing="8"
-                    RowDefinitions="auto,auto"
-                    RowSpacing="8">
-                    <Label Grid.Row="0" Text="Nit:" />
-                    <Entry
-                        Grid.Row="1"
-                        Keyboard="Text"
-                        Text="{Binding Nit, Mode=TwoWay}"
-                        TextTransform="Uppercase" />
-                </Grid>
-                <Grid
-                    ColumnSpacing="8"
-                    RowDefinitions="auto,auto"
-                    RowSpacing="8">
-                    <Label Grid.Row="0" Text="Teléfono:" />
-                    <Entry
-                        Grid.Row="1"
-                        Keyboard="Telephone"
-                        Placeholder="0000000"
-                        Text="{Binding Telefono, Mode=TwoWay}" />
-                </Grid>
-                <Grid
-                    ColumnSpacing="8"
-                    RowDefinitions="auto,auto"
-                    RowSpacing="8">
-                    <Label Grid.Row="0" Text="Correo electrónico:" />
-                    <Entry
-                        Grid.Row="1"
-                        Keyboard="Email"
-                        Placeholder="direccion@servidor.com"
-                        Text="{Binding Email, Mode=TwoWay}"
-                        TextTransform="Lowercase" />
-                </Grid>
-                <Grid
-                    ColumnSpacing="8"
-                    RowDefinitions="auto,auto"
-                    RowSpacing="8">
-                    <Label Grid.Row="0" Text="Dirección:" />
-                    <Editor
-                        Grid.Row="1"
-                        IsSpellCheckEnabled="True"
-                        IsTextPredictionEnabled="True"
-                        MaximumHeightRequest="250"
-                        Placeholder="Escriba aquí"
-                        Text="{Binding Direccion, Mode=TwoWay}"
-                        VerticalTextAlignment="Start">
-                        <Editor.Keyboard>
-                            <Keyboard x:FactoryMethod="Create">
-                                <x:Arguments>
-                                    <KeyboardFlags>All</KeyboardFlags>
-                                </x:Arguments>
-                            </Keyboard>
-                        </Editor.Keyboard>
-                    </Editor>
-                </Grid>
-                <Label
-                    x:Name="LbVisibleError"
-                    FontSize="Micro"
-                    HorizontalOptions="End"
-                    IsVisible="{Binding VisibleError, Mode=OneWay}"
-                    TextColor="Red">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span FontFamily="MaterialDesignIcons" Text="{StaticResource IconAlert}" />
-                            <Span Text=" Datos incorrectos." />
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-                <Grid
-                    Margin="0,8,0,0"
-                    ColumnDefinitions="auto,auto,auto"
-                    ColumnSpacing="8"
-                    HorizontalOptions="EndAndExpand"
-                    IsVisible="{Binding Source={x:Reference LbVisibleError}, Path=IsVisible, Converter={tk:InvertedBoolConverter}}">
-                    <Button
-                        Grid.Column="0"
-                        Command="{Binding CancelarCommand}"
-                        Text="Cancelar" />
-                    <Button
-                        Grid.Column="1"
-                        Command="{Binding AgregarCommand}"
-                        IsVisible="{Binding VisibleAgregar, Mode=OneWay}"
-                        Text="Agregar" />
-                    <Button
-                        Grid.Column="2"
-                        Command="{Binding AgregarSalirCommand}"
-                        Text="Agregar y salir" />
-                </Grid>
-            </VerticalStackLayout>
-        </Frame>
-    </ScrollView>
+    <Grid Padding="16">
+        <ScrollView>
+            <Border
+                Padding="12"
+                HorizontalOptions="Center"
+                Stroke="Gray"
+                StrokeThickness="1"
+                VerticalOptions="Center">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="16">
+                    <Grid RowDefinitions="auto,auto,auto" RowSpacing="8">
+                        <Label Grid.Row="0" Text="Nombre:" />
+                        <Entry
+                            Grid.Row="1"
+                            Keyboard="Text"
+                            Placeholder="Escriba aquí"
+                            Text="{Binding Nombre}" />
+                        <HorizontalStackLayout Grid.Row="2" Spacing="8">
+                            <Label Text="Es empresa:" VerticalOptions="Center" />
+                            <Switch IsToggled="{Binding EsEmpresa, Mode=TwoWay}" />
+                        </HorizontalStackLayout>
+                    </Grid>
+                    <Grid
+                        ColumnSpacing="8"
+                        RowDefinitions="auto,auto"
+                        RowSpacing="8">
+                        <Label Grid.Row="0" Text="Nit:" />
+                        <Entry
+                            Grid.Row="1"
+                            Keyboard="Text"
+                            Text="{Binding Nit, Mode=TwoWay}"
+                            TextTransform="Uppercase" />
+                    </Grid>
+                    <Grid
+                        ColumnSpacing="8"
+                        RowDefinitions="auto,auto"
+                        RowSpacing="8">
+                        <Label Grid.Row="0" Text="Teléfono:" />
+                        <Entry
+                            Grid.Row="1"
+                            Keyboard="Telephone"
+                            Placeholder="0000000"
+                            Text="{Binding Telefono, Mode=TwoWay}" />
+                    </Grid>
+                    <Grid
+                        ColumnSpacing="8"
+                        RowDefinitions="auto,auto"
+                        RowSpacing="8">
+                        <Label Grid.Row="0" Text="Correo electrónico:" />
+                        <Entry
+                            Grid.Row="1"
+                            Keyboard="Email"
+                            Placeholder="direccion@servidor.com"
+                            Text="{Binding Email, Mode=TwoWay}"
+                            TextTransform="Lowercase" />
+                    </Grid>
+                    <Grid
+                        ColumnSpacing="8"
+                        RowDefinitions="auto,auto"
+                        RowSpacing="8">
+                        <Label Grid.Row="0" Text="Dirección:" />
+                        <Editor
+                            Grid.Row="1"
+                            IsSpellCheckEnabled="True"
+                            IsTextPredictionEnabled="True"
+                            MaximumHeightRequest="250"
+                            Placeholder="Escriba aquí"
+                            Text="{Binding Direccion, Mode=TwoWay}"
+                            VerticalTextAlignment="Start">
+                            <Editor.Keyboard>
+                                <Keyboard x:FactoryMethod="Create">
+                                    <x:Arguments>
+                                        <KeyboardFlags>All</KeyboardFlags>
+                                    </x:Arguments>
+                                </Keyboard>
+                            </Editor.Keyboard>
+                        </Editor>
+                    </Grid>
+                    <Label
+                        x:Name="LbVisibleError"
+                        FontSize="Micro"
+                        HorizontalOptions="End"
+                        IsVisible="{Binding VisibleError, Mode=OneWay}"
+                        TextColor="Red">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span FontFamily="MaterialDesignIcons" Text="{StaticResource IconAlert}" />
+                                <Span Text=" Datos incorrectos." />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Grid
+                        Margin="0,8,0,0"
+                        ColumnDefinitions="auto,auto,auto"
+                        ColumnSpacing="8"
+                        HorizontalOptions="EndAndExpand"
+                        IsVisible="{Binding Source={x:Reference LbVisibleError}, Path=IsVisible, Converter={tk:InvertedBoolConverter}}">
+                        <Button
+                            Grid.Column="0"
+                            Command="{Binding CancelarCommand}"
+                            Text="Cancelar" />
+                        <Button
+                            Grid.Column="1"
+                            Command="{Binding AgregarCommand}"
+                            IsVisible="{Binding VisibleAgregar, Mode=OneWay}"
+                            Text="Agregar" />
+                        <Button
+                            Grid.Column="2"
+                            Command="{Binding GuardarSalirCommand}"
+                            Text="Guardar y salir" />
+                    </Grid>
+                </VerticalStackLayout>
+
+            </Border>
+        </ScrollView>
+    </Grid>
 
 </ContentPage>

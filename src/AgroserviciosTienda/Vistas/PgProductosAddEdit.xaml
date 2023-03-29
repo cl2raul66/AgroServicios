@@ -39,13 +39,8 @@
                         </Grid>
                         <Picker
                             Grid.Row="1"
-                            ItemDisplayBinding="{Binding}"
-                            ItemsSource="{Binding}"
-                            SelectedItem="{Binding}" />
-                        <Entry
-                            Grid.Row="1"
-                            Placeholder="Escriba aquí"
-                            Text="{Binding ProductoNombre}" />
+                            ItemsSource="{Binding ProductosNombre, Mode=OneWay}"
+                            SelectedItem="{Binding ProductoNombre}" />
                     </Grid>
                     <Grid
                         ColumnSpacing="8"

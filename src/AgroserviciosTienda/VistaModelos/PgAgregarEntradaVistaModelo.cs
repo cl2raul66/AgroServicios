@@ -35,7 +35,7 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     [NotifyPropertyChangedFor(nameof(Titulo))]
     EntradaView currentEntrada;
 
-    public string Titulo => currentEntrada is null ? "Nueva - Entrada" : "Modificar - Entrada";
+    public string Titulo => currentEntrada is null ? "Entrada - Nuevo" : "Entrada - Modificar";
 
     [ObservableProperty]
     DateTime fecha = DateTime.Now;
@@ -44,10 +44,10 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     string noFactura;
 
     [ObservableProperty]
-    Proveedor selectedProveedor;
+    Contacto? selectedProveedor;
 
     [ObservableProperty]
-    ObservableCollection<Proveedor> proveedores;
+    ObservableCollection<Contacto> proveedores;
 
     [ObservableProperty]
     decimal costoFlete;
@@ -104,7 +104,8 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     [RelayCommand]
     private async Task AgregarProveedor()
     {
-        await Shell.Current.GoToAsync($"{nameof(PgProveedorAddEdit)}", new Dictionary<string, object>() { { "visibleagregar", false } });
+        Tuple<Contacto, bool, bool> contactodatosnav = new(selectedProveedor, false, false);
+        await Shell.Current.GoToAsync($"{nameof(PgContactoAddEdit)}", parameters: new Dictionary<string, object>() { { "contactodatosnav", contactodatosnav } });
     }
 
     #region productos

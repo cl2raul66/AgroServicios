@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -29,6 +30,9 @@ public partial class PgProductosAddEditVistaModelo : ObservableValidator
     Producto currentProducto;
 
     public string Titulo => currentProducto is null ? "Nueva - Producto" : "Modificar - Producto";
+
+    [ObservableProperty]
+    public List<string> productosNombre;
 
     [ObservableProperty]
     [Required]

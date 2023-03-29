@@ -69,7 +69,7 @@
                                     SelectedItem="{Binding SelectedCliente}" />
                                 <Button
                                     Grid.Column="1"
-                                    Command="{Binding}"
+                                    Command="{Binding AgregarClienteCommand}"
                                     FontFamily="MaterialDesignIcons"
                                     Text="{StaticResource IconPlus}"
                                     VerticalOptions="End" />

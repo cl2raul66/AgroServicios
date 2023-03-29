@@ -40,7 +40,7 @@ public partial class PgAgregarVentaVistaModelo : ObservableValidator
     [NotifyPropertyChangedFor(nameof(Titulo))]
     VentaView currentVenta;
 
-    public string Titulo => currentVenta is null ? "Nueva - Venta" : "Modificar - Venta";
+    public string Titulo => currentVenta is null ? "Ventas - Nuevo" : "Venta - Modificar";
 
     [ObservableProperty]
     [Required]
@@ -50,10 +50,10 @@ public partial class PgAgregarVentaVistaModelo : ObservableValidator
     string noFactura;
 
     [ObservableProperty]
-    Cliente selectedCliente;
+    Contacto? selectedCliente;
 
     [ObservableProperty]
-    ObservableCollection<Cliente> clientes;
+    ObservableCollection<Contacto> clientes;
 
     [ObservableProperty]
     bool visibleError;
@@ -84,7 +84,8 @@ public partial class PgAgregarVentaVistaModelo : ObservableValidator
     [RelayCommand]
     private async Task AgregarCliente()
     {
-        await Shell.Current.GoToAsync($"{nameof(PgProveedorAddEdit)}", new Dictionary<string, object>() { { "visibleagregar", false } });
+        Tuple<Contacto, bool, bool> contactodatosnav = new(selectedCliente, false, true);
+        await Shell.Current.GoToAsync($"{nameof(PgContactoAddEdit)}", parameters: new Dictionary<string, object>() { { "contactodatosnav", contactodatosnav } });
     }
 
     #region productos
