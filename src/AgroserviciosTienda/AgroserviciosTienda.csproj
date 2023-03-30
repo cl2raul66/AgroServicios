@@ -68,6 +68,9 @@
 	  <Compile Update="Vistas\PgContactoAddEdit.xaml.cs">
 	    <DependentUpon>PgContactoAddEdit.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Vistas\PgProductoAddEdit.xaml.cs">
+	    <DependentUpon>PgProductoAddEdit.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -95,7 +98,7 @@
 	  <MauiXaml Update="Vistas\PgInventario.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Vistas\PgProductosAddEdit.xaml">
+	  <MauiXaml Update="Vistas\PgProductoAddEdit.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Vistas\PgContactoAddEdit.xaml">

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="AgroserviciosTienda.Vistas.PgProductosAddEdit"
+    x:Class="AgroserviciosTienda.Vistas.PgProductoAddEdit"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
     Title="{Binding Titulo, Mode=OneWay}"
-    x:DataType="vm:PgProductosAddEditVistaModelo"
+    x:DataType="vm:PgProductoAddEditVistaModelo"
     Shell.PresentationMode="ModalAnimated">
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsVisible="False" />
@@ -24,23 +24,32 @@
                     <RoundRectangle CornerRadius="8" />
                 </Border.StrokeShape>
                 <VerticalStackLayout Spacing="16">
-                    <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                    <Grid RowDefinitions="auto,auto,auto" RowSpacing="8">
                         <Grid Grid.Row="0" ColumnDefinitions="*,auto">
                             <Label
                                 Grid.Column="0"
                                 Text="Producto:"
                                 VerticalOptions="Center" />
                             <Button
+                                x:Name="BtnAddEditProductoNombre"
                                 Grid.Column="1"
-                                Command="{Binding}"
+                                Clicked="BtnAddEditProductoNombre_Clicked"
                                 FontFamily="MaterialDesignIcons"
-                                Text="{StaticResource IconViewList}"
+                                IsVisible="{Binding DatosNav.Item2, Mode=OneWay, Converter={tk:InvertedBoolConverter}}"
+                                Text="{StaticResource IconPlus}"
+                                ToolTipProperties.Text="Mostrar entrada para producto."
                                 VerticalOptions="End" />
                         </Grid>
                         <Picker
                             Grid.Row="1"
                             ItemsSource="{Binding ProductosNombre, Mode=OneWay}"
                             SelectedItem="{Binding ProductoNombre}" />
+                        <Entry
+                            x:Name="EntProductoNombre"
+                            Grid.Row="2"
+                            ClearButtonVisibility="WhileEditing"
+                            IsVisible="false"
+                            Text="{Binding ProductoNombre}" />
                     </Grid>
                     <Grid
                         ColumnSpacing="8"

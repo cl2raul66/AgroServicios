@@ -17,6 +17,7 @@
             <Border
                 Padding="12"
                 HorizontalOptions="Center"
+                MinimumWidthRequest="400"
                 Stroke="Gray"
                 StrokeThickness="1"
                 VerticalOptions="Center">

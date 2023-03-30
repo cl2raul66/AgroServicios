@@ -83,7 +83,7 @@
                             VerticalOptions="Center" />
                         <Button
                             Grid.Column="1"
-                            Command="{Binding AgregarProductoCommand}"
+                            Command="{Binding AgregarModificarProductoCommand}"
                             FontFamily="MaterialDesignIcons"
                             Text="{StaticResource IconPlus}" />
                     </Grid>

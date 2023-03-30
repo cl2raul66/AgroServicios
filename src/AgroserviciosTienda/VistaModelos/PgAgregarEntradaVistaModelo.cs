@@ -118,15 +118,10 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     Producto selectedProducto;
 
     [RelayCommand]
-    async Task AgregarProducto()
+    async Task AgregarModificarProducto()
     {
-        await Shell.Current.GoToAsync($"{nameof(PgProductosAddEdit)}");
-    }
-
-    [RelayCommand]
-    async Task ModificarProducto()
-    {
-        await Shell.Current.GoToAsync($"{nameof(PgProductosAddEdit)}", new Dictionary<string, object>() { { "producto", selectedProducto } });
+        Tuple<Producto, bool> productodatosNav = new(selectedProducto, false);
+        await Shell.Current.GoToAsync($"{nameof(PgProductoAddEdit)}", new Dictionary<string, object>() { { "productodatosNav", productodatosNav } });
     }
 
     [RelayCommand]

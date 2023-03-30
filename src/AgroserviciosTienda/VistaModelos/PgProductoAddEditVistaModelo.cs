@@ -2,18 +2,23 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace AgroserviciosTienda.VistaModelos;
 
-[QueryProperty(nameof(CurrentProducto), "producto")]
-public partial class PgProductosAddEditVistaModelo : ObservableValidator
+[QueryProperty(nameof(DatosNav), "productodatosNav")]
+public partial class PgProductoAddEditVistaModelo : ObservableValidator
 {
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
     {
         base.OnPropertyChanged(e);
+
+        if (e.PropertyName == nameof(DatosNav))
+        {
+            CurrentProducto = datosNav.Item1;
+        }
+
         if (e.PropertyName == nameof(CurrentProducto))
         {
             if (currentProducto is not null)
@@ -26,10 +31,13 @@ public partial class PgProductosAddEditVistaModelo : ObservableValidator
     }
 
     [ObservableProperty]
+    Tuple<Producto, bool> datosNav; //Producto currentProducto, bool esVender
+
+    [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Titulo))]
     Producto currentProducto;
 
-    public string Titulo => currentProducto is null ? "Nueva - Producto" : "Modificar - Producto";
+    public string Titulo => $"Producto - {(currentProducto is null ? "Nuevo" : "Modificar")}";
 
     [ObservableProperty]
     public List<string> productosNombre;

@@ -10,7 +10,7 @@ public partial class AppShell : Shell
 
         Routing.RegisterRoute(nameof(PgAgregarEntrada), typeof(PgAgregarEntrada));
         Routing.RegisterRoute(nameof(PgAgregarVenta), typeof(PgAgregarVenta));
-        Routing.RegisterRoute(nameof(PgProductosAddEdit), typeof(PgProductosAddEdit));
+        Routing.RegisterRoute(nameof(PgProductoAddEdit), typeof(PgProductoAddEdit));
         Routing.RegisterRoute(nameof(PgContactoAddEdit), typeof(PgContactoAddEdit));
     }
 }
