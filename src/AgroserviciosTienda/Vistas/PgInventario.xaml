@@ -6,7 +6,11 @@
     Title="Inventario de productos">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Nuevo" />
+        <ToolbarItem
+            Command="{Binding}"
+            IconImageSource="{StaticResource IcoFontThermometer}"
+            Text="Agregar"
+            ToolTipProperties.Text="Agregar entrada" />
     </ContentPage.ToolbarItems>
 
     <Grid RowDefinitions="*,auto">

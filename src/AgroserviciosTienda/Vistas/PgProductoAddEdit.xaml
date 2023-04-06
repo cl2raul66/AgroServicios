@@ -24,6 +24,7 @@
                     <RoundRectangle CornerRadius="8" />
                 </Border.StrokeShape>
                 <VerticalStackLayout Spacing="16">
+                    <Label FontSize="Subtitle" Text="{Binding Titulo, Mode=OneTime}" />
                     <Grid RowDefinitions="auto,auto,auto" RowSpacing="8">
                         <Grid Grid.Row="0" ColumnDefinitions="*,auto">
                             <Label
@@ -55,7 +56,21 @@
                         ColumnSpacing="8"
                         RowDefinitions="auto,auto"
                         RowSpacing="8">
-                        <Label Grid.Row="0" Text="Cantidad:" />
+                        <Label Grid.Row="0" Text="Presentación:" />
+                        <Picker Grid.Row="1" ItemsSource="{Binding TiposMedidas, Mode=OneWay}" />
+                    </Grid>
+                    <Grid
+                        ColumnSpacing="8"
+                        RowDefinitions="auto,auto"
+                        RowSpacing="8">
+                        <Label Grid.Row="0" Text="Presentación - Medida base:" />
+                        <Picker Grid.Row="1" ItemsSource="{Binding TiposMedidas, Mode=OneWay}" />
+                    </Grid>
+                    <Grid
+                        ColumnSpacing="8"
+                        RowDefinitions="auto,auto"
+                        RowSpacing="8">
+                        <Label Grid.Row="0" Text="Presentación - cantidad" />
                         <Entry
                             Grid.Row="1"
                             Keyboard="Numeric"
@@ -66,12 +81,23 @@
                         ColumnSpacing="8"
                         RowDefinitions="auto,auto"
                         RowSpacing="8">
-                        <Label Grid.Row="0" Text="Precio:" />
+                        <Label Grid.Row="0" Text="Precio por unidad:" />
                         <Entry
                             Grid.Row="1"
                             Keyboard="Numeric"
                             Placeholder="0.00"
                             Text="{Binding Precio, Mode=TwoWay}" />
+                    </Grid>
+                    <Grid
+                        ColumnSpacing="8"
+                        RowDefinitions="auto,auto"
+                        RowSpacing="8">
+                        <Label Grid.Row="0" Text="Cantidad unitaria:" />
+                        <Entry
+                            Grid.Row="1"
+                            Keyboard="Numeric"
+                            Placeholder="0"
+                            Text="{Binding Cantidad, Mode=TwoWay}" />
                     </Grid>
                     <Label
                         x:Name="LbVisibleError"

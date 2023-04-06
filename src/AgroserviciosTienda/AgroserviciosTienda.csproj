@@ -57,6 +57,7 @@
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
 		<PackageReference Include="LiteDB" Version="5.0.16" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+		<PackageReference Include="UnitsNet" Version="5.10.0" />
 	</ItemGroup>
 
 	<ItemGroup>

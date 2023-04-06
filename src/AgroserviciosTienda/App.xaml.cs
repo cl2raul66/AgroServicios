@@ -1,4 +1,6 @@
-﻿namespace AgroserviciosTienda;
+﻿using System.Globalization;
+
+namespace AgroserviciosTienda;
 
 public partial class App : Application
 {
@@ -6,6 +8,10 @@ public partial class App : Application
 	{
 		InitializeComponent();
 
-		MainPage = new AppShell();
+        var culture = new CultureInfo("es-ES");
+        CultureInfo.DefaultThreadCurrentCulture = culture;
+        CultureInfo.DefaultThreadCurrentUICulture = culture;
+
+        MainPage = new AppShell();
 	}
 }

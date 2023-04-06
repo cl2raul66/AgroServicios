@@ -4,6 +4,9 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
+using UnitsNet;
+using UnitsNet.Units;
 
 namespace AgroserviciosTienda.VistaModelos;
 
@@ -46,6 +49,9 @@ public partial class PgProductoAddEditVistaModelo : ObservableValidator
     [Required]
     [MinLength(3)]
     string productoNombre;
+
+    [ObservableProperty]
+    IEnumerable<string> tiposMedidas = Quantity.Names;
 
     [ObservableProperty]
     [Required]
@@ -98,7 +104,7 @@ public partial class PgProductoAddEditVistaModelo : ObservableValidator
             return false;
         }
 
-        var newProucto = new Producto(productoNombre, (int)cantidad, (decimal)precio);
+        var newProucto = new Producto(productoNombre, (int)cantidad, (decimal)precio, Quantity.From(500,LengthUnit.Centimeter));
         var resul = WeakReferenceMessenger.Default.Send<Producto>(newProucto);
         return resul is not null;
     }
