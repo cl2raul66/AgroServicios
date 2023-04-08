@@ -7,6 +7,13 @@
     xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
     Title="Inicio"
     x:DataType="vm:PgInicioVistaModelo">
+    <!--<ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding VerAjustessCommand}"
+            IconImageSource="{StaticResource IcoFontTools}"
+            Text="Agregar"
+            ToolTipProperties.Text="Agregar entrada" />
+    </ContentPage.ToolbarItems>-->
 
     <Grid RowDefinitions="*,auto">
         <ScrollView Grid.Row="0" Padding="16">

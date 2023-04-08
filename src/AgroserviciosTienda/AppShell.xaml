@@ -7,15 +7,15 @@
     Shell.FlyoutBehavior="Disabled">
 
     <TabBar>
-        <Tab Title="Inicio">
-            <ShellContent ContentTemplate="{DataTemplate v:PgInicio}" Route="PgInicio" />
-        </Tab>
-        <Tab Title="Venta">
-            <ShellContent
-                x:Name="PgVenta"
-                ContentTemplate="{DataTemplate v:PgVenta}"
-                Route="PgVenta" />
-        </Tab>
+        <ShellContent
+            Title="Inicio"
+            ContentTemplate="{DataTemplate v:PgInicio}"
+            Route="PgInicio" />
+        <ShellContent
+            x:Name="PgVenta"
+            Title="Venta"
+            ContentTemplate="{DataTemplate v:PgVenta}"
+            Route="PgVenta" />
         <Tab Title="Productos">
             <ShellContent
                 x:Name="PgInventario"
@@ -28,6 +28,11 @@
                 ContentTemplate="{DataTemplate v:PgEntrada}"
                 Route="PgEntrada" />
         </Tab>
+        <ShellContent
+            x:Name="PgAjustes"
+            Title="Ajustes"
+            ContentTemplate="{DataTemplate v:PgAjustes}"
+            Route="PgAjustes" />
     </TabBar>
 
 </Shell>

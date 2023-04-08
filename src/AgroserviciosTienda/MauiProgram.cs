@@ -34,6 +34,7 @@ public static class MauiProgram
 		builder.Services.AddTransient<PgAgregarVenta>();
 		builder.Services.AddTransient<PgProductoAddEdit>();
 		builder.Services.AddTransient<PgContactoAddEdit>();
+		//builder.Services.AddTransient<PgAjustes>();
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif

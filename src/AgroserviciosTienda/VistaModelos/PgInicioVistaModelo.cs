@@ -6,6 +6,12 @@ namespace AgroserviciosTienda.VistaModelos;
 
 public partial class PgInicioVistaModelo : ObservableObject
 {
+    //[RelayCommand]
+    //private async Task VerAjustess()
+    //{
+    //    await Shell.Current.GoToAsync($"//{nameof(PgAjustes)}");
+    //}
+
     [RelayCommand]
     private async Task VerEntradas()
     {

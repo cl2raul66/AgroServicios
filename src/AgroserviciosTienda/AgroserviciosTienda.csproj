@@ -81,6 +81,9 @@
 	  <MauiXaml Update="Resources\Styles\MaterialDesignFontImageSource.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Vistas\Ajustes\PgSetUnidadesMedida.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Vistas\PgAgregarEntrada.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
