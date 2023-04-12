@@ -54,14 +54,14 @@
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="5.0.0" />
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
 		<PackageReference Include="LiteDB" Version="5.0.16" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
-		<PackageReference Include="UnitsNet" Version="5.10.0" />
+		<PackageReference Include="System.Collections" Version="4.3.0" />
+		<PackageReference Include="UnitsNet" Version="5.11.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Servicios\" />
 	  <Folder Include="Utiles\Extension\" />
 	</ItemGroup>
 
@@ -69,7 +69,10 @@
 	  <Compile Update="Vistas\PgContactoAddEdit.xaml.cs">
 	    <DependentUpon>PgContactoAddEdit.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Vistas\PgProductoAddEdit.xaml.cs">
+	  <Compile Update="Vistas\Productos\PgAddProductos.xaml.cs">
+	    <DependentUpon>PgAddProductos.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Vistas\Productos\PgProductoAddEdit.xaml.cs">
 	    <DependentUpon>PgProductoAddEdit.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
@@ -102,7 +105,10 @@
 	  <MauiXaml Update="Vistas\PgInventario.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Vistas\PgProductoAddEdit.xaml">
+	  <MauiXaml Update="Vistas\Productos\PgAddProductos.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Vistas\Productos\PgProductoAddEdit.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Vistas\PgContactoAddEdit.xaml">

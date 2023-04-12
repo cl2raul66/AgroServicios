@@ -1,10 +1,11 @@
 ﻿using AgroserviciosTienda.Modelos;
+using AgroserviciosTienda.Servicios;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Globalization;
 using UnitsNet;
 using UnitsNet.Units;
 
@@ -13,22 +14,29 @@ namespace AgroserviciosTienda.VistaModelos;
 [QueryProperty(nameof(DatosNav), "productodatosNav")]
 public partial class PgProductoAddEditVistaModelo : ObservableValidator
 {
+    readonly IMedidasServicio medidasServ;
+
+    public PgProductoAddEditVistaModelo(IMedidasServicio medidasServicio)
+    {
+        medidasServ = medidasServicio;
+    }
+
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
     {
         base.OnPropertyChanged(e);
 
         if (e.PropertyName == nameof(DatosNav))
         {
-            CurrentProducto = datosNav.Item1;
+            CurrentProducto = DatosNav.Item1;
         }
 
         if (e.PropertyName == nameof(CurrentProducto))
         {
-            if (currentProducto is not null)
+            if (CurrentProducto is not null)
             {
-                ProductoNombre = currentProducto.Nombre;
-                Cantidad = currentProducto.Cantidad;
-                Precio = currentProducto.Precio;
+                ProductoNombre = CurrentProducto.Nombre;
+                Cantidad = CurrentProducto.Cantidad;
+                Precio = CurrentProducto.Precio;
             }
         }
     }
@@ -40,7 +48,7 @@ public partial class PgProductoAddEditVistaModelo : ObservableValidator
     [NotifyPropertyChangedFor(nameof(Titulo))]
     Producto currentProducto;
 
-    public string Titulo => $"Producto - {(currentProducto is null ? "Nuevo" : "Modificar")}";
+    public string Titulo => $"Producto - {(CurrentProducto is null ? "Nuevo" : "Modificar")}";
 
     [ObservableProperty]
     public List<string> productosNombre;
@@ -50,9 +58,19 @@ public partial class PgProductoAddEditVistaModelo : ObservableValidator
     [MinLength(3)]
     string productoNombre;
 
-    [ObservableProperty]
-    IEnumerable<string> tiposMedidas = Quantity.Names;
+    public IEnumerable<string> TiposMedidas => medidasServ.TiposMedidas;
 
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(Unidades))]
+    string selectedTipoMedidas;
+
+    public ObservableCollection<string> Unidades => new(medidasServ.Unidades(SelectedTipoMedidas));
+
+    [ObservableProperty]
+    [Required]
+    [Range(0.01, 10000.00)]
+    double cantidadPresentacion;
+    
     [ObservableProperty]
     [Required]
     [Range(1, 1000)]
@@ -104,7 +122,7 @@ public partial class PgProductoAddEditVistaModelo : ObservableValidator
             return false;
         }
 
-        var newProucto = new Producto(productoNombre, (int)cantidad, (decimal)precio, Quantity.From(500,LengthUnit.Centimeter));
+        var newProucto = new Producto(ProductoNombre, (int)Cantidad, (decimal)Precio, Quantity.From(500, LengthUnit.Centimeter));
         var resul = WeakReferenceMessenger.Default.Send<Producto>(newProucto);
         return resul is not null;
     }

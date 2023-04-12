@@ -28,10 +28,10 @@ public partial class PgAgregarVentaVistaModelo : ObservableValidator
         base.OnPropertyChanged(e);
         if (e.PropertyName == nameof(CurrentVenta))
         {
-            if (currentVenta is not null)
+            if (CurrentVenta is not null)
             {
-                Fecha = currentVenta.Fecha;
-                Productos = new(currentVenta.Productos);
+                Fecha = CurrentVenta.Fecha;
+                Productos = new(CurrentVenta.Productos);
             }
         }
     }
@@ -40,7 +40,7 @@ public partial class PgAgregarVentaVistaModelo : ObservableValidator
     [NotifyPropertyChangedFor(nameof(Titulo))]
     VentaView currentVenta;
 
-    public string Titulo => currentVenta is null ? "Ventas - Nuevo" : "Venta - Modificar";
+    public string Titulo => CurrentVenta is null ? "Ventas - Nuevo" : "Venta - Modificar";
 
     [ObservableProperty]
     [Required]
@@ -70,7 +70,7 @@ public partial class PgAgregarVentaVistaModelo : ObservableValidator
             return;
         }
 
-        var newVenta = new VentaView(fecha, productos.ToList());
+        var newVenta = new VentaView(Fecha, Productos.ToList());
         WeakReferenceMessenger.Default.Send<VentaView>(newVenta);
         await Cancelar();
     }
@@ -84,7 +84,7 @@ public partial class PgAgregarVentaVistaModelo : ObservableValidator
     [RelayCommand]
     private async Task AgregarCliente()
     {
-        Tuple<Contacto, bool, bool> contactodatosnav = new(selectedCliente, false, true);
+        Tuple<Contacto, bool, bool> contactodatosnav = new(SelectedCliente, false, true);
         await Shell.Current.GoToAsync($"{nameof(PgContactoAddEdit)}", parameters: new Dictionary<string, object>() { { "contactodatosnav", contactodatosnav } });
     }
 
@@ -100,14 +100,14 @@ public partial class PgAgregarVentaVistaModelo : ObservableValidator
     [RelayCommand]
     async Task AgregarModificarProducto()
     {
-        Tuple<Producto, bool> productodatosNav = new(selectedProducto, true);
+        Tuple<Producto, bool> productodatosNav = new(SelectedProducto, true);
         await Shell.Current.GoToAsync($"{nameof(PgProductoAddEdit)}", new Dictionary<string, object>() { { "productodatosNav", productodatosNav } });
     }
 
     [RelayCommand]
     private void EliminarProducto()
     {
-        productos.Remove(selectedProducto);
+        Productos.Remove(SelectedProducto);
     }
     #endregion
 }

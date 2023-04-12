@@ -1,5 +1,4 @@
-﻿
-using UnitsNet;
+﻿using UnitsNet;
 
 namespace AgroserviciosTienda.Modelos;
 
@@ -13,6 +12,6 @@ public class Producto
     public Producto(string nombre, int cantidad, decimal precio, IQuantity presentacion)
     {
         Nombre = nombre; Cantidad = cantidad; Precio = precio;
-        Presentacion = presentacion;
+        Presentacion = presentacion; 
     }
 }

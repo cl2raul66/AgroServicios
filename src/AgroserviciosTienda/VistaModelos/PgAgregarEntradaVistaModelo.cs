@@ -35,7 +35,7 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     [NotifyPropertyChangedFor(nameof(Titulo))]
     EntradaView currentEntrada;
 
-    public string Titulo => currentEntrada is null ? "Entrada - Nuevo" : "Entrada - Modificar";
+    public string Titulo => CurrentEntrada is null ? "Entrada - Nuevo" : "Entrada - Modificar";
 
     [ObservableProperty]
     DateTime fecha = DateTime.Now;
@@ -63,14 +63,14 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
         base.OnPropertyChanged(e);
         if (e.PropertyName == nameof(CurrentEntrada))
         {
-            if (currentEntrada is not null)
+            if (CurrentEntrada is not null)
             {
-                Fecha = currentEntrada.Fecha;
-                Productos = new(currentEntrada.Productos);
-                NoFactura = currentEntrada.NoFactura;
-                SelectedProveedor = currentEntrada.Proveedor;
-                CostoFlete = currentEntrada.CostoFlete;
-                CostoCarga = currentEntrada.CostoCarga;
+                Fecha = CurrentEntrada.Fecha;
+                Productos = new(CurrentEntrada.Productos);
+                NoFactura = CurrentEntrada.NoFactura;
+                SelectedProveedor = CurrentEntrada.Proveedor;
+                CostoFlete = CurrentEntrada.CostoFlete;
+                CostoCarga = CurrentEntrada.CostoCarga;
             }
         }
     }
@@ -87,9 +87,9 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
             return;
         }
 
-        EntradaView newEntrada = string.IsNullOrEmpty(noFactura)
-            ? new EntradaView(fecha, productos.ToList())
-            : new EntradaView(fecha, productos.ToList(), noFactura, selectedProveedor, costoFlete, costoCarga);
+        EntradaView newEntrada = string.IsNullOrEmpty(NoFactura)
+            ? new EntradaView(Fecha, Productos.ToList())
+            : new EntradaView(Fecha, Productos.ToList(), NoFactura, SelectedProveedor, CostoFlete, CostoCarga);
 
         WeakReferenceMessenger.Default.Send<EntradaView>(newEntrada);
         await Cancelar();
@@ -104,7 +104,7 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     [RelayCommand]
     private async Task AgregarProveedor()
     {
-        Tuple<Contacto, bool, bool> contactodatosnav = new(selectedProveedor, false, false);
+        Tuple<Contacto, bool, bool> contactodatosnav = new(SelectedProveedor, false, false);
         await Shell.Current.GoToAsync($"{nameof(PgContactoAddEdit)}", parameters: new Dictionary<string, object>() { { "contactodatosnav", contactodatosnav } });
     }
 
@@ -120,14 +120,14 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     [RelayCommand]
     async Task AgregarModificarProducto()
     {
-        Tuple<Producto, bool> productodatosNav = new(selectedProducto, false);
+        Tuple<Producto, bool> productodatosNav = new(SelectedProducto, false);
         await Shell.Current.GoToAsync($"{nameof(PgProductoAddEdit)}", new Dictionary<string, object>() { { "productodatosNav", productodatosNav } });
     }
 
     [RelayCommand]
     private void EliminarProducto()
     {
-        productos.Remove(selectedProducto);
+        Productos.Remove(SelectedProducto);
     }
     #endregion
 }

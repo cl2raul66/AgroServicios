@@ -1,5 +1,8 @@
-﻿using AgroserviciosTienda.VistaModelos;
+﻿using AgroserviciosTienda.Servicios;
+using AgroserviciosTienda.VistaModelos;
+using AgroserviciosTienda.VistaModelos.Ajustes;
 using AgroserviciosTienda.Vistas;
+using AgroserviciosTienda.Vistas.Ajustes;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 
@@ -19,6 +22,8 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 				fonts.AddFont("MaterialDesignIcons.ttf", "MaterialDesignIcons");
 			});
+		builder.Services.AddSingleton<IMedidasServicio, MedidasServicio>();
+
 		builder.Services.AddTransient<PgInicioVistaModelo>();
 		builder.Services.AddTransient<PgEntradaVistaModelo>();
 		builder.Services.AddTransient<PgAgregarEntradaVistaModelo>();
@@ -26,6 +31,7 @@ public static class MauiProgram
 		builder.Services.AddTransient<PgAgregarVentaVistaModelo>();
 		builder.Services.AddTransient<PgProductoAddEditVistaModelo>();
 		builder.Services.AddTransient<PgContactoAddEditVistaModelo>();
+		builder.Services.AddTransient<PgSetUnidadesMedidaVistaModelo>();
 
 		builder.Services.AddTransient<PgInicio>();
 		builder.Services.AddTransient<PgEntrada>();
@@ -34,7 +40,7 @@ public static class MauiProgram
 		builder.Services.AddTransient<PgAgregarVenta>();
 		builder.Services.AddTransient<PgProductoAddEdit>();
 		builder.Services.AddTransient<PgContactoAddEdit>();
-		//builder.Services.AddTransient<PgAjustes>();
+		builder.Services.AddTransient<PgSetUnidadesMedida>();
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif

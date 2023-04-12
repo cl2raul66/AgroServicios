@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="AgroserviciosTienda.Vistas.PgProductoAddEdit"
+    x:Class="AgroserviciosTienda.Vistas.PgAddProductos"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
-    Title="{Binding Titulo, Mode=OneWay}"
-    x:DataType="vm:PgProductoAddEditVistaModelo"
+    Title="{Binding Titulo, Mode=OneTime}"
+    x:DataType="vm:PgAddProductosVistaModelo"
     Shell.PresentationMode="ModalAnimated">
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsVisible="False" />
@@ -25,46 +25,21 @@
                 </Border.StrokeShape>
                 <VerticalStackLayout Spacing="16">
                     <Label FontSize="Subtitle" Text="{Binding Titulo, Mode=OneTime}" />
-                    <Grid RowDefinitions="auto,auto,auto" RowSpacing="8">
-                        <Grid Grid.Row="0" ColumnDefinitions="*,auto">
-                            <Label
-                                Grid.Column="0"
-                                Text="Producto:"
-                                VerticalOptions="Center" />
-                            <Button
-                                x:Name="BtnAddEditProductoNombre"
-                                Grid.Column="1"
-                                Clicked="BtnAddEditProductoNombre_Clicked"
-                                FontFamily="MaterialDesignIcons"
-                                IsVisible="{Binding DatosNav.Item2, Mode=OneWay, Converter={tk:InvertedBoolConverter}}"
-                                Text="{StaticResource IconPlus}"
-                                ToolTipProperties.Text="Mostrar entrada para producto."
-                                VerticalOptions="End" />
-                        </Grid>
+                    <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                        <Label
+                            Grid.Row="0"
+                            Text="Producto:"
+                            VerticalOptions="Center" />
                         <Picker
                             Grid.Row="1"
                             ItemsSource="{Binding ProductosNombre, Mode=OneWay}"
-                            SelectedItem="{Binding ProductoNombre}" />
-                        <Entry
-                            x:Name="EntProductoNombre"
-                            Grid.Row="2"
-                            ClearButtonVisibility="WhileEditing"
-                            IsVisible="false"
-                            Text="{Binding ProductoNombre}" />
+                            SelectedItem="{Binding SelectedProductoNombre}" />
                     </Grid>
                     <Grid
                         ColumnSpacing="8"
                         RowDefinitions="auto,auto"
                         RowSpacing="8">
-                        <Label Grid.Row="0" Text="Presentación:" />
-                        <Picker Grid.Row="1" ItemsSource="{Binding TiposMedidas, Mode=OneWay}" />
-                    </Grid>
-                    <Grid
-                        ColumnSpacing="8"
-                        RowDefinitions="auto,auto"
-                        RowSpacing="8">
-                        <Label Grid.Row="0" Text="Presentación - Medida base:" />
-                        <Picker Grid.Row="1" ItemsSource="{Binding TiposMedidas, Mode=OneWay}" />
+                        <Label Grid.Row="0" Text="{Binding Presentacion, Mode=OneWay, StringFormat='Presentación: {0}', Converter={StaticResource PresentacionToString}}" />
                     </Grid>
                     <Grid
                         ColumnSpacing="8"
@@ -81,23 +56,19 @@
                         ColumnSpacing="8"
                         RowDefinitions="auto,auto"
                         RowSpacing="8">
-                        <Label Grid.Row="0" Text="Precio por unidad:" />
-                        <Entry
-                            Grid.Row="1"
-                            Keyboard="Numeric"
-                            Placeholder="0.00"
-                            Text="{Binding Precio, Mode=TwoWay}" />
+                        <Label Grid.Row="0" Text="Presentación - Medida venta:" />
+                        <Picker Grid.Row="1" ItemsSource="{Binding}" />
                     </Grid>
                     <Grid
                         ColumnSpacing="8"
                         RowDefinitions="auto,auto"
                         RowSpacing="8">
-                        <Label Grid.Row="0" Text="Cantidad unitaria:" />
+                        <Label Grid.Row="0" Text="Precio:" />
                         <Entry
                             Grid.Row="1"
                             Keyboard="Numeric"
-                            Placeholder="0"
-                            Text="{Binding Cantidad, Mode=TwoWay}" />
+                            Placeholder="0.00"
+                            Text="{Binding Precio, Mode=TwoWay}" />
                     </Grid>
                     <Label
                         x:Name="LbVisibleError"
@@ -137,5 +108,4 @@
             </Border>
         </ScrollView>
     </Grid>
-
 </ContentPage>
