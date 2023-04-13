@@ -9,9 +9,4 @@ public partial class PgProductoAddEdit : ContentPage
         InitializeComponent();
         BindingContext = vm;
     }
-
-    private void BtnAddEditProductoNombre_Clicked(object sender, EventArgs e)
-    {
-        EntProductoNombre.IsVisible = true;
-    }
 }

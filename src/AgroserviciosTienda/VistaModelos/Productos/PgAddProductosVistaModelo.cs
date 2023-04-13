@@ -52,7 +52,7 @@ public partial class PgAddProductosVistaModelo : ObservableValidator
     [NotifyPropertyChangedFor(nameof(Titulo))]
     Producto currentProducto;
 
-    public string Titulo => $"Producto - {(CurrentProducto is null ? "Nuevo" : "Modificar")}";
+    public string Titulo => $"Producto - {(CurrentProducto is null ? "Agregar" : "Modificar")}";
 
     [ObservableProperty]
     public List<string> productosNombre;

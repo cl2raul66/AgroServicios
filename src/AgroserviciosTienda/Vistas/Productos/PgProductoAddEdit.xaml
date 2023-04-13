@@ -25,31 +25,25 @@
                 </Border.StrokeShape>
                 <VerticalStackLayout Spacing="16">
                     <Label FontSize="Subtitle" Text="{Binding Titulo, Mode=OneTime}" />
-                    <Grid RowDefinitions="auto,auto,auto" RowSpacing="8">
-                        <Grid Grid.Row="0" ColumnDefinitions="*,auto">
-                            <Label
-                                Grid.Column="0"
-                                Text="Producto:"
-                                VerticalOptions="Center" />
-                            <Button
-                                x:Name="BtnAddEditProductoNombre"
-                                Grid.Column="1"
-                                Clicked="BtnAddEditProductoNombre_Clicked"
-                                FontFamily="MaterialDesignIcons"
-                                IsVisible="{Binding DatosNav.Item2, Mode=OneWay, Converter={tk:InvertedBoolConverter}}"
-                                Text="{StaticResource IconPlus}"
-                                ToolTipProperties.Text="Mostrar entrada para producto."
-                                VerticalOptions="End" />
-                        </Grid>
+                    <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                        <Label
+                            Grid.Row="0"
+                            Text="Producto existente:"
+                            VerticalOptions="Center" />
                         <Picker
                             Grid.Row="1"
                             ItemsSource="{Binding ProductosNombre, Mode=OneWay}"
                             SelectedItem="{Binding ProductoNombre}" />
+                    </Grid>
+                    <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                        <Label
+                            Grid.Row="0"
+                            Text="Producto nuevo:"
+                            VerticalOptions="Center" />
                         <Entry
                             x:Name="EntProductoNombre"
-                            Grid.Row="2"
+                            Grid.Row="1"
                             ClearButtonVisibility="WhileEditing"
-                            IsVisible="false"
                             Text="{Binding ProductoNombre}" />
                     </Grid>
                     <Grid
