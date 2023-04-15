@@ -17,7 +17,11 @@ public partial class PgEntradaVistaModelo : ObservableRecipient
     public PgEntradaVistaModelo(IEntradasRepositorio entradas)
     {
         //IsActive = true;
-        Entradas = new(entradas.GetAll().Select(x => x.ToEntradaView()));
+        Entradas = new();
+        foreach (var item in entradas.GetAll())
+        {
+            Entradas.Add(item.ToEntradaView());
+        }
     }
 
     protected override void OnActivated()
