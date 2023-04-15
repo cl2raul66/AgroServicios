@@ -62,10 +62,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Utiles\Extension\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <Compile Update="Vistas\PgContactoAddEdit.xaml.cs">
 	    <DependentUpon>PgContactoAddEdit.xaml</DependentUpon>
 	  </Compile>

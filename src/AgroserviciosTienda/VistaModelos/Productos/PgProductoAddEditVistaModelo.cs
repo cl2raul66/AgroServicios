@@ -67,10 +67,13 @@ public partial class PgProductoAddEditVistaModelo : ObservableValidator
     public ObservableCollection<string> Unidades => new(medidasServ.Unidades(SelectedTipoMedidas));
 
     [ObservableProperty]
+    string selectedUnidades;
+
+    [ObservableProperty]
     [Required]
     [Range(0.01, 10000.00)]
     double cantidadPresentacion;
-    
+
     [ObservableProperty]
     [Required]
     [Range(1, 1000)]
@@ -122,7 +125,7 @@ public partial class PgProductoAddEditVistaModelo : ObservableValidator
             return false;
         }
 
-        var newProucto = new Producto(ProductoNombre, (int)Cantidad, (decimal)Precio, Quantity.From(500, LengthUnit.Centimeter));
+        var newProucto = new Producto(ProductoNombre, (int)Cantidad, (decimal)Precio, new(SelectedTipoMedidas, SelectedUnidades, CantidadPresentacion));
         var resul = WeakReferenceMessenger.Default.Send<Producto>(newProucto);
         return resul is not null;
     }

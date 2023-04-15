@@ -14,6 +14,9 @@ public class EntradaView
     {
         Fecha = fecha;
         Productos = productos;
+        NoFactura = string.Empty;
+        CostoFlete = 0;
+        CostoCarga = 0;
     }
     public EntradaView(DateTime fecha, List<Producto> productos, string nofactura, Contacto proveedor, decimal costoflete, decimal costocarga)
     {

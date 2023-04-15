@@ -1,4 +1,5 @@
 ﻿using AgroserviciosTienda.Modelos;
+using AgroserviciosTienda.Repositorios;
 using AgroserviciosTienda.Vistas;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -12,8 +13,13 @@ namespace AgroserviciosTienda.VistaModelos;
 [QueryProperty(nameof(CurrentEntrada), "entrada")]
 public partial class PgAgregarEntradaVistaModelo : ObservableValidator
 {
-    public PgAgregarEntradaVistaModelo()
+    readonly IEntradasRepositorio entradasServ;
+
+    public PgAgregarEntradaVistaModelo(IProveedoresRepositorio proveedores, IEntradasRepositorio entradas)
     {
+        Proveedores = new(proveedores.GetAll());
+        entradasServ = entradas;
+
         WeakReferenceMessenger.Default.Register<PgAgregarEntradaVistaModelo, Producto>(this, (r, m) =>
         {
             if (m is not null)
@@ -44,7 +50,7 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     string noFactura;
 
     [ObservableProperty]
-    Contacto? selectedProveedor;
+    Contacto selectedProveedor;
 
     [ObservableProperty]
     ObservableCollection<Contacto> proveedores;
@@ -91,7 +97,9 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
             ? new EntradaView(Fecha, Productos.ToList())
             : new EntradaView(Fecha, Productos.ToList(), NoFactura, SelectedProveedor, CostoFlete, CostoCarga);
 
-        WeakReferenceMessenger.Default.Send<EntradaView>(newEntrada);
+        entradasServ.Insert(new(newEntrada.Fecha, newEntrada.Productos, newEntrada.NoFactura, newEntrada.Proveedor, newEntrada.CostoFlete, newEntrada.CostoCarga));
+
+        //WeakReferenceMessenger.Default.Send<EntradaView>(newEntrada);
         await Cancelar();
     }
 

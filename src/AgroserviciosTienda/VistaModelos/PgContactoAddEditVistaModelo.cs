@@ -1,4 +1,5 @@
 ﻿using AgroserviciosTienda.Modelos;
+using AgroserviciosTienda.Repositorios;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -10,28 +11,35 @@ namespace AgroserviciosTienda.VistaModelos;
 [QueryProperty(nameof(DatosNav), "contactodatosnav")]
 public partial class PgContactoAddEditVistaModelo : ObservableValidator
 {
+    readonly IProveedoresRepositorio proveedoresServ;
+
+    public PgContactoAddEditVistaModelo(IProveedoresRepositorio proveedores)
+    {
+        proveedoresServ = proveedores;
+    }
+
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
     {
         base.OnPropertyChanged(e);
         if (e.PropertyName == nameof(DatosNav))
         {
-            if (datosNav is not null)
+            if (DatosNav is not null)
             {
-                CurrentContacto = datosNav.Item1;
-                visibleAgregar = datosNav.Item2;
-                Titulo = $"{(datosNav.Item3 ? "Cliente" : "Proveedor")} - {(datosNav.Item1 is null ? "Nuevo" :"Modificar" )}";
+                CurrentContacto = DatosNav.Item1;
+                VisibleAgregar = DatosNav.Item2;
+                Titulo = $"{(DatosNav.Item3 ? "Cliente" : "Proveedor")} - {(DatosNav.Item1 is null ? "Nuevo" :"Modificar" )}";
             }
         }
 
         if (e.PropertyName == nameof(CurrentContacto))
         {
-            if (currentContacto is not null)
+            if (CurrentContacto is not null)
             {
-                Nombre = currentContacto.Nombre;
-                Nit = currentContacto.Nit;
-                Telefono = currentContacto.Telefono;
-                Email = currentContacto.EMail;
-                Direccion = currentContacto.Direccion;
+                Nombre = CurrentContacto.Nombre;
+                Nit = CurrentContacto.Nit;
+                Telefono = CurrentContacto.Telefono;
+                Email = CurrentContacto.EMail;
+                Direccion = CurrentContacto.Direccion;
             }
         }
     }
@@ -116,8 +124,10 @@ public partial class PgContactoAddEditVistaModelo : ObservableValidator
             return false;
         }
 
-        var newContacto = new Contacto(nombre, nit, telefono, email, direccion, esEmpresa);
-        var resul = WeakReferenceMessenger.Default.Send<Contacto>(newContacto);
-        return resul is not null;
+        var newContacto = new Contacto(Nombre, Nit, Telefono, Email, Direccion, EsEmpresa);
+        //var resul = WeakReferenceMessenger.Default.Send<Contacto>(newContacto);
+        proveedoresServ.Insert(newContacto);
+
+        return true;
     }
 }

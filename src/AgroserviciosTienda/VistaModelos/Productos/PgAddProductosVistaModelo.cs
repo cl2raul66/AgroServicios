@@ -118,9 +118,10 @@ public partial class PgAddProductosVistaModelo : ObservableValidator
             return false;
         }
 
-        var newProucto = new Producto(SelectedProductoNombre, 1, (decimal)Precio, Quantity.From(Cantidad, LengthUnit.Centimeter));
-        var resul = WeakReferenceMessenger.Default.Send<Producto>(newProucto);
-        return resul is not null;
+        //var newProucto = new Producto(SelectedProductoNombre, 1, (decimal)Precio, Quantity.From(Cantidad, LengthUnit.Centimeter));
+        //var resul = WeakReferenceMessenger.Default.Send<Producto>(newProucto);
+        //return resul is not null;
+        return true;
     }
     #endregion
 }

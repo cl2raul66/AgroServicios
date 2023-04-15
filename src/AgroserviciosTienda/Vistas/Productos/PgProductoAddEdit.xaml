@@ -61,7 +61,10 @@
                         RowDefinitions="auto,auto"
                         RowSpacing="8">
                         <Label Grid.Row="0" Text="Presentación - Medida base:" />
-                        <Picker Grid.Row="1" ItemsSource="{Binding Unidades, Mode=OneWay}" />
+                        <Picker
+                            Grid.Row="1"
+                            ItemsSource="{Binding Unidades, Mode=OneWay}"
+                            SelectedItem="{Binding SelectedUnidades}" />
                     </Grid>
                     <Grid
                         ColumnSpacing="8"
