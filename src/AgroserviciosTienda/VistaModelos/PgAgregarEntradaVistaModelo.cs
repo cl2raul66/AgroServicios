@@ -39,7 +39,7 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Titulo))]
-    EntradaView currentEntrada;
+    Entrada currentEntrada;
 
     public string Titulo => CurrentEntrada is null ? "Entrada - Nuevo" : "Entrada - Modificar";
 
@@ -93,11 +93,9 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
             return;
         }
 
-        EntradaView newEntrada = string.IsNullOrEmpty(NoFactura)
-            ? new EntradaView(Fecha, Productos.ToList())
-            : new EntradaView(Fecha, Productos.ToList(), NoFactura, SelectedProveedor, CostoFlete, CostoCarga);
+        Entrada newEntrada = new(Fecha, Productos.ToList(), NoFactura, SelectedProveedor, CostoFlete, CostoCarga);
 
-        entradasServ.Insert(new(newEntrada.Fecha, newEntrada.Productos, newEntrada.NoFactura, newEntrada.Proveedor, newEntrada.CostoFlete, newEntrada.CostoCarga));
+        entradasServ.Insert(newEntrada);
 
         //WeakReferenceMessenger.Default.Send<EntradaView>(newEntrada);
         await Cancelar();

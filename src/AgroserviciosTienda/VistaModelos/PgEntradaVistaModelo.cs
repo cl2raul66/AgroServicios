@@ -14,13 +14,15 @@ public partial class PgEntradaVistaModelo : ObservableRecipient
 {
     //readonly IEntradasRepositorio entradasServ;
 
-    public PgEntradaVistaModelo(IEntradasRepositorio entradas)
+    public PgEntradaVistaModelo(IEntradasRepositorio entradasRepo)
     {
         //IsActive = true;
-        Entradas = new();
-        foreach (var item in entradas.GetAll())
+        if (entradasRepo.AnyEntrada)
         {
-            Entradas.Add(item.ToEntradaView());
+            foreach (var item in entradasRepo.GetAll())
+            {
+                Entradas.Add(item);
+            }
         }
     }
 
@@ -42,7 +44,7 @@ public partial class PgEntradaVistaModelo : ObservableRecipient
     }
 
     [ObservableProperty]
-    ObservableCollection<EntradaView> entradas;
+    ObservableCollection<Entrada> entradas = new();
 
     [RelayCommand]
     private async Task Agregar()

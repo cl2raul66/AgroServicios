@@ -13,7 +13,7 @@ public class ProveedoresLiteDbServicio : IProveedoresRepositorio
     {
         var cnx = new ConnectionString()
         {
-            Filename = Path.Combine(FileSystem.Current.CacheDirectory, "Proveedores.db")
+            Filename = Path.Combine(FileSystem.Current.AppDataDirectory, "Proveedores.db")
         };
 
         var db = new LiteDatabase(cnx);

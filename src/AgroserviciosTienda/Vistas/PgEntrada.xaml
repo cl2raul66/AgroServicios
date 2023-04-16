@@ -20,17 +20,17 @@
         <ScrollView Grid.Row="0" Padding="16" />
         <ListView ItemsSource="{Binding Entradas, Mode=OneWay}" SelectionMode="None">
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="modelo:EntradaView">
+                <DataTemplate x:DataType="modelo:Entrada">
                     <ViewCell>
                         <VerticalStackLayout Padding="16" Spacing="8">
                             <Label
                                 FontAttributes="Bold"
                                 FontSize="Medium"
                                 Text="{Binding Fecha, StringFormat='{0:d}'}" />
-                            <HorizontalStackLayout Spacing="8">
+                            <!--<HorizontalStackLayout Spacing="8">
                                 <Label FontSize="Body" Text="{Binding Productos.Count, StringFormat='No. Productos: {0}'}" />
                                 <Label FontSize="Body" Text="{Binding Productos, StringFormat='Costo total: {0:N2}', Converter={StaticResource ProductosVentaTotal}}" />
-                            </HorizontalStackLayout>
+                            </HorizontalStackLayout>-->
                         </VerticalStackLayout>
                     </ViewCell>
                 </DataTemplate>
