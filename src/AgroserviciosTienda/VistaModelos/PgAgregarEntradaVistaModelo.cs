@@ -93,9 +93,9 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
             return;
         }
 
-        Entrada newEntrada = new(Fecha, Productos.ToList(), NoFactura, SelectedProveedor, CostoFlete, CostoCarga);
+        //Entrada newEntrada = new(Fecha, Productos.ToList(), NoFactura, SelectedProveedor, CostoFlete, CostoCarga);
 
-        entradasServ.Insert(newEntrada);
+        //entradasServ.Insert(newEntrada);
 
         //WeakReferenceMessenger.Default.Send<EntradaView>(newEntrada);
         await Cancelar();

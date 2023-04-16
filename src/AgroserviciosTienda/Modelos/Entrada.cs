@@ -19,27 +19,27 @@ public class Entrada
     public decimal CostoFlete { get; set; }
     public decimal CostoCarga { get; set; }
 
-    public Entrada(DateTime fecha, List<Producto> productos)
-    {
-        Fecha = fecha;
-        Productos = productos;
-        NoFactura = string.Empty;
-        CostoFlete = 0;
-        CostoCarga = 0;
-    }
-    
-    public Entrada(DateTime fecha, List<Producto> productos, string noFactura, Contacto proveedor, decimal costoFlete, decimal costoCarga)
-    {
-        Fecha = fecha;
-        Productos = productos;
-        NoFactura = noFactura;
-        Proveedor = proveedor;
-        CostoFlete = costoFlete;
-        CostoCarga = costoCarga;
-    }
+    //public Entrada(DateTime fecha, List<Producto> productos)
+    //{
+    //    Fecha = fecha;
+    //    Productos = productos;
+    //    NoFactura = string.Empty;
+    //    CostoFlete = 0;
+    //    CostoCarga = 0;
+    //}
+
+    //public Entrada(DateTime fecha, List<Producto> productos, string noFactura, Contacto proveedor, decimal costoFlete, decimal costoCarga)
+    //{
+    //    Fecha = fecha;
+    //    Productos = productos;
+    //    NoFactura = noFactura;
+    //    Proveedor = proveedor;
+    //    CostoFlete = costoFlete;
+    //    CostoCarga = costoCarga;
+    //}
 
     public Entrada()
     {
-        
+
     }
 }
