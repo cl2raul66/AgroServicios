@@ -21,6 +21,14 @@ public partial class PgAgregarVentaVistaModelo : ObservableValidator
                 Productos.Insert(0, m);
             }
         });
+        
+        WeakReferenceMessenger.Default.Register<PgAgregarVentaVistaModelo, Contacto>(this, (r, m) =>
+        {
+            if (m is not null)
+            {
+                Clientes.Insert(0, m);
+            }
+        });
     }
 
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
@@ -38,7 +46,7 @@ public partial class PgAgregarVentaVistaModelo : ObservableValidator
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Titulo))]
-    VentaView currentVenta;
+    Venta currentVenta;
 
     public string Titulo => CurrentVenta is null ? "Ventas - Nuevo" : "Venta - Modificar";
 
@@ -50,7 +58,7 @@ public partial class PgAgregarVentaVistaModelo : ObservableValidator
     string noFactura;
 
     [ObservableProperty]
-    Contacto? selectedCliente;
+    Contacto selectedCliente;
 
     [ObservableProperty]
     ObservableCollection<Contacto> clientes;
@@ -70,8 +78,8 @@ public partial class PgAgregarVentaVistaModelo : ObservableValidator
             return;
         }
 
-        var newVenta = new VentaView(Fecha, Productos.ToList());
-        WeakReferenceMessenger.Default.Send<VentaView>(newVenta);
+        Venta newVenta = string.IsNullOrEmpty(NoFactura) ? new(Fecha, Productos.ToList()) : new(Fecha, Productos.ToList(), NoFactura, SelectedCliente);
+        WeakReferenceMessenger.Default.Send<Venta>(newVenta);
         await Cancelar();
     }
 

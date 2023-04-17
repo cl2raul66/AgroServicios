@@ -26,6 +26,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<IProveedoresRepositorio, ProveedoresLiteDbServicio>();
 		builder.Services.AddSingleton<IEntradasRepositorio, EntradasLiteDbServicio>();
 		builder.Services.AddSingleton<IMedidasServicio, MedidasServicio>();
+		builder.Services.AddSingleton<IVentasRepositorio, VentasLiteDbServicio>();
 
 		builder.Services.AddTransient<PgInicioVistaModelo>();
 		builder.Services.AddTransient<PgEntradaVistaModelo>();

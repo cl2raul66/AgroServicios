@@ -1,4 +1,5 @@
 ﻿using AgroserviciosTienda.Modelos;
+using AgroserviciosTienda.Repositorios;
 using AgroserviciosTienda.Vistas;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -10,18 +11,23 @@ namespace AgroserviciosTienda.VistaModelos;
 
 public partial class PgVentaVistaModelo : ObservableRecipient
 {
-    public PgVentaVistaModelo()
+    readonly IVentasRepositorio ventasServ;
+
+    public PgVentaVistaModelo(IVentasRepositorio ventasRepo)
     {
         IsActive = true;
+        ventasServ = ventasRepo;
+        Ventas = ventasServ.AnyVenta ? new(ventasServ.GetAll) : new();
     }
 
     protected override void OnActivated()
     {
         base.OnActivated();
-        WeakReferenceMessenger.Default.Register<PgVentaVistaModelo, VentaView>(this, (r, m) =>
+        WeakReferenceMessenger.Default.Register<PgVentaVistaModelo, Venta>(this, (r, m) =>
         {
             if (m is not null)
             {
+                ventasServ.Insert(m);
                 Ventas.Insert(0, m);
             }
         });
@@ -33,10 +39,10 @@ public partial class PgVentaVistaModelo : ObservableRecipient
     }
 
     [ObservableProperty]
-    ObservableCollection<VentaView> ventas = new();
+    ObservableCollection<Venta> ventas;
 
     [ObservableProperty]
-    VentaView selectedVenta;
+    Venta selectedVenta;
 
     [RelayCommand]
     private async Task Agregar()
@@ -47,6 +53,6 @@ public partial class PgVentaVistaModelo : ObservableRecipient
     [RelayCommand]
     private void Eliminar()
     {
-        Ventas.Remove(selectedVenta);
+        Ventas.Remove(SelectedVenta);
     }
 }

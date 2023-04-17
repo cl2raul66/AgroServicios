@@ -23,7 +23,7 @@
             SelectedItem="{Binding SelectedVenta}"
             SelectionMode="Single">
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="modelo:VentaView">
+                <DataTemplate x:DataType="modelo:Venta">
                     <ViewCell>
                         <VerticalStackLayout Padding="16" Spacing="8">
                             <Label
