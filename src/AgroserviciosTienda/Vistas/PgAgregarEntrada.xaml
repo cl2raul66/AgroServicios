@@ -107,11 +107,20 @@
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="modelo:Producto">
                                 <ViewCell>
-                                    <HorizontalStackLayout Padding="16" Spacing="8">
+                                    <VerticalStackLayout
+                                        Padding="4"
+                                        BackgroundColor="AliceBlue"
+                                        Spacing="8">
                                         <Label Text="{Binding Nombre, StringFormat='Producto: {0}'}" />
-                                        <Label Text="{Binding Cantidad, StringFormat='Cantidad: {0}'}" />
-                                        <Label Text="{Binding Precio, StringFormat='Precio: {0}'}" />
-                                    </HorizontalStackLayout>
+                                        <Label  >
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding Cantidad, StringFormat='Cantidad: {0}'}"/>
+                                                    <Span Text="{Binding Precio, StringFormat='Precio: {0}'}"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                    </VerticalStackLayout>
                                 </ViewCell>
                             </DataTemplate>
                         </ListView.ItemTemplate>

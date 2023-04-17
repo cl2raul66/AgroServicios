@@ -22,4 +22,9 @@ public class Producto
         Precio = precio;
         Presentacion = presentacion;
     }
+
+    public Producto()
+    {
+        
+    }
 }

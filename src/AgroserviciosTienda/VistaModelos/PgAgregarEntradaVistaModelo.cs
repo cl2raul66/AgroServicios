@@ -13,12 +13,9 @@ namespace AgroserviciosTienda.VistaModelos;
 [QueryProperty(nameof(CurrentEntrada), "entrada")]
 public partial class PgAgregarEntradaVistaModelo : ObservableValidator
 {
-    readonly IEntradasRepositorio entradasServ;
-
-    public PgAgregarEntradaVistaModelo(IProveedoresRepositorio proveedores, IEntradasRepositorio entradas)
+    public PgAgregarEntradaVistaModelo(IProveedoresRepositorio proveedores)
     {
         Proveedores = new(proveedores.GetAll());
-        entradasServ = entradas;
 
         WeakReferenceMessenger.Default.Register<PgAgregarEntradaVistaModelo, Producto>(this, (r, m) =>
         {
@@ -93,11 +90,11 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
             return;
         }
 
-        //Entrada newEntrada = new(Fecha, Productos.ToList(), NoFactura, SelectedProveedor, CostoFlete, CostoCarga);
+        Entrada newEntrada = new(Fecha, Productos.ToList(), NoFactura, SelectedProveedor, CostoFlete, CostoCarga);
 
         //entradasServ.Insert(newEntrada);
 
-        //WeakReferenceMessenger.Default.Send<EntradaView>(newEntrada);
+        WeakReferenceMessenger.Default.Send<Entrada>(newEntrada);
         await Cancelar();
     }
 

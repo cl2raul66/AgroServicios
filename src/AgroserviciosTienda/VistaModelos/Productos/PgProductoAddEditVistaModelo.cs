@@ -93,6 +93,10 @@ public partial class PgProductoAddEditVistaModelo : ObservableValidator
         if (await Guardar())
         {
             ProductoNombre = string.Empty;
+            CurrentProducto = null;
+            SelectedTipoMedidas = null;
+            SelectedUnidades = null;
+            CantidadPresentacion = 0;
             Cantidad = 0;
             Precio = 0;
         }

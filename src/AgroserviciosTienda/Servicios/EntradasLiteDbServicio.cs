@@ -27,13 +27,7 @@ public class EntradasLiteDbServicio : IEntradasRepositorio
 
     public Entrada Get(Expression<Func<Entrada, bool>> query) => collection.FindOne(query);
 
-    public IEnumerable<Entrada> GetAll()
-    {
-
-        var all = collection.FindAll();
-
-        return all;
-    }
+    public IEnumerable<Entrada> GetAll => collection.FindAll();
 
     public IEnumerable<Entrada> GetByAny(Expression<Func<Entrada, bool>> query) => collection.Find(query);
 

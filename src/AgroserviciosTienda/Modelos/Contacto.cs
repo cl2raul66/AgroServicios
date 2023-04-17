@@ -18,4 +18,9 @@ public class Contacto
         Direccion = direccion;
         EsEmpresa = esempresa;
     }
+
+    public Contacto()
+    {
+        
+    }
 }

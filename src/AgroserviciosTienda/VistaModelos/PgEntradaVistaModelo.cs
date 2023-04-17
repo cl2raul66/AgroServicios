@@ -1,6 +1,5 @@
 ﻿using AgroserviciosTienda.Modelos;
 using AgroserviciosTienda.Repositorios;
-using AgroserviciosTienda.Utiles.Extensiones;
 using AgroserviciosTienda.Vistas;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -12,30 +11,27 @@ namespace AgroserviciosTienda.VistaModelos;
 
 public partial class PgEntradaVistaModelo : ObservableRecipient
 {
-    //readonly IEntradasRepositorio entradasServ;
+    readonly IEntradasRepositorio entradasServ;
 
     public PgEntradaVistaModelo(IEntradasRepositorio entradasRepo)
     {
-        //IsActive = true;
-        if (entradasRepo.AnyEntrada)
-        {
-            foreach (var item in entradasRepo.GetAll())
-            {
-                Entradas.Add(item);
-            }
-        }
+        IsActive = true;
+        entradasServ = entradasRepo;
+
+        Entradas = entradasServ.AnyEntrada ? new(entradasRepo.GetAll) : new();
     }
 
     protected override void OnActivated()
     {
         base.OnActivated();
-        //WeakReferenceMessenger.Default.Register<PgEntradaVistaModelo, EntradaView>(this, (r, m) =>
-        //{
-        //    if (m is not null)
-        //    {
-        //        Entradas.Insert(0, m);
-        //    }
-        //});
+        WeakReferenceMessenger.Default.Register<PgEntradaVistaModelo, Entrada>(this, (r, m) =>
+        {
+            if (m is not null)
+            {
+                entradasServ.Insert(m);
+                Entradas.Insert(0, m);
+            }
+        });
     }
 
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
@@ -44,7 +40,7 @@ public partial class PgEntradaVistaModelo : ObservableRecipient
     }
 
     [ObservableProperty]
-    ObservableCollection<Entrada> entradas = new();
+    ObservableCollection<Entrada> entradas;
 
     [RelayCommand]
     private async Task Agregar()
