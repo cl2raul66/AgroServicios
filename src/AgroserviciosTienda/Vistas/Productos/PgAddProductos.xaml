@@ -35,17 +35,31 @@
                             ItemsSource="{Binding ProductosNombre, Mode=OneWay}"
                             SelectedItem="{Binding SelectedProductoNombre}" />
                     </Grid>
-                    <Grid
-                        ColumnSpacing="8"
-                        RowDefinitions="auto,auto"
-                        RowSpacing="8">
-                        <Label Grid.Row="0" Text="{Binding Presentacion, Mode=OneWay, StringFormat='Presentación: {0}', Converter={StaticResource PresentacionToString}}" />
+                    <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                        <Label
+                            Grid.Row="0"
+                            Text="Modo de venta:"
+                            VerticalOptions="Center" />
+                        <Grid
+                            Grid.Row="1"
+                            ColumnDefinitions="*,*"
+                            ColumnSpacing="8">
+                            <HorizontalStackLayout Grid.Column="0">
+                                <RadioButton x:Name="RbtnPorunidad" GroupName="TipoVenta" />
+                                <Label Text="Por unidad" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout Grid.Column="1">
+                                <RadioButton x:Name="RbtnAgranel" GroupName="TipoVenta" />
+                                <Label Text="A granel" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Grid>
                     </Grid>
                     <Grid
                         ColumnSpacing="8"
+                        IsVisible="{Binding Source={x:Reference RbtnPorunidad}, Path=IsChecked}"
                         RowDefinitions="auto,auto"
                         RowSpacing="8">
-                        <Label Grid.Row="0" Text="Presentación - cantidad" />
+                        <Label Grid.Row="0" Text="Cantidad de unidades:" />
                         <Entry
                             Grid.Row="1"
                             Keyboard="Numeric"
@@ -54,6 +68,26 @@
                     </Grid>
                     <Grid
                         ColumnSpacing="8"
+                        IsVisible="{Binding Source={x:Reference RbtnAgranel}, Path=IsChecked}"
+                        RowDefinitions="auto,auto"
+                        RowSpacing="8">
+                        <Label Grid.Row="0" Text="{Binding Presentacion, Mode=OneWay, StringFormat='Presentación: {0}', Converter={StaticResource PresentacionToString}}" />
+                    </Grid>
+                    <Grid
+                        ColumnSpacing="8"
+                        IsVisible="{Binding Source={x:Reference RbtnAgranel}, Path=IsChecked}"
+                        RowDefinitions="auto,auto"
+                        RowSpacing="8">
+                        <Label Grid.Row="0" Text="Presentación - cantidad:" />
+                        <Entry
+                            Grid.Row="1"
+                            Keyboard="Numeric"
+                            Placeholder="0"
+                            Text="{Binding Cantidad, Mode=TwoWay}" />
+                    </Grid>
+                    <Grid
+                        ColumnSpacing="8"
+                        IsVisible="{Binding Source={x:Reference RbtnAgranel}, Path=IsChecked}"
                         RowDefinitions="auto,auto"
                         RowSpacing="8">
                         <Label Grid.Row="0" Text="Presentación - Medida venta:" />

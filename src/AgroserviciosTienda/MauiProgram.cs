@@ -1,4 +1,5 @@
-﻿using AgroserviciosTienda.Repositorios;
+﻿using AgroserviciosTienda.Modelos;
+using AgroserviciosTienda.Repositorios;
 using AgroserviciosTienda.Servicios;
 using AgroserviciosTienda.VistaModelos;
 using AgroserviciosTienda.VistaModelos.Ajustes;
@@ -23,7 +24,8 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 				fonts.AddFont("MaterialDesignIcons.ttf", "MaterialDesignIcons");
 			});
-		builder.Services.AddSingleton<IProveedoresRepositorio, ProveedoresLiteDbServicio>();
+		builder.Services.AddSingleton<IContactosRepositorio<Proveedor>, ProveedoresLiteDbServicio>();
+		builder.Services.AddSingleton<IContactosRepositorio<Cliente>, ClientesLiteDbServicio>();
 		builder.Services.AddSingleton<IEntradasRepositorio, EntradasLiteDbServicio>();
 		builder.Services.AddSingleton<IMedidasServicio, MedidasServicio>();
 		builder.Services.AddSingleton<IVentasRepositorio, VentasLiteDbServicio>();

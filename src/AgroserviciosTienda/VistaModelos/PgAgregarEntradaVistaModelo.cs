@@ -13,7 +13,7 @@ namespace AgroserviciosTienda.VistaModelos;
 [QueryProperty(nameof(CurrentEntrada), "entrada")]
 public partial class PgAgregarEntradaVistaModelo : ObservableValidator
 {
-    public PgAgregarEntradaVistaModelo(IProveedoresRepositorio proveedores)
+    public PgAgregarEntradaVistaModelo(IContactosRepositorio<Proveedor> proveedores)
     {
         Proveedores = new(proveedores.GetAll());
 

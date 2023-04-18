@@ -2,7 +2,6 @@
 using AgroserviciosTienda.Repositorios;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -11,9 +10,9 @@ namespace AgroserviciosTienda.VistaModelos;
 [QueryProperty(nameof(DatosNav), "contactodatosnav")]
 public partial class PgContactoAddEditVistaModelo : ObservableValidator
 {
-    readonly IProveedoresRepositorio proveedoresServ;
+    readonly IContactosRepositorio<Proveedor> proveedoresServ;
 
-    public PgContactoAddEditVistaModelo(IProveedoresRepositorio proveedores)
+    public PgContactoAddEditVistaModelo(IContactosRepositorio<Proveedor> proveedores)
     {
         proveedoresServ = proveedores;
     }
@@ -124,7 +123,7 @@ public partial class PgContactoAddEditVistaModelo : ObservableValidator
             return false;
         }
 
-        var newContacto = new Contacto(Nombre, Nit, Telefono, Email, Direccion, EsEmpresa);
+        var newContacto = new Proveedor(Nombre, Nit, Telefono, Email, Direccion, EsEmpresa);
         //var resul = WeakReferenceMessenger.Default.Send<Contacto>(newContacto);
         proveedoresServ.Insert(newContacto);
 

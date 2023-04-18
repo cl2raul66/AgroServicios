@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace AgroserviciosTienda.Servicios;
 
-public class ProveedoresLiteDbServicio : IProveedoresRepositorio
+public class ProveedoresLiteDbServicio : IContactosRepositorio<Proveedor>
 {
     readonly ILiteCollection<Contacto> collection;
 
@@ -22,11 +22,11 @@ public class ProveedoresLiteDbServicio : IProveedoresRepositorio
 
     public bool AnyContacto() => collection.Count() > 0;
 
-    public Contacto Get(Expression<Func<Contacto, bool>> query) => collection.FindOne(query);
+    public Proveedor Get(Expression<Func<Contacto, bool>> query) => collection.FindOne(query) as Proveedor;
 
-    public IEnumerable<Contacto> GetAll() => collection.FindAll();
+    public IEnumerable<Proveedor> GetAll() => collection.FindAll().OfType<Proveedor>();
 
-    public IEnumerable<Contacto> GetByAny(Expression<Func<Contacto, bool>> query) => collection.Find(query);
+    public IEnumerable<Proveedor> GetByAny(Expression<Func<Contacto, bool>> query) => collection.Find(query).OfType<Proveedor>();
 
     public void Insert(Contacto entity) => collection.Insert(entity);
 }
