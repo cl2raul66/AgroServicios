@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="AgroserviciosTienda.Vistas.PgProductoAddEdit"
+    x:Class="AgroserviciosTienda.Vistas.PgProductosEntradas"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
-    Title="{Binding Titulo, Mode=OneTime}"
-    x:DataType="vm:PgProductoAddEditVistaModelo"
-    Shell.PresentationMode="ModalAnimated">
-    <Shell.BackButtonBehavior>
-        <BackButtonBehavior IsVisible="False" />
-    </Shell.BackButtonBehavior>
+    Title="Agregar - Producto"
+    x:DataType="vm:PgProductosEntradasVistaModelo">
 
     <Grid Padding="16">
         <ScrollView>
@@ -24,7 +20,7 @@
                     <RoundRectangle CornerRadius="8" />
                 </Border.StrokeShape>
                 <VerticalStackLayout Spacing="16">
-                    <Label FontSize="Subtitle" Text="{Binding Titulo, Mode=OneTime}" />
+                    <Label FontSize="Subtitle" Text="Agregar - Producto" />
                     <Grid RowDefinitions="auto,auto" RowSpacing="8">
                         <Label
                             Grid.Row="0"

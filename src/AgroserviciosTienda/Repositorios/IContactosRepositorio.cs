@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace AgroserviciosTienda.Repositorios;
 
-public interface IContactosRepositorio<T> where T : Contacto
+public interface IContactosRepositorio<T> where T : class
 {
     bool AnyContacto();
     T Get(Expression<Func<Contacto, bool>> query);

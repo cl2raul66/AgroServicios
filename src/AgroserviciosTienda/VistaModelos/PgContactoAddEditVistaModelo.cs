@@ -19,7 +19,7 @@ public partial class PgContactoAddEditVistaModelo : ObservableValidator
 
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
     {
-        base.OnPropertyChanged(e);
+        //base.OnPropertyChanged(e);
         if (e.PropertyName == nameof(DatosNav))
         {
             if (DatosNav is not null)

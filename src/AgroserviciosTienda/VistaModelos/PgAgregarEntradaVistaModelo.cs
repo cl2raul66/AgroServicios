@@ -10,7 +10,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AgroserviciosTienda.VistaModelos;
 
-[QueryProperty(nameof(CurrentEntrada), "entrada")]
 public partial class PgAgregarEntradaVistaModelo : ObservableValidator
 {
     public PgAgregarEntradaVistaModelo(IContactosRepositorio<Proveedor> proveedores)
@@ -35,19 +34,13 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     }
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(Titulo))]
-    Entrada currentEntrada;
-
-    public string Titulo => CurrentEntrada is null ? "Entrada - Nuevo" : "Entrada - Modificar";
-
-    [ObservableProperty]
     DateTime fecha = DateTime.Now;
 
     [ObservableProperty]
     string noFactura;
 
     [ObservableProperty]
-    Contacto selectedProveedor;
+    Contacto selectedProveedor = null;
 
     [ObservableProperty]
     ObservableCollection<Contacto> proveedores;
@@ -60,23 +53,6 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
 
     [ObservableProperty]
     bool visibleError;
-
-    protected override void OnPropertyChanged(PropertyChangedEventArgs e)
-    {
-        base.OnPropertyChanged(e);
-        if (e.PropertyName == nameof(CurrentEntrada))
-        {
-            if (CurrentEntrada is not null)
-            {
-                Fecha = CurrentEntrada.Fecha;
-                Productos = new(CurrentEntrada.Productos);
-                NoFactura = CurrentEntrada.NoFactura;
-                SelectedProveedor = CurrentEntrada.Proveedor;
-                CostoFlete = CurrentEntrada.CostoFlete;
-                CostoCarga = CurrentEntrada.CostoCarga;
-            }
-        }
-    }
 
     [RelayCommand]
     private async void Guardar()
@@ -107,8 +83,10 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     [RelayCommand]
     private async Task AgregarProveedor()
     {
-        Tuple<Contacto, bool, bool> contactodatosnav = new(SelectedProveedor, false, false);
-        await Shell.Current.GoToAsync($"{nameof(PgContactoAddEdit)}", parameters: new Dictionary<string, object>() { { "contactodatosnav", contactodatosnav } });
+        //objeto Contacto, visibleAgregar bool y esCliente bool
+        Tuple<Contacto, bool, bool> contactodatosnav = SelectedProveedor is null ? new(new(), Proveedores.Count > 0, false) : new(SelectedProveedor, Proveedores.Count > 0, false);
+
+        await Shell.Current.GoToAsync($"{nameof(PgContactoAddEdit)}", new Dictionary<string, object>() { { "contactodatosnav", contactodatosnav } });
     }
 
     #region productos
@@ -123,8 +101,7 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     [RelayCommand]
     async Task AgregarModificarProducto()
     {
-        Tuple<ProductoEntrada, bool> productodatosNav = new(SelectedProducto, false);
-        await Shell.Current.GoToAsync($"{nameof(PgProductoAddEdit)}", new Dictionary<string, object>() { { "productodatosNav", productodatosNav } });
+        await Shell.Current.GoToAsync($"{nameof(PgProductosEntradas)}", true);
     }
 
     [RelayCommand]

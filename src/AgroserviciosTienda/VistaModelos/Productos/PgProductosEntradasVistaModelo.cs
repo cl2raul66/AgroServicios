@@ -9,44 +9,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AgroserviciosTienda.VistaModelos;
 
-[QueryProperty(nameof(DatosNav), "productodatosNav")]
-public partial class PgProductoAddEditVistaModelo : ObservableValidator
+public partial class PgProductosEntradasVistaModelo : ObservableValidator
 {
     readonly IMedidasServicio medidasServ;
 
-    public PgProductoAddEditVistaModelo(IMedidasServicio medidasServicio)
+    public PgProductosEntradasVistaModelo(IMedidasServicio medidasServicio)
     {
         medidasServ = medidasServicio;
     }
-
-    protected override void OnPropertyChanged(PropertyChangedEventArgs e)
-    {
-        base.OnPropertyChanged(e);
-
-        if (e.PropertyName == nameof(DatosNav))
-        {
-            CurrentProducto = DatosNav.Item1;
-        }
-
-        if (e.PropertyName == nameof(CurrentProducto))
-        {
-            if (CurrentProducto is not null)
-            { 
-                ProductoNombre = CurrentProducto.ElProducto.Nombre;
-                Cantidad = CurrentProducto.CantidadUnidad;
-                Precio = CurrentProducto.Precio;
-            }
-        }
-    }
-
-    [ObservableProperty]
-    Tuple<ProductoEntrada, bool> datosNav; //Producto currentProducto, bool esVender
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(Titulo))]
-    ProductoEntrada currentProducto;
-
-    public string Titulo => $"Producto - {(CurrentProducto is null ? "Agregar" : "Modificar")}";
 
     [ObservableProperty]
     public List<string> productosNombre;
@@ -91,7 +61,6 @@ public partial class PgProductoAddEditVistaModelo : ObservableValidator
         if (await Guardar())
         {
             ProductoNombre = string.Empty;
-            CurrentProducto = null;
             SelectedTipoMedidas = null;
             SelectedUnidades = null;
             CantidadPresentacion = 0;
