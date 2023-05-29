@@ -4,35 +4,42 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:v="clr-namespace:AgroserviciosTienda.Vistas"
-    Shell.FlyoutBehavior="Disabled">
+    Shell.FlyoutBehavior="Disabled"
+    Shell.FlyoutItemIsVisible="False">
 
     <TabBar>
-        <ShellContent
-            Title="Inicio"
-            ContentTemplate="{DataTemplate v:PgInicio}"
-            Route="PgInicio" />
-        <ShellContent
-            x:Name="PgVenta"
-            Title="Venta"
-            ContentTemplate="{DataTemplate v:PgVenta}"
-            Route="PgVenta" />
+        <Tab Title="Inicio">
+            <Tab.Icon>
+                <FontImageSource FontFamily="icofont" Glyph="{StaticResource UiHome}" />
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate v:PgInicio}" Route="PgInicio" />
+        </Tab>
+        <Tab Title="Ventas">
+            <Tab.Icon>
+                <FontImageSource FontFamily="icofont" Glyph="{StaticResource SaleDiscount}" />
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate v:PgVenta}" Route="PgVenta" />
+        </Tab>
         <Tab Title="Productos">
-            <ShellContent
+            <Tab.Icon>
+                <FontImageSource FontFamily="icofont" Glyph="{StaticResource Inbox}" />
+            </Tab.Icon>
+            <!--<ShellContent
                 x:Name="PgInventario"
                 Title="Inventario"
                 ContentTemplate="{DataTemplate v:PgInventario}"
-                Route="PgInventario" />
+                Route="PgInventario" />-->
             <ShellContent
-                x:Name="PgEntrada"
                 Title="Entradas"
                 ContentTemplate="{DataTemplate v:PgEntrada}"
                 Route="PgEntrada" />
         </Tab>
-        <ShellContent
-            x:Name="PgAjustes"
-            Title="Ajustes"
-            ContentTemplate="{DataTemplate v:PgAjustes}"
-            Route="PgAjustes" />
+        <Tab Title="Ajustes">
+            <Tab.Icon>
+                <FontImageSource FontFamily="icofont" Glyph="{StaticResource UiSettings}" />
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate v:PgAjustes}" Route="PgAjustes" />
+        </Tab>
     </TabBar>
 
 </Shell>

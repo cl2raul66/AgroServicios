@@ -10,30 +10,12 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
-                <ResourceDictionary Source="Resources/Styles/MaterialDesignGlyph.xaml" />
-                <ResourceDictionary Source="Resources/Styles/MaterialDesignFontImageSource.xaml" />
+                <ResourceDictionary Source="Resources/Styles/icofont.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <cvt:ProductosVentaTotalConverter x:Key="ProductosVentaTotal" />
             <cvt:BoolToColorConverter x:Key="BoolToColor" />
             <cvt:PresentacionToStringConverter x:Key="PresentacionToString" />
-            <FontImageSource
-                x:Key="AgregarIcon"
-                FontFamily="MaterialDesignIcons"
-                Glyph="{StaticResource IconPlus}"
-                Size="44"
-                Color="White" />
-            <FontImageSource
-                x:Key="ModificarIcon"
-                FontFamily="MaterialDesignIcons"
-                Glyph="{StaticResource IconFileEdit}"
-                Size="44"
-                Color="White" />
-            <FontImageSource
-                x:Key="EliminarIcon"
-                FontFamily="MaterialDesignIcons"
-                Glyph="{StaticResource IconDelete}"
-                Size="44"
-                Color="White" />
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

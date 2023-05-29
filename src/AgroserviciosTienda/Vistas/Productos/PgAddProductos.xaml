@@ -62,6 +62,7 @@
                         <Label Grid.Row="0" Text="Cantidad de unidades:" />
                         <Entry
                             Grid.Row="1"
+                            ClearButtonVisibility="WhileEditing"
                             Keyboard="Numeric"
                             Placeholder="0"
                             Text="{Binding Cantidad, Mode=TwoWay}" />
@@ -81,6 +82,7 @@
                         <Label Grid.Row="0" Text="Presentación - cantidad:" />
                         <Entry
                             Grid.Row="1"
+                            ClearButtonVisibility="WhileEditing"
                             Keyboard="Numeric"
                             Placeholder="0"
                             Text="{Binding Cantidad, Mode=TwoWay}" />
@@ -100,6 +102,7 @@
                         <Label Grid.Row="0" Text="Precio:" />
                         <Entry
                             Grid.Row="1"
+                            ClearButtonVisibility="WhileEditing"
                             Keyboard="Numeric"
                             Placeholder="0.00"
                             Text="{Binding Precio, Mode=TwoWay}" />

@@ -13,13 +13,13 @@
 public class Entrada
 {
     public DateTime Fecha { get; set; }
-    public List<Producto> Productos { get; set; }
+    public List<ProductoEntrada> Productos { get; set; }
     public string NoFactura { get; set; }
     public Contacto Proveedor { get; set; }
     public decimal CostoFlete { get; set; }
     public decimal CostoCarga { get; set; }
 
-    public Entrada(DateTime fecha, List<Producto> productos)
+    public Entrada(DateTime fecha, List<ProductoEntrada> productos)
     {
         Fecha = fecha;
         Productos = productos;
@@ -28,7 +28,7 @@ public class Entrada
         CostoCarga = 0;
     }
 
-    public Entrada(DateTime fecha, List<Producto> productos, string noFactura, Contacto proveedor, decimal costoFlete, decimal costoCarga)
+    public Entrada(DateTime fecha, List<ProductoEntrada> productos, string noFactura, Contacto proveedor, decimal costoFlete, decimal costoCarga)
     {
         Fecha = fecha;
         Productos = productos;

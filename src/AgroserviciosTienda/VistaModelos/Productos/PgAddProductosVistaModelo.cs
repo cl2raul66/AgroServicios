@@ -38,7 +38,7 @@ public partial class PgAddProductosVistaModelo : ObservableValidator
         {
             if (CurrentProducto is not null)
             {
-                SelectedProductoNombre = CurrentProducto.Nombre;
+                SelectedProductoNombre = CurrentProducto.ElProducto.Nombre;
                 Cantidad = CurrentProducto.Cantidad;
                 Precio = CurrentProducto.Precio;
             }
@@ -46,11 +46,11 @@ public partial class PgAddProductosVistaModelo : ObservableValidator
     }
 
     [ObservableProperty]
-    Tuple<Producto, bool> datosNav; //Producto currentProducto, bool esVender
+    Tuple<ProductoVenta, bool> datosNav; //Producto currentProducto, bool esVender
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Titulo))]
-    Producto currentProducto;
+    ProductoVenta currentProducto;
 
     public string Titulo => $"Producto - {(CurrentProducto is null ? "Agregar" : "Modificar")}";
 
@@ -75,7 +75,7 @@ public partial class PgAddProductosVistaModelo : ObservableValidator
     [ObservableProperty]
     [Required]
     [Range(1.00, 19999.99)]
-    decimal precio;
+    double precio;
 
     [ObservableProperty]
     bool visibleError;

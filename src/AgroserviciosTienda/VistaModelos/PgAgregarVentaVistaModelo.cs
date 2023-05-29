@@ -14,7 +14,7 @@ public partial class PgAgregarVentaVistaModelo : ObservableValidator
 {
     public PgAgregarVentaVistaModelo()
     {
-        WeakReferenceMessenger.Default.Register<PgAgregarVentaVistaModelo, Producto>(this, (r, m) =>
+        WeakReferenceMessenger.Default.Register<PgAgregarVentaVistaModelo, ProductoVenta>(this, (r, m) =>
         {
             if (m is not null)
             {
@@ -100,15 +100,15 @@ public partial class PgAgregarVentaVistaModelo : ObservableValidator
     [ObservableProperty]
     [Required]
     [MinLength(1)]
-    ObservableCollection<Producto> productos = new();
+    ObservableCollection<ProductoVenta> productos = new();
 
     [ObservableProperty]
-    Producto selectedProducto;
+    ProductoVenta selectedProducto;
 
     [RelayCommand]
     async Task AgregarModificarProducto()
     {
-        Tuple<Producto, bool> productodatosNav = new(SelectedProducto, true);
+        Tuple<ProductoVenta, bool> productodatosNav = new(SelectedProducto, true);
         await Shell.Current.GoToAsync($"{nameof(PgAddProductos)}", new Dictionary<string, object>() { { "productodatosNav", productodatosNav } });
     }
 

@@ -92,12 +92,22 @@
                         SelectedItem="{Binding SelectedProducto}"
                         SelectionMode="Single">
                         <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="modelo:Producto">
+                            <DataTemplate x:DataType="modelo:ProductoVenta">
                                 <ViewCell>
                                     <HorizontalStackLayout Padding="16" Spacing="8">
-                                        <Label Text="{Binding Nombre, StringFormat='Producto: {0}'}" />
-                                        <Label Text="{Binding Cantidad, StringFormat='Cantidad: {0}'}" />
-                                        <Label Text="{Binding Precio, StringFormat='Precio: {0}'}" />
+                                        <Label Text="{Binding ElProducto.Nombre, StringFormat='Producto: {0}'}" />
+                                        <Label Text="{Binding Cantidad, StringFormat='Cantidad unitaria: {0}'}" />
+                                        <Label>
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="Unidad: "/>
+                                                    <Span Text="{Binding ElProducto.Presentacion.Unidad}"/>
+                                                    <Span Text=" "/>
+                                                    <Span Text="{Binding ElProducto.Presentacion.Medida}"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label Text="{Binding Precio , StringFormat='Precio: {0}'}" />
                                     </HorizontalStackLayout>
                                 </ViewCell>
                             </DataTemplate>

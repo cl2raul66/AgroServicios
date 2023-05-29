@@ -17,11 +17,11 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     {
         Proveedores = new(proveedores.GetAll());
 
-        WeakReferenceMessenger.Default.Register<PgAgregarEntradaVistaModelo, Producto>(this, (r, m) =>
+        WeakReferenceMessenger.Default.Register<PgAgregarEntradaVistaModelo, ProductoEntrada>(this, (r, m) =>
         {
             if (m is not null)
             {
-                var idx = productos.IndexOf(productos.FirstOrDefault(x => x.Nombre == m.Nombre));
+                var idx = productos.IndexOf(productos.FirstOrDefault(x => x.ElProducto.Nombre == m.ElProducto.Nombre));
                 if (idx > -1)
                 {
                     Productos[idx] = m;
@@ -115,15 +115,15 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     [ObservableProperty]
     [Required]
     [MinLength(1)]
-    ObservableCollection<Producto> productos = new();
+    ObservableCollection<ProductoEntrada> productos = new();
 
     [ObservableProperty]
-    Producto selectedProducto;
+    ProductoEntrada selectedProducto;
 
     [RelayCommand]
     async Task AgregarModificarProducto()
     {
-        Tuple<Producto, bool> productodatosNav = new(SelectedProducto, false);
+        Tuple<ProductoEntrada, bool> productodatosNav = new(SelectedProducto, false);
         await Shell.Current.GoToAsync($"{nameof(PgProductoAddEdit)}", new Dictionary<string, object>() { { "productodatosNav", productodatosNav } });
     }
 

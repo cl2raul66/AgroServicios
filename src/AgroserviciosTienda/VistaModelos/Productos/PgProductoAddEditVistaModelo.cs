@@ -6,8 +6,6 @@ using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using UnitsNet;
-using UnitsNet.Units;
 
 namespace AgroserviciosTienda.VistaModelos;
 
@@ -33,20 +31,20 @@ public partial class PgProductoAddEditVistaModelo : ObservableValidator
         if (e.PropertyName == nameof(CurrentProducto))
         {
             if (CurrentProducto is not null)
-            {
-                ProductoNombre = CurrentProducto.Nombre;
-                Cantidad = CurrentProducto.Cantidad;
+            { 
+                ProductoNombre = CurrentProducto.ElProducto.Nombre;
+                Cantidad = CurrentProducto.CantidadUnidad;
                 Precio = CurrentProducto.Precio;
             }
         }
     }
 
     [ObservableProperty]
-    Tuple<Producto, bool> datosNav; //Producto currentProducto, bool esVender
+    Tuple<ProductoEntrada, bool> datosNav; //Producto currentProducto, bool esVender
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Titulo))]
-    Producto currentProducto;
+    ProductoEntrada currentProducto;
 
     public string Titulo => $"Producto - {(CurrentProducto is null ? "Agregar" : "Modificar")}";
 
@@ -82,7 +80,7 @@ public partial class PgProductoAddEditVistaModelo : ObservableValidator
     [ObservableProperty]
     [Required]
     [Range(1, 19999.99)]
-    decimal precio;
+    double precio;
 
     [ObservableProperty]
     bool visibleError;
@@ -129,8 +127,9 @@ public partial class PgProductoAddEditVistaModelo : ObservableValidator
             return false;
         }
 
-        var newProucto = new Producto(ProductoNombre, (int)Cantidad, (decimal)Precio, new(SelectedTipoMedidas, SelectedUnidades, CantidadPresentacion));
-        var resul = WeakReferenceMessenger.Default.Send<Producto>(newProucto);
+        var p = new Producto() { Nombre = ProductoNombre, Presentacion = new Empaque(SelectedTipoMedidas, SelectedUnidades, CantidadPresentacion) };
+        var newProducto = new ProductoEntrada() { ElProducto = p, CantidadUnidad = Cantidad, Precio = Precio };
+        var resul = WeakReferenceMessenger.Default.Send<ProductoEntrada>(newProducto);
         return resul is not null;
     }
     #endregion
