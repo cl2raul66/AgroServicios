@@ -1,8 +1,8 @@
 namespace AgroserviciosTienda.Vistas;
 
-public partial class PgAjustes : ContentPage
+public partial class PgVentas : ContentPage
 {
-	public PgAjustes()
+	public PgVentas()
 	{
 		InitializeComponent();
 	}

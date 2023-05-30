@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AgroserviciosTienda.VistaModelos;
 
-public partial class PgInicioVistaModelo : ObservableRecipient
+public partial class PgInventarioVistaModelo : ObservableRecipient
 {
     protected override void OnActivated()
     {
@@ -19,12 +19,6 @@ public partial class PgInicioVistaModelo : ObservableRecipient
     [RelayCommand]
     async Task VerAgregarentrada()
     {
-        await Shell.Current.GoToAsync($"//{nameof(PgInventario)}/{nameof(PgAgregarEntrada)}", true);
-    }
-    
-    [RelayCommand]
-    async Task VerRealizarventa()
-    {
-        await Shell.Current.GoToAsync($"//{nameof(PgVentas)}", true);
+        await Shell.Current.GoToAsync(nameof(PgAgregarEntrada), true);
     }
 }

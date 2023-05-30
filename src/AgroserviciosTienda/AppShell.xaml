@@ -3,6 +3,7 @@
     x:Class="AgroserviciosTienda.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:AgroserviciosTienda"
     xmlns:v="clr-namespace:AgroserviciosTienda.Vistas"
     Shell.FlyoutBehavior="Disabled"
     Shell.FlyoutItemIsVisible="False">
@@ -18,21 +19,13 @@
             <Tab.Icon>
                 <FontImageSource FontFamily="icofont" Glyph="{StaticResource SaleDiscount}" />
             </Tab.Icon>
-            <ShellContent ContentTemplate="{DataTemplate v:PgVenta}" Route="PgVenta" />
+            <ShellContent ContentTemplate="{DataTemplate v:PgVentas}" Route="PgVentas" />
         </Tab>
         <Tab Title="Productos">
             <Tab.Icon>
-                <FontImageSource FontFamily="icofont" Glyph="{StaticResource Inbox}" />
+                <FontImageSource FontFamily="icofont" Glyph="{StaticResource Box}" />
             </Tab.Icon>
-            <!--<ShellContent
-                x:Name="PgInventario"
-                Title="Inventario"
-                ContentTemplate="{DataTemplate v:PgInventario}"
-                Route="PgInventario" />-->
-            <ShellContent
-                Title="Entradas"
-                ContentTemplate="{DataTemplate v:PgEntrada}"
-                Route="PgEntrada" />
+            <ShellContent ContentTemplate="{DataTemplate v:PgInventario}" Route="PgInventario" />
         </Tab>
         <Tab Title="Ajustes">
             <Tab.Icon>

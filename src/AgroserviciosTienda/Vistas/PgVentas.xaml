@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="AgroserviciosTienda.Vistas.PgInicio"
+    x:Class="AgroserviciosTienda.Vistas.PgVentas"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
-    Title="Inicio"
-    x:DataType="vm:PgInicioVistaModelo"
+    Title="Ventas"
     Shell.NavBarIsVisible="False">
 
     <Grid
@@ -22,7 +19,7 @@
                 <Label
                     Padding="8"
                     FontSize="Subtitle"
-                    Text="Inicio"
+                    Text="Ventas"
                     TextColor="{StaticResource Primary}"
                     VerticalOptions="Center" />
             </Grid>
@@ -34,14 +31,7 @@
                     FontSize="Subtitle"
                     Text="Accesos rápidos:"
                     TextColor="{StaticResource Primary}" />
-                <Button
-                    Command="{Binding VerAgregarentradaCommand}"
-                    FontSize="Subtitle"
-                    Text="Agregar entrada de productos" />
-                <Button
-                    Command="{Binding VerRealizarventaCommand}"
-                    FontSize="Subtitle"
-                    Text="Realizar venta de productos" />
+                <Button FontSize="Subtitle" Text="Realizar venta de productos" />
             </VerticalStackLayout>
         </Frame>
     </Grid>

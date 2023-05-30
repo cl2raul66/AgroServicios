@@ -3,30 +3,67 @@
     x:Class="AgroserviciosTienda.Vistas.PgInventario"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Inventario de productos">
+    xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
+    Title="Inventario"
+    x:DataType="vm:PgInventarioVistaModelo"
+    Shell.NavBarIsVisible="False">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem
-            Command="{Binding}"
-            IconImageSource="{StaticResource IcoFontThermometer}"
-            Text="Agregar"
-            ToolTipProperties.Text="Agregar entrada" />
-    </ContentPage.ToolbarItems>
-
-    <Grid RowDefinitions="*,auto">
-        <ScrollView Grid.Row="0" Padding="16" />
-
-        <Grid
-            Grid.Row="1"
-            Padding="16"
-            BackgroundColor="{StaticResource Primary}">
-            <HorizontalStackLayout HorizontalOptions="Center" Spacing="8">
+    <Grid
+        Padding="16"
+        RowDefinitions="auto,*,auto"
+        RowSpacing="16">
+        <Frame
+            Padding="8,4"
+            CornerRadius="8"
+            HorizontalOptions="Fill">
+            <Grid ColumnDefinitions="*,auto">
                 <Label
-                    FontSize="Micro"
-                    Text="by RandA Media Lab, Group"
-                    TextColor="{StaticResource White}" />
-            </HorizontalStackLayout>
-        </Grid>
+                    Padding="8"
+                    FontSize="Subtitle"
+                    Text="Inventario"
+                    TextColor="{StaticResource Primary}"
+                    VerticalOptions="Center" />
+                <HorizontalStackLayout
+                    Grid.Column="1"
+                    Margin="0"
+                    Padding="0"
+                    Spacing="0">
+                    <Button
+                        Padding="2"
+                        BackgroundColor="Transparent"
+                        FontFamily="icofont"
+                        FontSize="Subtitle"
+                        Text="{StaticResource ChartHistogramAlt}"
+                        TextColor="{StaticResource Primary}" />
+                    <Label
+                        FontFamily="icofont"
+                        FontSize="Title"
+                        Text="|"
+                        TextColor="{StaticResource Gray400}"
+                        VerticalOptions="Center" />
+                    <Button
+                        Padding="2"
+                        BackgroundColor="Transparent"
+                        FontFamily="icofont"
+                        FontSize="Subtitle"
+                        Text="{StaticResource Inbox}"
+                        TextColor="{StaticResource Secondary}" />
+                </HorizontalStackLayout>
+            </Grid>
+        </Frame>
+        <Frame Grid.Row="2" Padding="12,16">
+            <VerticalStackLayout Spacing="16">
+                <Label
+                    Padding="8,0"
+                    FontSize="Subtitle"
+                    Text="Accesos rápidos:"
+                    TextColor="{StaticResource Primary}" />
+                <Button
+                    Command="{Binding VerAgregarentradaCommand}"
+                    FontSize="Subtitle"
+                    Text="Agregar entrada de productos" />
+            </VerticalStackLayout>
+        </Frame>
     </Grid>
 
 </ContentPage>

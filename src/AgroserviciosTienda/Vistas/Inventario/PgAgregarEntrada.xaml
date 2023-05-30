@@ -3,7 +3,6 @@
     x:Class="AgroserviciosTienda.Vistas.PgAgregarEntrada"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:modelo="clr-namespace:AgroserviciosTienda.Modelos"
     xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
     Title="Agregar - Entrada"
@@ -13,31 +12,31 @@
     <Grid
         Padding="16"
         RowDefinitions="auto,*"
-        RowSpacing="24">
+        RowSpacing="16">
         <Frame
-            Padding="12,8"
-            BackgroundColor="{StaticResource White}"
+            Padding="8,4"
             CornerRadius="8"
             HorizontalOptions="Fill">
             <Grid ColumnDefinitions="*,auto">
                 <Label
+                    Padding="8"
                     FontSize="Subtitle"
                     Text="Agregar - Entrada"
                     TextColor="{StaticResource Primary}"
                     VerticalOptions="Center" />
-
                 <HorizontalStackLayout
                     Grid.Column="1"
                     Margin="0"
                     Padding="0"
                     Spacing="0">
                     <Button
+                        Padding="2"
                         BackgroundColor="Transparent"
-                        Command="{Binding GuardarCommand}"
                         FontFamily="icofont"
-                        FontSize="Title"
+                        FontSize="Subtitle"
+                        IsEnabled="{Binding HasErrors, Converter={tk:InvertedBoolConverter}}"
                         Text="{StaticResource Save}"
-                        TextColor="{StaticResource Secondary}" />
+                        TextColor="{StaticResource Primary}" />
                     <Label
                         FontFamily="icofont"
                         FontSize="Title"
@@ -45,10 +44,11 @@
                         TextColor="{StaticResource Gray400}"
                         VerticalOptions="Center" />
                     <Button
+                        Padding="2"
                         BackgroundColor="Transparent"
                         Command="{Binding CancelarCommand}"
                         FontFamily="icofont"
-                        FontSize="Title"
+                        FontSize="Subtitle"
                         Text="{StaticResource UiClose}"
                         TextColor="{StaticResource Primary}" />
                 </HorizontalStackLayout>
@@ -57,7 +57,7 @@
         <ScrollView Grid.Row="1">
             <Border
                 Padding="12"
-                BackgroundColor="{StaticResource White}"
+                BackgroundColor="{StaticResource Background}"
                 HorizontalOptions="Center">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="8" />
@@ -106,13 +106,13 @@
                                     Grid.Row="1"
                                     Grid.Column="0"
                                     ItemDisplayBinding="{Binding Nombre}"
-                                    ItemsSource="{Binding Proveedores, Mode=OneWay}"
+                                    ItemsSource="{Binding Proveedores}"
                                     SelectedItem="{Binding SelectedProveedor}" />
                                 <Button
                                     Grid.Row="1"
                                     Grid.Column="1"
                                     BackgroundColor="{StaticResource Tertiary}"
-                                    Command="{Binding AgregarProveedorCommand}"
+                                    Command="{Binding VerAgregarproveedorCommand}"
                                     FontFamily="icofont"
                                     Text="{StaticResource Plus}"
                                     TextColor="{StaticResource Primary}"
@@ -154,36 +154,12 @@
                         <Button
                             Grid.Column="1"
                             BackgroundColor="{StaticResource Tertiary}"
-                            Command="{Binding AgregarModificarProductoCommand}"
+                            Command="{Binding VerAgregarproductosentradaCommand}"
                             FontFamily="icofont"
                             Text="{StaticResource Plus}"
                             TextColor="{StaticResource Primary}" />
                     </Grid>
-                    <ListView
-                        ItemsSource="{Binding Productos, Mode=OneWay}"
-                        SelectedItem="{Binding SelectedProducto}"
-                        SelectionMode="Single">
-                        <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="modelo:ProductoEntrada">
-                                <ViewCell>
-                                    <VerticalStackLayout
-                                        Padding="4"
-                                        BackgroundColor="AliceBlue"
-                                        Spacing="8">
-                                        <Label Text="{Binding ElProducto.Nombre, StringFormat='Producto: {0}'}" />
-                                        <Label>
-                                            <Label.FormattedText>
-                                                <FormattedString>
-                                                    <Span Text="{Binding CantidadUnidad, StringFormat='Cantidad: {0}'}" />
-                                                    <Span Text="{Binding Precio, StringFormat='Precio: {0}'}" />
-                                                </FormattedString>
-                                            </Label.FormattedText>
-                                        </Label>
-                                    </VerticalStackLayout>
-                                </ViewCell>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                    <ListView />
                 </VerticalStackLayout>
             </Border>
         </ScrollView>

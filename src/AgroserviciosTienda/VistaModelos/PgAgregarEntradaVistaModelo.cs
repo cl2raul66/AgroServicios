@@ -1,49 +1,35 @@
-﻿using AgroserviciosTienda.Modelos;
-using AgroserviciosTienda.Repositorios;
-using AgroserviciosTienda.Vistas;
+﻿using AgroserviciosTienda.Vistas;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace AgroserviciosTienda.VistaModelos;
 
 public partial class PgAgregarEntradaVistaModelo : ObservableValidator
 {
-    public PgAgregarEntradaVistaModelo(IContactosRepositorio<Proveedor> proveedores)
+    public PgAgregarEntradaVistaModelo()
     {
-        Proveedores = new(proveedores.GetAll());
-
-        WeakReferenceMessenger.Default.Register<PgAgregarEntradaVistaModelo, ProductoEntrada>(this, (r, m) =>
-        {
-            if (m is not null)
-            {
-                var idx = productos.IndexOf(productos.FirstOrDefault(x => x.ElProducto.Nombre == m.ElProducto.Nombre));
-                if (idx > -1)
-                {
-                    Productos[idx] = m;
-                }
-                else
-                {
-                    Productos.Insert(0, m);
-                }
-            }
-        });
+        ValidateAllProperties();
     }
 
     [ObservableProperty]
     DateTime fecha = DateTime.Now;
 
+    #region Con Factura
     [ObservableProperty]
     string noFactura;
 
     [ObservableProperty]
-    Contacto selectedProveedor = null;
+    ObservableCollection<object> proveedores;
 
     [ObservableProperty]
-    ObservableCollection<Contacto> proveedores;
+    object selectedProveedor;
 
     [ObservableProperty]
     decimal costoFlete;
@@ -51,63 +37,32 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     [ObservableProperty]
     decimal costoCarga;
 
-    [ObservableProperty]
-    bool visibleError;
-
     [RelayCommand]
-    private async void Guardar()
+    private async Task VerAgregarproveedor()
     {
-        ValidateAllProperties();
-        if (HasErrors)
-        {
-            VisibleError = true;
-            await Task.Delay(5000);
-            VisibleError = false;
-            return;
-        }
-
-        Entrada newEntrada = new(Fecha, Productos.ToList(), NoFactura, SelectedProveedor, CostoFlete, CostoCarga);
-
-        //entradasServ.Insert(newEntrada);
-
-        WeakReferenceMessenger.Default.Send<Entrada>(newEntrada);
         await Cancelar();
     }
+    #endregion
 
-    [RelayCommand]
-    private async Task Cancelar()
-    {
-        await Shell.Current.GoToAsync("..");
-    }
-
-    [RelayCommand]
-    private async Task AgregarProveedor()
-    {
-        //objeto Contacto, visibleAgregar bool y esCliente bool
-        Tuple<Contacto, bool, bool> contactodatosnav = SelectedProveedor is null ? new(new(), Proveedores.Count > 0, false) : new(SelectedProveedor, Proveedores.Count > 0, false);
-
-        await Shell.Current.GoToAsync($"{nameof(PgContactoAddEdit)}", new Dictionary<string, object>() { { "contactodatosnav", contactodatosnav } });
-    }
-
-    #region productos
+    #region Productos
     [ObservableProperty]
     [Required]
     [MinLength(1)]
-    ObservableCollection<ProductoEntrada> productos = new();
+    ObservableCollection<object> productos = new();
 
     [ObservableProperty]
-    ProductoEntrada selectedProducto;
+    object selectedProducto;
 
     [RelayCommand]
-    async Task AgregarModificarProducto()
+    private async Task VerAgregarproductosentrada()
     {
-        await Shell.Current.GoToAsync($"{nameof(PgProductosEntradas)}", true);
-    }
-
-    [RelayCommand]
-    private void EliminarProducto()
-    {
-        Productos.Remove(SelectedProducto);
+        await Shell.Current.GoToAsync(nameof(PgAgregarProductosEntrada), true);
     }
     #endregion
+
+    [RelayCommand]
+    async Task Cancelar()
+    {
+        await Shell.Current.GoToAsync("..", true);
+    }
 }
