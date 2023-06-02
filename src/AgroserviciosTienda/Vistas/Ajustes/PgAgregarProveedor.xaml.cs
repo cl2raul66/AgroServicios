@@ -2,9 +2,9 @@ using AgroserviciosTienda.VistaModelos;
 
 namespace AgroserviciosTienda.Vistas;
 
-public partial class PgAgregarProductosEntrada : ContentPage
+public partial class PgAgregarProveedor : ContentPage
 {
-	public PgAgregarProductosEntrada(PgAgregarEntradaVistaModelo vm)
+	public PgAgregarProveedor(PgAgregarProveedorVistaModelo vm)
 	{
 		InitializeComponent();
 

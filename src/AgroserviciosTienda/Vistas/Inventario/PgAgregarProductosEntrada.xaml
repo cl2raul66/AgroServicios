@@ -6,6 +6,7 @@
     xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
     Title="Agregar - Productos"
+    x:DataType="vm:PgAgregarProductosEntradaVistaModelo"
     Shell.NavBarIsVisible="False"
     Shell.PresentationMode="ModalAnimated">
 
@@ -29,163 +30,160 @@
                     BackgroundColor="{StaticResource Background}"
                     BorderColor="{StaticResource Primary}"
                     HeightRequest="28"
-                    Text="10"
+                    IsVisible="{Binding CountAdd, Converter={tk:IntToBoolConverter}}"
+                    Text="{Binding CountAdd}"
                     TextColor="{StaticResource Primary}"
                     WidthRequest="28" />
             </Grid>
         </Frame>
         <ScrollView Grid.Row="1">
-            <Border
-                Padding="12"
-                BackgroundColor="{StaticResource Background}"
-                HorizontalOptions="FillAndExpand">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="8" />
-                </Border.StrokeShape>
+            <VerticalStackLayout Spacing="16">
+                <Frame>
+                    <VerticalStackLayout Spacing="16">
+                        <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                            <Label
+                                Grid.Row="0"
+                                FontSize="Subtitle"
+                                Text="Nombre: *"
+                                TextColor="{StaticResource Primary}"
+                                VerticalOptions="Center" />
+                            <Entry
+                                x:Name="EntProductoNombre"
+                                Grid.Row="1"
+                                ClearButtonVisibility="WhileEditing"
+                                Placeholder="Escriba aquí"
+                                Text="{Binding Nombre}" />
+                        </Grid>
 
-                <VerticalStackLayout Spacing="16">
-                    <Grid RowDefinitions="auto,auto" RowSpacing="8">
-                        <Label
-                            Grid.Row="0"
-                            FontSize="Subtitle"
-                            Text="Producto existente:"
-                            TextColor="{StaticResource Primary}" />
-                        <Picker
-                            Title="Seleccione un producto"
-                            Grid.Row="1"
-                            ItemsSource="{Binding}"
-                            SelectedItem="{Binding}" />
-                    </Grid>
-                    <Grid RowDefinitions="auto,auto" RowSpacing="8">
-                        <Label
-                            Grid.Row="0"
-                            FontSize="Subtitle"
-                            Text="Producto nuevo:"
-                            TextColor="{StaticResource Primary}"
-                            VerticalOptions="Center" />
-                        <Entry
-                            x:Name="EntProductoNombre"
-                            Grid.Row="1"
-                            ClearButtonVisibility="WhileEditing"
-                            Placeholder="Escriba aquí"
-                            Text="{Binding}" />
-                    </Grid>
-                    <Grid
-                        ColumnSpacing="8"
-                        RowDefinitions="auto,auto"
-                        RowSpacing="8">
-                        <Label
-                            Grid.Row="0"
-                            FontSize="Subtitle"
-                            Text="Presentación:"
-                            TextColor="{StaticResource Primary}" />
-                        <Picker
-                            Title="Seleccione presentación"
-                            Grid.Row="1"
-                            ItemsSource="{Binding}"
-                            SelectedItem="{Binding}" />
-                    </Grid>
-                    <Grid
-                        ColumnSpacing="8"
-                        RowDefinitions="auto,auto"
-                        RowSpacing="8">
-                        <Label
-                            Grid.Row="0"
-                            FontSize="Subtitle"
-                            Text="Presentación - Medida base:"
-                            TextColor="{StaticResource Primary}" />
-                        <Picker
-                            Title="Seleccione tipo de medida"
-                            Grid.Row="1"
-                            ItemsSource="{Binding}"
-                            SelectedItem="{Binding}" />
-                    </Grid>
-                    <Grid
-                        ColumnSpacing="8"
-                        RowDefinitions="auto,auto"
-                        RowSpacing="8">
-                        <Label
-                            Grid.Row="0"
-                            FontSize="Subtitle"
-                            Text="Presentación - cantidad"
-                            TextColor="{StaticResource Primary}" />
-                        <Entry
-                            Grid.Row="1"
-                            Keyboard="Numeric"
-                            Placeholder="0"
-                            Text="{Binding}" />
-                    </Grid>
-                    <Grid
-                        ColumnSpacing="8"
-                        RowDefinitions="auto,auto"
-                        RowSpacing="8">
-                        <Label
-                            Grid.Row="0"
-                            FontSize="Subtitle"
-                            Text="Precio por unidad:"
-                            TextColor="{StaticResource Primary}" />
-                        <Entry
-                            Grid.Row="1"
-                            Keyboard="Numeric"
-                            Placeholder="0.00"
-                            Text="{Binding}" />
-                    </Grid>
-                    <Grid
-                        ColumnSpacing="8"
-                        RowDefinitions="auto,auto"
-                        RowSpacing="8">
-                        <Label
-                            Grid.Row="0"
-                            FontSize="Subtitle"
-                            Text="Cantidad unitaria:"
-                            TextColor="{StaticResource Primary}" />
-                        <Entry
-                            Grid.Row="1"
-                            Keyboard="Numeric"
-                            Placeholder="0"
-                            Text="{Binding}" />
-                    </Grid>
+                        <Grid
+                            ColumnSpacing="8"
+                            RowDefinitions="auto,auto"
+                            RowSpacing="8">
+                            <Label
+                                Grid.Row="0"
+                                FontSize="Subtitle"
+                                Text="Precio por unidad: *"
+                                TextColor="{StaticResource Primary}" />
+                            <Entry
+                                Grid.Row="1"
+                                Keyboard="Numeric"
+                                Placeholder="0.00"
+                                Text="{Binding Precio}" />
+                        </Grid>
+                        <Grid
+                            ColumnSpacing="8"
+                            RowDefinitions="auto,auto"
+                            RowSpacing="8">
+                            <Label
+                                Grid.Row="0"
+                                FontSize="Subtitle"
+                                Text="Cantidad unitaria: *"
+                                TextColor="{StaticResource Primary}" />
+                            <Entry
+                                Grid.Row="1"
+                                Keyboard="Numeric"
+                                Placeholder="0"
+                                Text="{Binding Cantidadunidad}" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Frame>
+                <Frame>
+                    <VerticalStackLayout Spacing="16">
+                        <Grid
+                            ColumnSpacing="8"
+                            RowDefinitions="auto,auto"
+                            RowSpacing="8">
+                            <Label
+                                Grid.Row="0"
+                                FontSize="Subtitle"
+                                Text="Presentación:"
+                                TextColor="{StaticResource Primary}" />
+                            <Picker
+                                Title="Seleccione presentación"
+                                Grid.Row="1"
+                                ItemsSource="{Binding Medidas}"
+                                SelectedItem="{Binding PresentacionMedida}" />
+                        </Grid>
+                        <Grid
+                            ColumnSpacing="8"
+                            RowDefinitions="auto,auto"
+                            RowSpacing="8">
+                            <Label
+                                Grid.Row="0"
+                                FontSize="Subtitle"
+                                Text="Presentación - Medida base:"
+                                TextColor="{StaticResource Primary}" />
+                            <Picker
+                                Title="Seleccione tipo de medida"
+                                Grid.Row="1"
+                                ItemsSource="{Binding Unidades}"
+                                SelectedItem="{Binding PresentacionUnidad}" />
+                        </Grid>
+                        <Grid
+                            ColumnSpacing="8"
+                            RowDefinitions="auto,auto"
+                            RowSpacing="8">
+                            <Label
+                                Grid.Row="0"
+                                FontSize="Subtitle"
+                                Text="Presentación - cantidad"
+                                TextColor="{StaticResource Primary}" />
+                            <Entry
+                                Grid.Row="1"
+                                Keyboard="Numeric"
+                                Placeholder="0"
+                                Text="{Binding PresentacionValor}" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Frame>
+                <Frame BackgroundColor="#ffa927" IsVisible="{Binding VisibleError}">
                     <Label
-                        x:Name="LbVisibleError"
-                        FontSize="Micro"
-                        HorizontalOptions="End"
-                        IsVisible="{Binding}"
+                        CharacterSpacing="2"
+                        FontSize="Body"
                         TextColor="Red">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span FontFamily="icofont" Text="{StaticResource Waiter}" />
-                                <Span Text=" Datos incorrectos." />
+                                <Span FontFamily="icofont" Text="{StaticResource InfoCircle}" />
+                                <Span Text=" Rellene los requeridos (*)." />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
-                </VerticalStackLayout>
-            </Border>
+                </Frame>
+            </VerticalStackLayout>
         </ScrollView>
         <Frame
             Grid.Row="2"
             Padding="8"
             CornerRadius="8"
             HorizontalOptions="Fill">
-            <HorizontalStackLayout HorizontalOptions="CenterAndExpand" Spacing="8">
-                <Button Command="{Binding}" Text="Cancelar" />
+            <Grid ColumnDefinitions="*,auto,*,auto,*">
+                <Button Command="{Binding CancelarCommand}" Text="Cancelar" />
                 <Label
-                    FontFamily="icofont"
-                    FontSize="Title"
-                    Text="|"
-                    TextColor="{StaticResource Gray400}"
-                    VerticalOptions="Center" />
-                <Button Command="{Binding}" Text="Agregar" />
-                <Label
+                    Grid.Column="1"
+                    Margin="8,0"
                     FontFamily="icofont"
                     FontSize="Title"
                     Text="|"
                     TextColor="{StaticResource Gray400}"
                     VerticalOptions="Center" />
                 <Button
-                    Command="{Binding}"
+                    Grid.Column="2"
+                    Command="{Binding AgregarCommand}"
+                    Text="Agregar" />
+                <Label
+                    Grid.Column="3"
+                    Margin="8,0"
+                    FontFamily="icofont"
+                    FontSize="Title"
+                    Text="|"
+                    TextColor="{StaticResource Gray400}"
+                    VerticalOptions="Center" />
+                <Button
+                    Grid.Column="4"
+                    Command="{Binding AgregarSalirCommand}"
                     LineBreakMode="MiddleTruncation"
                     Text="Agregar y salir" />
-            </HorizontalStackLayout>
+            </Grid>
         </Frame>
     </Grid>
 

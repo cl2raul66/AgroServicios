@@ -1,6 +1,9 @@
-﻿using AgroserviciosTienda.Vistas;
+﻿using AgroserviciosTienda.Modelos;
+using AgroserviciosTienda.Repositorios;
+using AgroserviciosTienda.Vistas;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,9 +16,29 @@ namespace AgroserviciosTienda.VistaModelos;
 
 public partial class PgAgregarEntradaVistaModelo : ObservableValidator
 {
-    public PgAgregarEntradaVistaModelo()
+    readonly IContactosRepositorio<Proveedor> proveedoresServ;
+
+    public PgAgregarEntradaVistaModelo(IContactosRepositorio<Proveedor> contactosRepositorio)
     {
-        ValidateAllProperties();
+        proveedoresServ = contactosRepositorio;
+
+        WeakReferenceMessenger.Default.Register<PgAgregarEntradaVistaModelo, Proveedor>(this, (r, m) =>
+        {
+            if (m is not null)
+            {
+                Proveedores.Insert(0, m);
+                SelectedProveedor = Proveedores[0];
+            }
+        });
+
+        WeakReferenceMessenger.Default.Register<PgAgregarEntradaVistaModelo, Producto>(this, (r, m) =>
+        {
+            if (m is not null)
+            {
+                Productos.Insert(0, m);
+                SelectedProducto = Productos[0];
+            }
+        });
     }
 
     [ObservableProperty]
@@ -26,10 +49,10 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     string noFactura;
 
     [ObservableProperty]
-    ObservableCollection<object> proveedores;
+    ObservableCollection<Proveedor> proveedores = new();
 
     [ObservableProperty]
-    object selectedProveedor;
+    Proveedor selectedProveedor;
 
     [ObservableProperty]
     decimal costoFlete;
@@ -40,7 +63,7 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     [RelayCommand]
     private async Task VerAgregarproveedor()
     {
-        await Cancelar();
+        await Shell.Current.GoToAsync(nameof(PgAgregarProveedor), true);
     }
     #endregion
 
@@ -48,10 +71,10 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     [ObservableProperty]
     [Required]
     [MinLength(1)]
-    ObservableCollection<object> productos = new();
+    ObservableCollection<Producto> productos = new();
 
     [ObservableProperty]
-    object selectedProducto;
+    Producto selectedProducto;
 
     [RelayCommand]
     private async Task VerAgregarproductosentrada()
@@ -60,6 +83,14 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     }
     #endregion
 
+    [RelayCommand]
+    async Task Guardar()
+    {
+        proveedoresServ.Insert(SelectedProveedor);
+
+        await Cancelar();
+    }
+    
     [RelayCommand]
     async Task Cancelar()
     {

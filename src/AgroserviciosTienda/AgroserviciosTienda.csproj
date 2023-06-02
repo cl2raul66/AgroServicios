@@ -12,10 +12,10 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 
 		<!-- Display name -->
-		<ApplicationTitle>AgroserviciosTienda</ApplicationTitle>
+		<ApplicationTitle>Agroservicios - Tienda</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.agroserviciostienda</ApplicationId>
+		<ApplicationId>com.randamedialab.agroserviciostienda</ApplicationId>
 		<ApplicationIdGuid>8e53a281-56d8-4e01-abdc-fff4cc70f28a</ApplicationIdGuid>
 
 		<!-- Versions -->
@@ -28,6 +28,14 @@
 		<!--<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>-->
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android|AnyCPU'">
+	  <LangVersion>preview</LangVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android|AnyCPU'">
+	  <LangVersion>preview</LangVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -71,6 +79,9 @@
 	  <MauiXaml Update="Vistas\Inventario\PgAgregarProductosEntrada.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Vistas\Ajustes\PgAgregarProveedor.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Vistas\PgAjustes.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -86,10 +97,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Modelos\" />
-	  <Folder Include="Servicios\" />
 	  <Folder Include="Utiles\" />
-	  <Folder Include="Repositorios\" />
 	</ItemGroup>
 
 </Project>

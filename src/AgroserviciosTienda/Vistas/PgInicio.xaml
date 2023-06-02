@@ -35,7 +35,7 @@
                     Text="Accesos rápidos:"
                     TextColor="{StaticResource Primary}" />
                 <Button
-                    Command="{Binding VerAgregarentradaCommand}"
+                    Command="{Binding VerAddentradaCommand}"
                     FontSize="Subtitle"
                     Text="Agregar entrada de productos" />
                 <Button

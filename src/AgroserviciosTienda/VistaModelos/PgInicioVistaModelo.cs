@@ -17,11 +17,11 @@ public partial class PgInicioVistaModelo : ObservableRecipient
     }
 
     [RelayCommand]
-    async Task VerAgregarentrada()
+    async Task VerAddentrada()
     {
         await Shell.Current.GoToAsync($"//{nameof(PgInventario)}/{nameof(PgAgregarEntrada)}", true);
     }
-    
+
     [RelayCommand]
     async Task VerRealizarventa()
     {
