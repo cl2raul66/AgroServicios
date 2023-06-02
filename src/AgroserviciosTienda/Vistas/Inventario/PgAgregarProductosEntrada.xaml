@@ -31,7 +31,7 @@
                     BorderColor="{StaticResource Primary}"
                     HeightRequest="28"
                     IsVisible="{Binding CountAdd, Converter={tk:IntToBoolConverter}}"
-                    Text="{Binding CountAdd}"
+                    Text="{Binding CountAdd, Mode=OneWay}"
                     TextColor="{StaticResource Primary}"
                     WidthRequest="28" />
             </Grid>
@@ -136,7 +136,7 @@
                         </Grid>
                     </VerticalStackLayout>
                 </Frame>
-                <Frame BackgroundColor="#ffa927" IsVisible="{Binding VisibleError}">
+                <Frame BackgroundColor="#ffa927" IsVisible="{Binding VisibleError, Mode=OneWay}">
                     <Label
                         CharacterSpacing="2"
                         FontSize="Body"
@@ -157,7 +157,10 @@
             CornerRadius="8"
             HorizontalOptions="Fill">
             <Grid ColumnDefinitions="*,auto,*,auto,*">
-                <Button Command="{Binding CancelarCommand}" Text="Cancelar" />
+                <Button
+                    Grid.Column="0"
+                    Command="{Binding CancelarCommand}"
+                    Text="Cancelar" />
                 <Label
                     Grid.Column="1"
                     Margin="8,0"

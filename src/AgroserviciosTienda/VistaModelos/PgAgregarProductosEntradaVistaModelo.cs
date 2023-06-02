@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AgroserviciosTienda.VistaModelos;
 
-public partial class PgAgregarProductosEntradaVistaModelo : ObservableValidator
+public partial class PgAgregarProductosEntradaVistaModelo : ObservableObject
 {
     readonly IMedidasServicio medidasServ;
 
@@ -19,8 +19,6 @@ public partial class PgAgregarProductosEntradaVistaModelo : ObservableValidator
     }
 
     [ObservableProperty]
-    [Required]
-    [MinLength(3)]
     string nombre;
 
     [ObservableProperty]
@@ -36,17 +34,12 @@ public partial class PgAgregarProductosEntradaVistaModelo : ObservableValidator
     string presentacionUnidad;
 
     [ObservableProperty]
-    [Range(0.01, 10000.00)]
     double presentacionValor;
 
     [ObservableProperty]
-    [Required]
-    [Range(1, 1000)]
     int cantidadunidad;
 
     [ObservableProperty]
-    [Required]
-    [Range(1, 19999.99)]
     double precio;
 
     [ObservableProperty]
@@ -88,7 +81,6 @@ public partial class PgAgregarProductosEntradaVistaModelo : ObservableValidator
     #region extra
     async Task<bool> Guardar()
     {
-        ValidateAllProperties();
         if (HasErrors)
         {
             VisibleError = true;
@@ -102,5 +94,7 @@ public partial class PgAgregarProductosEntradaVistaModelo : ObservableValidator
         var resul = WeakReferenceMessenger.Default.Send(newProducto);
         return resul is not null;
     }
+
+    bool HasErrors => string.IsNullOrEmpty(Nombre) || Cantidadunidad < 1 || Precio < 1.0;
     #endregion
 }
