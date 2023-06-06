@@ -3,11 +3,36 @@
     x:Class="AgroserviciosTienda.Vistas.PgAgregarEntrada"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:modelo="clr-namespace:AgroserviciosTienda.Modelos"
     xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
     Title="Agregar - Entrada"
     x:DataType="vm:PgAgregarEntradaVistaModelo"
     Shell.NavBarIsVisible="False">
+    <ContentPage.Resources>
+        <Style x:Key="BorderItem" TargetType="Border">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Padding" Value="8" />
+                                <Setter Property="BackgroundColor" Value="{StaticResource Tertiary}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="Padding" Value="6" />
+                                <Setter Property="BackgroundColor" Value="{StaticResource Tertiary}" />
+                                <Setter Property="StrokeThickness" Value="2" />
+                                <Setter Property="Stroke" Value="{StaticResource Primary}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
 
     <Grid
         Padding="16"
@@ -30,13 +55,33 @@
                     Padding="0"
                     Spacing="0">
                     <Button
-                        Padding="2"
-                        BackgroundColor="Transparent"
+                        Command="{Binding GuardarCommand}"
                         FontFamily="icofont"
                         FontSize="Subtitle"
-                        IsEnabled="{Binding HasErrors, Converter={tk:InvertedBoolConverter}}"
+                        IsEnabled="{Binding HasErrors, Mode=OneWay, Converter={tk:InvertedBoolConverter}}"
                         Text="{StaticResource Save}"
-                        TextColor="{StaticResource Primary}" />
+                        TextColor="{StaticResource Primary}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroupList>
+                                <VisualStateGroup Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <VisualState.Setters>
+                                            <Setter Property="Padding" Value="2" />
+                                            <Setter Property="BackgroundColor" Value="Transparent" />
+                                            <Setter Property="TextColor" Value="{StaticResource Secondary}" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <VisualState.Setters>
+                                            <Setter Property="Padding" Value="2" />
+                                            <Setter Property="BackgroundColor" Value="Transparent" />
+                                            <Setter Property="TextColor" Value="{StaticResource Gray400}" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateGroupList>
+                        </VisualStateManager.VisualStateGroups>
+                    </Button>
                     <Label
                         FontFamily="icofont"
                         FontSize="Title"
@@ -55,16 +100,12 @@
             </Grid>
         </Frame>
         <ScrollView Grid.Row="1">
-            <Border
-                Padding="12"
-                BackgroundColor="{StaticResource Background}"
-                HorizontalOptions="Center"
-                VerticalOptions="FillAndExpand">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="8" />
-                </Border.StrokeShape>
-
-                <VerticalStackLayout Spacing="16">
+            <Grid RowDefinitions="auto,auto,*" RowSpacing="16">
+                <Frame
+                    Grid.Row="0"
+                    Padding="12"
+                    CornerRadius="8"
+                    HorizontalOptions="Fill">
                     <Grid RowDefinitions="auto,auto" RowSpacing="8">
                         <Label
                             Grid.Row="0"
@@ -73,116 +114,220 @@
                             TextColor="{StaticResource Primary}" />
                         <DatePicker Grid.Row="1" Date="{Binding Fecha}" />
                     </Grid>
-                    <tk:Expander x:Name="ExpTieneFactura">
-                        <tk:Expander.Header>
-                            <Grid Margin="0" ColumnDefinitions="auto,*">
-                                <CheckBox Grid.Column="0" IsChecked="{Binding Source={x:Reference ExpTieneFactura}, Path=IsExpanded, Mode=TwoWay}" />
+                </Frame>
+                <Border
+                    Grid.Row="1"
+                    Padding="12"
+                    BackgroundColor="{StaticResource Background}"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="FillAndExpand">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+
+                    <VerticalStackLayout Spacing="16">
+                        <tk:Expander x:Name="ExpTieneFactura">
+                            <tk:Expander.Header>
+                                <Grid Margin="0" ColumnDefinitions="auto,*">
+                                    <CheckBox Grid.Column="0" IsChecked="{Binding Source={x:Reference ExpTieneFactura}, Path=IsExpanded, Mode=TwoWay}" />
+                                    <Label
+                                        Grid.Column="1"
+                                        FontSize="Subtitle"
+                                        Text="Con factura"
+                                        VerticalOptions="Center" />
+                                </Grid>
+                            </tk:Expander.Header>
+                            <VerticalStackLayout Padding="8" Spacing="8">
+                                <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                                    <Label
+                                        Grid.Row="0"
+                                        FontSize="Subtitle"
+                                        Text="No. Factura:"
+                                        TextColor="{StaticResource Primary}" />
+                                    <Entry
+                                        Grid.Row="1"
+                                        Keyboard="Text"
+                                        Text="{Binding NoFactura}" />
+                                </Grid>
+                                <Grid
+                                    ColumnDefinitions="*,auto"
+                                    ColumnSpacing="16"
+                                    RowDefinitions="auto,auto">
+                                    <Label
+                                        Grid.ColumnSpan="2"
+                                        FontSize="Subtitle"
+                                        Text="Proveedor:"
+                                        TextColor="{StaticResource Primary}" />
+                                    <Picker
+                                        Title="Seleccione un proveedor"
+                                        Grid.Row="1"
+                                        Grid.Column="0"
+                                        ItemDisplayBinding="{Binding Nombre}"
+                                        ItemsSource="{Binding Proveedores}"
+                                        SelectedItem="{Binding SelectedProveedor}" />
+                                    <Button
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        BackgroundColor="{StaticResource Tertiary}"
+                                        Command="{Binding VerAgregarproveedorCommand}"
+                                        FontFamily="icofont"
+                                        Text="{StaticResource Plus}"
+                                        TextColor="{StaticResource Primary}"
+                                        VerticalOptions="End" />
+                                </Grid>
+                                <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                                    <Label
+                                        Grid.Row="0"
+                                        FontSize="Subtitle"
+                                        Text="Costo flete:"
+                                        TextColor="{StaticResource Primary}" />
+                                    <Entry
+                                        Grid.Row="1"
+                                        Keyboard="Numeric"
+                                        Placeholder="0.00"
+                                        SelectionLength="1"
+                                        Text="{Binding CostoFlete}" />
+                                </Grid>
+                                <Grid RowDefinitions="auto,auto" RowSpacing="8">
+                                    <Label
+                                        Grid.Row="0"
+                                        FontSize="Subtitle"
+                                        Text="Costo carga:"
+                                        TextColor="{StaticResource Primary}" />
+                                    <Entry
+                                        Grid.Row="1"
+                                        Keyboard="Numeric"
+                                        Placeholder="0.00"
+                                        SelectionLength="1"
+                                        Text="{Binding CostoCarga}" />
+                                </Grid>
+                            </VerticalStackLayout>
+                        </tk:Expander>
+                    </VerticalStackLayout>
+                </Border>
+                <Border
+                    Grid.Row="2"
+                    Padding="12"
+                    BackgroundColor="{StaticResource Background}"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="FillAndExpand">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                    <Grid RowDefinitions="auto,*" RowSpacing="12">
+                        <VerticalStackLayout Grid.Row="0" Spacing="8">
+                            <Grid ColumnDefinitions="*,auto" ColumnSpacing="8">
+                                <Label
+                                    FontSize="Subtitle"
+                                    Text="Productos:"
+                                    TextColor="{StaticResource Primary}" />
                                 <Label
                                     Grid.Column="1"
-                                    FontSize="Subtitle"
-                                    Text="Con factura"
+                                    FontAttributes="Bold"
+                                    FontSize="Caption"
+                                    Text="{Binding CostoEntrada, Mode=OneWay, StringFormat='Costo total: {0}'}"
+                                    TextColor="{StaticResource Secondary}"
                                     VerticalOptions="Center" />
                             </Grid>
-                        </tk:Expander.Header>
-                        <VerticalStackLayout Padding="8" Spacing="8">
-                            <Grid RowDefinitions="auto,auto" RowSpacing="8">
-                                <Label
-                                    Grid.Row="0"
-                                    FontSize="Subtitle"
-                                    Text="No. Factura:"
-                                    TextColor="{StaticResource Primary}" />
-                                <Entry Grid.Row="1" Text="{Binding NoFactura}" />
-                            </Grid>
-                            <Grid
-                                ColumnDefinitions="*,auto"
-                                ColumnSpacing="16"
-                                RowDefinitions="auto,auto">
-                                <Label
-                                    Grid.ColumnSpan="2"
-                                    FontSize="Subtitle"
-                                    Text="Proveedor:"
-                                    TextColor="{StaticResource Primary}" />
+                            <Grid ColumnDefinitions="*,auto" ColumnSpacing="8">
                                 <Picker
-                                    Title="Seleccione un proveedor"
+                                    Title="Seleccione un producto"
                                     Grid.Row="1"
                                     Grid.Column="0"
-                                    ItemDisplayBinding="{Binding Nombre}"
-                                    ItemsSource="{Binding Proveedores}"
-                                    SelectedItem="{Binding SelectedProveedor}" />
+                                    ItemDisplayBinding="{Binding Articulos.Nombre}"
+                                    ItemsSource="{Binding Productos}"
+                                    SelectedItem="{Binding SelectedProducto}" />
                                 <Button
                                     Grid.Row="1"
                                     Grid.Column="1"
                                     BackgroundColor="{StaticResource Tertiary}"
-                                    Command="{Binding VerAgregarproveedorCommand}"
+                                    Command="{Binding VerAgregarproductosentradaCommand}"
                                     FontFamily="icofont"
+                                    HorizontalOptions="End"
                                     Text="{StaticResource Plus}"
                                     TextColor="{StaticResource Primary}"
                                     VerticalOptions="End" />
                             </Grid>
-                            <Grid RowDefinitions="auto,auto" RowSpacing="8">
-                                <Label
-                                    Grid.Row="0"
-                                    FontSize="Subtitle"
-                                    Text="Costo flete:"
-                                    TextColor="{StaticResource Primary}" />
-                                <Entry
-                                    Grid.Row="1"
-                                    Keyboard="Numeric"
-                                    Placeholder="0.00"
-                                    Text="{Binding CostoFlete}" />
-                            </Grid>
-                            <Grid RowDefinitions="auto,auto" RowSpacing="8">
-                                <Label
-                                    Grid.Row="0"
-                                    FontSize="Subtitle"
-                                    Text="Costo carga:"
-                                    TextColor="{StaticResource Primary}" />
-                                <Entry
-                                    Grid.Row="1"
-                                    Keyboard="Numeric"
-                                    Placeholder="0.00"
-                                    Text="{Binding CostoCarga}" />
-                            </Grid>
+                            <Button
+                                Command="{Binding AgregarProductoToListaCommand}"
+                                FontSize="Subtitle"
+                                IsEnabled="{Binding SelectedProducto, Mode=OneWay, Converter={tk:IsNotNullConverter}}"
+                                Text="Agregar producto seleccionado" />
+                            <Button
+                                Command="{Binding EliminarProductoToListaCommand}"
+                                FontSize="Subtitle"
+                                IsVisible="{Binding CurrentproductoLista, Mode=OneWay, Converter={tk:IsNotNullConverter}}"
+                                Text="Eliminar producto de la lista" />
                         </VerticalStackLayout>
-                    </tk:Expander>
-                    <Grid
-                        ColumnDefinitions="*,auto"
-                        ColumnSpacing="16"
-                        RowDefinitions="auto,auto">
-                        <Label
-                            Grid.ColumnSpan="2"
-                            FontSize="Subtitle"
-                            Text="Productos:"
-                            TextColor="{StaticResource Primary}" />
-                        <Picker
-                            Title="Seleccione un producto"
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            ItemDisplayBinding="{Binding Nombre}"
-                            ItemsSource="{Binding Productos}"
-                            SelectedItem="{Binding SelectedProducto}" />
-                        <Button
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            BackgroundColor="{StaticResource Tertiary}"
-                            Command="{Binding VerAgregarproductosentradaCommand}"
-                            FontFamily="icofont"
-                            Text="{StaticResource Plus}"
-                            TextColor="{StaticResource Primary}"
-                            VerticalOptions="End" />
+                        <ScrollView Grid.Row="1" VerticalScrollBarVisibility="Default">
+                            <CollectionView
+                                ItemsSource="{Binding ProductosLista, Mode=OneWay}"
+                                SelectedItem="{Binding CurrentproductoLista}"
+                                SelectionMode="Single">
+                                <CollectionView.EmptyView>
+                                    <ContentView>
+                                        <StackLayout
+                                            HorizontalOptions="Center"
+                                            Spacing="8"
+                                            VerticalOptions="Center">
+                                            <Image HeightRequest="56" WidthRequest="56">
+                                                <Image.Source>
+                                                    <FontImageSource
+                                                        FontFamily="icofont"
+                                                        Glyph="{StaticResource Box}"
+                                                        Color="{StaticResource Gray400}" />
+                                                </Image.Source>
+                                            </Image>
+                                            <Label
+                                                FontSize="Caption"
+                                                Text="No hay productos"
+                                                TextColor="{StaticResource Gray500}" />
+                                        </StackLayout>
+                                    </ContentView>
+                                </CollectionView.EmptyView>
+                                <CollectionView.ItemsLayout>
+                                    <LinearItemsLayout ItemSpacing="4" Orientation="Vertical" />
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="modelo:ProductoEntrada">
+                                        <Border Grid.Row="1" Style="{StaticResource BorderItem}">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="8" />
+                                            </Border.StrokeShape>
+                                            <Grid RowDefinitions="auto,auto" RowSpacing="4">
+                                                <Label
+                                                    Grid.Row="0"
+                                                    FontAttributes="Bold"
+                                                    FontSize="Caption">
+                                                    <Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span Text="{Binding Articulos.Nombre, Mode=OneWay}" />
+                                                            <Span Text=" " />
+                                                            <Span Text="{Binding Articulos.Presentacion.Valor, Mode=OneWay, Converter={StaticResource DoubleCeroToNull}}" />
+                                                            <Span Text="{Binding Articulos.Presentacion.Unidad, Mode=OneWay, TargetNullValue=''}" />
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                </Label>
+                                                <Label Grid.Row="1" FontSize="Body">
+                                                    <Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span Text="{Binding CantidadUnidad, Mode=OneWay, StringFormat='Cantidad: {0}'}" />
+                                                            <Span Text=" | " />
+                                                            <Span Text="{Binding Precio, Mode=OneWay, StringFormat='Precio: {0}'}" />
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                </Label>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </ScrollView>
                     </Grid>
-                    <Button
-                        Command="{Binding}"
-                        FontSize="Subtitle"
-                        Text="Agregar producto seleccionado" />
-                    <ListView />
-                    <Button
-                        Command="{Binding}"
-                        FontSize="Subtitle"
-                        Text="Eliminar producto de la lista" />
-                </VerticalStackLayout>
-            </Border>
+                </Border>
+            </Grid>
         </ScrollView>
+
     </Grid>
 
 </ContentPage>

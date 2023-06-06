@@ -30,7 +30,7 @@
                     BackgroundColor="{StaticResource Background}"
                     BorderColor="{StaticResource Primary}"
                     HeightRequest="28"
-                    IsVisible="{Binding CountAdd, Converter={tk:IntToBoolConverter}}"
+                    IsVisible="{Binding CountAdd, Converter={StaticResource IntToBool}}"
                     Text="{Binding CountAdd, Mode=OneWay}"
                     TextColor="{StaticResource Primary}"
                     WidthRequest="28" />
@@ -51,10 +51,10 @@
                                 x:Name="EntProductoNombre"
                                 Grid.Row="1"
                                 ClearButtonVisibility="WhileEditing"
+                                Keyboard="Text"
                                 Placeholder="Escriba aquí"
                                 Text="{Binding Nombre}" />
                         </Grid>
-
                         <Grid
                             ColumnSpacing="8"
                             RowDefinitions="auto,auto"
@@ -68,6 +68,7 @@
                                 Grid.Row="1"
                                 Keyboard="Numeric"
                                 Placeholder="0.00"
+                                SelectionLength="1"
                                 Text="{Binding Precio}" />
                         </Grid>
                         <Grid
@@ -83,6 +84,7 @@
                                 Grid.Row="1"
                                 Keyboard="Numeric"
                                 Placeholder="0"
+                                SelectionLength="1"
                                 Text="{Binding Cantidadunidad}" />
                         </Grid>
                     </VerticalStackLayout>
@@ -101,7 +103,7 @@
                             <Picker
                                 Title="Seleccione presentación"
                                 Grid.Row="1"
-                                ItemsSource="{Binding Medidas}"
+                                ItemsSource="{Binding Medidas, Mode=OneWay}"
                                 SelectedItem="{Binding PresentacionMedida}" />
                         </Grid>
                         <Grid
@@ -116,7 +118,7 @@
                             <Picker
                                 Title="Seleccione tipo de medida"
                                 Grid.Row="1"
-                                ItemsSource="{Binding Unidades}"
+                                ItemsSource="{Binding Unidades, Mode=OneWay}"
                                 SelectedItem="{Binding PresentacionUnidad}" />
                         </Grid>
                         <Grid
@@ -132,6 +134,7 @@
                                 Grid.Row="1"
                                 Keyboard="Numeric"
                                 Placeholder="0"
+                                SelectionLength="1"
                                 Text="{Binding PresentacionValor}" />
                         </Grid>
                     </VerticalStackLayout>

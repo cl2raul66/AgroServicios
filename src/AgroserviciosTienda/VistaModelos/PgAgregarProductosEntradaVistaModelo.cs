@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AgroserviciosTienda.VistaModelos;
 
-public partial class PgAgregarProductosEntradaVistaModelo : ObservableObject
+public partial class PgAgregarProductosEntradaVistaModelo : ObservableValidator
 {
     readonly IMedidasServicio medidasServ;
 
@@ -19,6 +19,8 @@ public partial class PgAgregarProductosEntradaVistaModelo : ObservableObject
     }
 
     [ObservableProperty]
+    [Required]
+    [MinLength(3)]
     string nombre;
 
     [ObservableProperty]
@@ -37,13 +39,17 @@ public partial class PgAgregarProductosEntradaVistaModelo : ObservableObject
     double presentacionValor;
 
     [ObservableProperty]
+    [Required]
+    [Range(1, 1000)]
     int cantidadunidad;
 
     [ObservableProperty]
+    [Required]
+    [Range(1, 19999.99)]
     double precio;
 
     [ObservableProperty]
-    int countAdd = 0;
+    int countAdd;
 
     [ObservableProperty]
     bool visibleError = false;
@@ -62,7 +68,7 @@ public partial class PgAgregarProductosEntradaVistaModelo : ObservableObject
             Precio = 0;
         }
     }
-    
+
     [RelayCommand]
     async Task AgregarSalir()
     {
@@ -71,7 +77,7 @@ public partial class PgAgregarProductosEntradaVistaModelo : ObservableObject
             await Cancelar();
         }
     }
-    
+
     [RelayCommand]
     async Task Cancelar()
     {
@@ -89,12 +95,9 @@ public partial class PgAgregarProductosEntradaVistaModelo : ObservableObject
             return false;
         }
 
-        var p = new Producto() { Nombre = Nombre, Presentacion = new Empaque(PresentacionMedida, PresentacionUnidad, PresentacionValor) };
-        var newProducto = new ProductoEntrada() { Articulos = p, CantidadUnidad = Cantidadunidad, Precio = Precio };
-        var resul = WeakReferenceMessenger.Default.Send(newProducto);
+        var newProductoEntrada = new ProductoEntrada(new() { Nombre = Nombre, Presentacion = new Empaque(PresentacionMedida, PresentacionUnidad, PresentacionValor) }, Cantidadunidad, Precio);
+        var resul = WeakReferenceMessenger.Default.Send(newProductoEntrada);
         return resul is not null;
     }
-
-    bool HasErrors => string.IsNullOrEmpty(Nombre) || Cantidadunidad < 1 || Precio < 1.0;
     #endregion
 }

@@ -22,7 +22,9 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 fonts.AddFont("icofont.ttf", "icofont");
             });
+
         builder.Services.AddSingleton<IMedidasServicio, MedidasServicio>();
+        builder.Services.AddSingleton<IEntradasRepositorio, EntradasLiteDbServicio>();
         builder.Services.AddSingleton<IContactosRepositorio<Proveedor>, ProveedoresLiteDbServicio>();
 
         builder.Services.AddTransient<PgInicioVistaModelo>();
@@ -30,6 +32,7 @@ public static class MauiProgram
         builder.Services.AddTransient<PgAgregarEntradaVistaModelo>();
         builder.Services.AddTransient<PgAgregarProductosEntradaVistaModelo>();
         builder.Services.AddTransient<PgAgregarProveedorVistaModelo>();
+        builder.Services.AddTransient<PgAjustesVistaModelo>();
 
         builder.Services.AddTransient<PgInicio>();
         builder.Services.AddTransient<PgInventario>();

@@ -17,10 +17,14 @@ namespace AgroserviciosTienda.VistaModelos;
 public partial class PgAgregarEntradaVistaModelo : ObservableValidator
 {
     readonly IContactosRepositorio<Proveedor> proveedoresServ;
+    readonly IEntradasRepositorio entradasServ;
 
-    public PgAgregarEntradaVistaModelo(IContactosRepositorio<Proveedor> contactosRepositorio)
+    public PgAgregarEntradaVistaModelo(IContactosRepositorio<Proveedor> contactosRepositorio, IEntradasRepositorio entradasRepositorio)
     {
         proveedoresServ = contactosRepositorio;
+        entradasServ = entradasRepositorio;
+
+        ValidateAllProperties();
 
         WeakReferenceMessenger.Default.Register<PgAgregarEntradaVistaModelo, Proveedor>(this, (r, m) =>
         {
@@ -31,12 +35,13 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
             }
         });
 
-        WeakReferenceMessenger.Default.Register<PgAgregarEntradaVistaModelo, Producto>(this, (r, m) =>
+        WeakReferenceMessenger.Default.Register<PgAgregarEntradaVistaModelo, ProductoEntrada>(this, (r, m) =>
         {
             if (m is not null)
             {
                 Productos.Insert(0, m);
                 SelectedProducto = Productos[0];
+                _ = AgregarProductoToLista();
             }
         });
     }
@@ -67,33 +72,84 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     }
     #endregion
 
-    #region Productos
+    #region Productos Entradas
     [ObservableProperty]
     [Required]
     [MinLength(1)]
-    ObservableCollection<Producto> productos = new();
+    ObservableCollection<ProductoEntrada> productosLista = null;
 
     [ObservableProperty]
-    Producto selectedProducto;
+    double costoEntrada;
+
+    [ObservableProperty]
+
+    ProductoEntrada currentproductoLista;
+
+    [ObservableProperty]
+    ObservableCollection<ProductoEntrada> productos = new();
+
+    [ObservableProperty]
+    ProductoEntrada selectedProducto;
 
     [RelayCommand]
-    private async Task VerAgregarproductosentrada()
+    async Task VerAgregarproductosentrada()
     {
         await Shell.Current.GoToAsync(nameof(PgAgregarProductosEntrada), true);
+    }
+
+    [RelayCommand]
+    async Task AgregarProductoToLista()
+    {
+        if (ProductosLista?.Any() ?? false)
+        {
+            ProductosLista.Insert(0, SelectedProducto);
+        }
+        else
+        {
+            ProductosLista = new() { SelectedProducto };
+        }
+        SelectedProducto = null;
+        GetCostoTotal();
+        await Task.CompletedTask;
+    }
+
+    [RelayCommand]
+    async Task EliminarProductoToLista()
+    {
+        ProductosLista.Remove(CurrentproductoLista);
+        CurrentproductoLista = null;
+        GetCostoTotal();
+        await Task.CompletedTask;
     }
     #endregion
 
     [RelayCommand]
     async Task Guardar()
     {
-        proveedoresServ.Insert(SelectedProveedor);
-
+        if (string.IsNullOrEmpty(NoFactura))
+        {
+            entradasServ.Insert(new(Fecha, ProductosLista.ToList()));
+        }
+        else
+        {
+            proveedoresServ.Insert(SelectedProveedor);
+            entradasServ.Insert(new(Fecha, ProductosLista.ToList(), NoFactura, SelectedProveedor, CostoFlete, CostoCarga));
+        }
+        
         await Cancelar();
     }
-    
+
     [RelayCommand]
     async Task Cancelar()
     {
         await Shell.Current.GoToAsync("..", true);
     }
+
+    #region calcular costo total
+    void GetCostoTotal()
+    {
+        CostoEntrada = ProductosLista?.Select(x => x.CantidadUnidad * x.Precio).Sum() ?? 0; ValidateAllProperties();
+        ValidateAllProperties();
+    }
+    #endregion
 }

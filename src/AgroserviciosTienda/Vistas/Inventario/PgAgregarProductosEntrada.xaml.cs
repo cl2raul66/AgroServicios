@@ -4,7 +4,7 @@ namespace AgroserviciosTienda.Vistas;
 
 public partial class PgAgregarProductosEntrada : ContentPage
 {
-	public PgAgregarProductosEntrada(PgAgregarEntradaVistaModelo vm)
+	public PgAgregarProductosEntrada(PgAgregarProductosEntradaVistaModelo vm)
 	{
 		InitializeComponent();
 

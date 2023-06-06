@@ -3,7 +3,9 @@
     x:Class="AgroserviciosTienda.App"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:AgroserviciosTienda">
+    xmlns:cvt="clr-namespace:AgroserviciosTienda.Utiles.Convertidores"
+    xmlns:local="clr-namespace:AgroserviciosTienda"
+    xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -11,6 +13,7 @@
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
                 <ResourceDictionary Source="Resources/Styles/icofont.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <cvt:DoubleCeroToNullConverter x:Key="DoubleCeroToNull" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>
