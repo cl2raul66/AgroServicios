@@ -3,20 +3,50 @@
     x:Class="AgroserviciosTienda.Vistas.PgAjustes"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
     xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
     Title="Ajustes"
-    x:DataType="vm:PgAjustesVistaModelo">
+    x:DataType="vm:PgAjustesVistaModelo"
+    Shell.NavBarIsVisible="False">
 
-    <VerticalStackLayout>
-        <Label
-            HorizontalOptions="Center"
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" />
-        <Picker ItemsSource="{Binding Medidas, Mode=OneWay}" SelectedItem="{Binding SelectedMedida}" />
-        <Label
-            HorizontalOptions="Center"
-            Text="{Binding Unidades, Mode=OneWay, TargetNullValue=NONE, StringFormat='Unidades: {0}', Converter={tk:ListToStringConverter Separator=','}}"
-            VerticalOptions="Center" />
-    </VerticalStackLayout>
+    <Grid
+        Padding="16"
+        RowDefinitions="auto,*"
+        RowSpacing="16">
+        <Frame
+            Padding="8,4"
+            BackgroundColor="{StaticResource Background}"
+            CornerRadius="8"
+            HorizontalOptions="Fill">
+            <Grid ColumnDefinitions="*,auto">
+                <Label
+                    Padding="8"
+                    FontSize="Subtitle"
+                    Text="Ajustes"
+                    TextColor="{StaticResource Primary}"
+                    VerticalOptions="Center" />
+            </Grid>
+        </Frame>
+        <Frame Grid.Row="1" Padding="2">
+            <ScrollView>
+                <TableView Intent="Settings">
+                    <TableRoot>
+                        <TableSection Title="Proveedores">
+                            <TextCell Detail="Toca para agrega nuevo proveedor al sistema." Text="Agregar proveedor" />
+                        </TableSection>
+                        <TableSection Title="Medidas">
+                            <TextCell Detail="Toca para administrar las medidas." Text="Administrar medidas" />
+                        </TableSection>
+                        <TableSection Title="Productos">
+                            <TextCell Detail="Toca para ajustar precio inicial a productos." Text="Precio de productos" />
+                        </TableSection>
+                        <TableSection Title="Clientes">
+                            <TextCell Detail="Toca para agrega nuevo cliente al sistema." Text="Agregar cliente" />
+                        </TableSection>
+                    </TableRoot>
+                </TableView>
+            </ScrollView>
+        </Frame>
+    </Grid>
+
 </ContentPage>

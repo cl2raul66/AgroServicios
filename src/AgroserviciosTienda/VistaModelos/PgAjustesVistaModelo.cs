@@ -1,4 +1,6 @@
-﻿using AgroserviciosTienda.Servicios;
+﻿using AgroserviciosTienda.Modelos;
+using AgroserviciosTienda.Repositorios;
+using AgroserviciosTienda.Servicios;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
@@ -11,20 +13,4 @@ namespace AgroserviciosTienda.VistaModelos;
 
 public partial class PgAjustesVistaModelo : ObservableObject
 {
-    readonly IMedidasServicio medidasServ;
-
-    public PgAjustesVistaModelo(IMedidasServicio medidasServicio)
-    {
-        medidasServ = medidasServicio;
-        Medidas = medidasServ.TiposMedidas;
-    }
-
-    [ObservableProperty]
-    IEnumerable<string> medidas;
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(Unidades))]
-    string selectedMedida;
-
-    public ObservableCollection<string> Unidades => new(medidasServ.Unidades(SelectedMedida));
 }

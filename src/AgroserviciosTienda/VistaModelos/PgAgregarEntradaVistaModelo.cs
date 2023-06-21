@@ -4,27 +4,34 @@ using AgroserviciosTienda.Vistas;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace AgroserviciosTienda.VistaModelos;
 
 public partial class PgAgregarEntradaVistaModelo : ObservableValidator
 {
     readonly IContactosRepositorio<Proveedor> proveedoresServ;
+    readonly IInventarioRepositorio inventarioServ;
     readonly IEntradasRepositorio entradasServ;
 
-    public PgAgregarEntradaVistaModelo(IContactosRepositorio<Proveedor> contactosRepositorio, IEntradasRepositorio entradasRepositorio)
+    public PgAgregarEntradaVistaModelo(IContactosRepositorio<Proveedor> contactosRepositorio, IInventarioRepositorio inventarioRepositorio, IEntradasRepositorio entradasRepositorio)
     {
         proveedoresServ = contactosRepositorio;
+        inventarioServ = inventarioRepositorio;
         entradasServ = entradasRepositorio;
 
-        ValidateAllProperties();
+        if (proveedoresServ.AnyContacto)
+        {
+            Proveedores = new(proveedoresServ.GetAll);
+        }
+
+        if (inventarioServ.AnyInventario)
+        {
+            ProductosPicker = new(inventarioServ.GetAll.Select(x => x.Articulo));
+        }
 
         WeakReferenceMessenger.Default.Register<PgAgregarEntradaVistaModelo, Proveedor>(this, (r, m) =>
         {
@@ -39,11 +46,11 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
         {
             if (m is not null)
             {
-                Productos.Insert(0, m);
-                SelectedProducto = Productos[0];
-                _ = AgregarProductoToLista();
+                ProductosPicker.Insert(0, m.Articulo);
+                AddProductoEntradaToLista(new(m.Articulo, m.CantidadUnidad, m.Precio));
             }
         });
+        ValidateAllProperties();
     }
 
     [ObservableProperty]
@@ -72,6 +79,29 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     }
     #endregion
 
+    #region Productos
+    [ObservableProperty]
+    ObservableCollection<Producto> productosPicker = new();
+
+    [ObservableProperty]
+    Producto selectedProductopicker;
+
+    [ObservableProperty]
+    int cantidadunidad;
+
+    [ObservableProperty]
+    double precio;
+
+    [ObservableProperty]
+    double costoEntrada;
+
+    [RelayCommand]
+    async Task VerAgregarproductosentrada()
+    {
+        await Shell.Current.GoToAsync(nameof(PgAgregarProductosEntrada), true);
+    }
+    #endregion
+
     #region Productos Entradas
     [ObservableProperty]
     [Required]
@@ -79,37 +109,15 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     ObservableCollection<ProductoEntrada> productosLista = null;
 
     [ObservableProperty]
-    double costoEntrada;
-
-    [ObservableProperty]
-
     ProductoEntrada currentproductoLista;
 
     [ObservableProperty]
-    ObservableCollection<ProductoEntrada> productos = new();
-
-    [ObservableProperty]
-    ProductoEntrada selectedProducto;
-
-    [RelayCommand]
-    async Task VerAgregarproductosentrada()
-    {
-        await Shell.Current.GoToAsync(nameof(PgAgregarProductosEntrada), true);
-    }
+    bool enableAgregarproductotolista;
 
     [RelayCommand]
     async Task AgregarProductoToLista()
     {
-        if (ProductosLista?.Any() ?? false)
-        {
-            ProductosLista.Insert(0, SelectedProducto);
-        }
-        else
-        {
-            ProductosLista = new() { SelectedProducto };
-        }
-        SelectedProducto = null;
-        GetCostoTotal();
+        AddProductoEntradaToLista();
         await Task.CompletedTask;
     }
 
@@ -135,7 +143,21 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
             proveedoresServ.Insert(SelectedProveedor);
             entradasServ.Insert(new(Fecha, ProductosLista.ToList(), NoFactura, SelectedProveedor, CostoFlete, CostoCarga));
         }
-        
+
+        bool seAgrego = false;
+        foreach (var item in ProductosLista)
+        {
+            Inventario newInventario = item.Articulo.Presentacion?.Valor == 0
+            ? new(item.Articulo, item.CantidadUnidad)
+            : new(item.Articulo, item.CantidadUnidad * item.Articulo.Presentacion.Valor);
+
+            inventarioServ.Upset(newInventario);
+
+            seAgrego = true;
+        }
+
+        WeakReferenceMessenger.Default.Send(seAgrego.ToString());
+
         await Cancelar();
     }
 
@@ -145,11 +167,65 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
         await Shell.Current.GoToAsync("..", true);
     }
 
-    #region calcular costo total
+    #region Extra
     void GetCostoTotal()
     {
-        CostoEntrada = ProductosLista?.Select(x => x.CantidadUnidad * x.Precio).Sum() ?? 0; ValidateAllProperties();
+        CostoEntrada = ProductosLista?.Select(x => x.CantidadUnidad * x.Precio).Sum() ?? 0;
         ValidateAllProperties();
+    }
+
+    void AddProductoEntradaToLista(ProductoEntrada newProductoentrada = null)
+    {
+        newProductoentrada ??= new(SelectedProductopicker, Cantidadunidad, Precio);
+
+        if (ProductosLista?.Any() ?? false)
+        {
+            ProductosLista.Insert(0, newProductoentrada);
+        }
+        else
+        {
+            ProductosLista = new() { newProductoentrada };
+        }
+
+        var cacheArticulo = new ProductoEntradaArticuloCache(
+            newProductoentrada.CantidadUnidad,
+            newProductoentrada.Precio
+        );
+
+        string articulo = $"Cache_{newProductoentrada.Articulo.ToString().Replace(' ', '%')}";
+
+        Preferences.Default.Set(articulo, JsonSerializer.Serialize(cacheArticulo));
+
+        if (SelectedProductopicker is not null)
+        {
+            SelectedProductopicker = null;
+            Precio = 0;
+            Cantidadunidad = 0;
+        }
+
+        GetCostoTotal();
+    }
+
+    protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(SelectedProductopicker))
+        {
+            if (SelectedProductopicker is not null)
+            {
+                string articulo = $"Cache_{SelectedProductopicker.ToString().TrimEnd().Replace(' ', '%')}";
+                string cacheArticuloJson = Preferences.Default.Get(articulo, string.Empty);
+                if (!string.IsNullOrEmpty(cacheArticuloJson))
+                {
+                    var cacheArticulo = JsonSerializer.Deserialize<ProductoEntradaArticuloCache>(cacheArticuloJson);
+
+                    Cantidadunidad = cacheArticulo.CantidadUnidad;
+                    Precio = cacheArticulo.Precio;
+                }
+            }
+
+            EnableAgregarproductotolista = Precio > 0 && Cantidadunidad > 0 && SelectedProductopicker is not null;
+        }
+        base.OnPropertyChanged(e);
     }
     #endregion
 }

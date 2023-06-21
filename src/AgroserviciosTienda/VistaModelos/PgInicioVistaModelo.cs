@@ -11,6 +11,13 @@ namespace AgroserviciosTienda.VistaModelos;
 
 public partial class PgInicioVistaModelo : ObservableRecipient
 {
+    //PgInventarioVistaModelo InventarioVM;
+
+    //public PgInicioVistaModelo(PgInventarioVistaModelo vm)
+    //{
+    //    InventarioVM = vm;
+    //}
+
     protected override void OnActivated()
     {
         base.OnActivated();
@@ -19,6 +26,7 @@ public partial class PgInicioVistaModelo : ObservableRecipient
     [RelayCommand]
     async Task VerAddentrada()
     {
+        //InventarioVM.IsActive = true;
         await Shell.Current.GoToAsync($"//{nameof(PgInventario)}/{nameof(PgAgregarEntrada)}", true);
     }
 

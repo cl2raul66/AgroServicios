@@ -2,16 +2,18 @@
 
 public class ProductoEntrada
 {
-    public Producto Articulos { get; set; }
+    public Producto Articulo { get; set; }
     public int CantidadUnidad { get; set; }
     public double Precio { get; set; }
 
     public ProductoEntrada() { }
 
-    public ProductoEntrada(Producto articulos, int cantidadunidad, double precio)
+    public ProductoEntrada(Producto articulo, int cantidadunidad, double precio)
     {
-        Articulos = articulos;
+        Articulo = articulo;
         CantidadUnidad = cantidadunidad;
         Precio = precio;
     }
 }
+
+

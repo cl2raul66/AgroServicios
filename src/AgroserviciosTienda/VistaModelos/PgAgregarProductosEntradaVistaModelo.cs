@@ -95,7 +95,7 @@ public partial class PgAgregarProductosEntradaVistaModelo : ObservableValidator
             return false;
         }
 
-        var newProductoEntrada = new ProductoEntrada(new() { Nombre = Nombre, Presentacion = new Empaque(PresentacionMedida, PresentacionUnidad, PresentacionValor) }, Cantidadunidad, Precio);
+        var newProductoEntrada = new ProductoEntrada(new() { Nombre = Nombre.TrimEnd(), Presentacion = new Empaque(PresentacionMedida, PresentacionUnidad, PresentacionValor) }, Cantidadunidad, Precio);
         var resul = WeakReferenceMessenger.Default.Send(newProductoEntrada);
         return resul is not null;
     }

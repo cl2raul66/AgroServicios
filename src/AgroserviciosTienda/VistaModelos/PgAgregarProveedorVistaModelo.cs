@@ -54,7 +54,7 @@ public partial class PgAgregarProveedorVistaModelo : ObservableValidator
             return;
         }
 
-        var newProveedor = new Proveedor(Nombre, Nit, Telefono, Email, Direccion, EsEmpresa);
+        var newProveedor = new Proveedor(Nombre.TrimEnd(), Nit.TrimEnd(), Telefono.TrimEnd(), Email.TrimEnd(), Direccion.TrimEnd(), EsEmpresa);
 
         var resul = WeakReferenceMessenger.Default.Send(newProveedor);
         if (resul is not null)

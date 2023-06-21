@@ -20,11 +20,11 @@ public class ProveedoresLiteDbServicio : IContactosRepositorio<Proveedor>
         collection = db.GetCollection<Proveedor>();
     }
 
-    public bool AnyContacto() => collection.Count() > 0;
+    public bool AnyContacto => collection.Count() > 0;
 
     public Proveedor Get(Expression<Func<Proveedor, bool>> query) => collection.FindOne(query);
 
-    public IEnumerable<Proveedor> GetAll() => collection.FindAll().OfType<Proveedor>();
+    public IEnumerable<Proveedor> GetAll => collection.FindAll().OfType<Proveedor>();
 
     public IEnumerable<Proveedor> GetByAny(Expression<Func<Proveedor, bool>> query) => collection.Find(query).OfType<Proveedor>();
 

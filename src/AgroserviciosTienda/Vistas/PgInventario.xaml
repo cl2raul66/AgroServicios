@@ -3,6 +3,7 @@
     x:Class="AgroserviciosTienda.Vistas.PgInventario"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:modelo="clr-namespace:AgroserviciosTienda.Modelos"
     xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
     Title="Inventario"
     x:DataType="vm:PgInventarioVistaModelo"
@@ -51,6 +52,76 @@
                 </HorizontalStackLayout>
             </Grid>
         </Frame>
+        <Frame
+            Grid.Row="1"
+            Padding="8"
+            CornerRadius="8">
+            <CollectionView ItemsSource="{Binding Almacen, Mode=OneWay}" SelectionMode="None">
+                <CollectionView.EmptyView>
+                    <ContentView>
+                        <StackLayout
+                            HorizontalOptions="Center"
+                            Spacing="8"
+                            VerticalOptions="Center">
+                            <Image HeightRequest="56" WidthRequest="56">
+                                <Image.Source>
+                                    <FontImageSource
+                                        FontFamily="icofont"
+                                        Glyph="{StaticResource ChartHistogramAlt}"
+                                        Color="{StaticResource Gray400}" />
+                                </Image.Source>
+                            </Image>
+                            <Label
+                                FontSize="Caption"
+                                Text="No hay productos"
+                                TextColor="{StaticResource Gray500}" />
+                        </StackLayout>
+                    </ContentView>
+                </CollectionView.EmptyView>
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="4" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="modelo:Inventario">
+                        <Border
+                            Grid.Row="1"
+                            Padding="8"
+                            BackgroundColor="{StaticResource Tertiary}">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8" />
+                            </Border.StrokeShape>
+                            <Grid RowDefinitions="auto,auto" RowSpacing="4">
+                                <Label
+                                    Grid.Row="0"
+                                    FontAttributes="Bold"
+                                    FontSize="Caption"
+                                    Text="{Binding Articulo}"
+                                    TextColor="{StaticResource Primary}" />
+                                <Label
+                                    Grid.Row="1"
+                                    FontSize="Body"
+                                    HorizontalOptions="End"
+                                    Text="{Binding Existencia, StringFormat='Existencia: {0}'}"
+                                    TextColor="{StaticResource Secondary}" />
+                                <!--<Label
+                                    Grid.Row="1"
+                                    FontSize="Body"
+                                    HorizontalOptions="End"
+                                    TextColor="{StaticResource Secondary}">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding Articulo.Presentacion, StringFormat='Unidades: {0}', ConverterParameter=Existencia}" />
+                                            <Span Text="{Binding Existencia, StringFormat='Existencia: {0}'}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>-->
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Frame>
+
         <Frame Grid.Row="2" Padding="12,16">
             <VerticalStackLayout Spacing="16">
                 <Label

@@ -225,7 +225,7 @@
                                     Grid.Column="1"
                                     FontAttributes="Bold"
                                     FontSize="Caption"
-                                    Text="{Binding CostoEntrada, Mode=OneWay, StringFormat='Costo total: {0}'}"
+                                    Text="{Binding CostoEntrada, Mode=OneWay, StringFormat='Costo total: {0:F2}'}"
                                     TextColor="{StaticResource Secondary}"
                                     VerticalOptions="Center" />
                             </Grid>
@@ -234,9 +234,8 @@
                                     Title="Seleccione un producto"
                                     Grid.Row="1"
                                     Grid.Column="0"
-                                    ItemDisplayBinding="{Binding Articulos.Nombre}"
-                                    ItemsSource="{Binding Productos}"
-                                    SelectedItem="{Binding SelectedProducto}" />
+                                    ItemsSource="{Binding ProductosPicker}"
+                                    SelectedItem="{Binding SelectedProductopicker}" />
                                 <Button
                                     Grid.Row="1"
                                     Grid.Column="1"
@@ -248,10 +247,36 @@
                                     TextColor="{StaticResource Primary}"
                                     VerticalOptions="End" />
                             </Grid>
+                            <Grid RowDefinitions="auto,auto" RowSpacing="4">
+                                <Label
+                                    Grid.Row="0"
+                                    FontSize="Subtitle"
+                                    Text="Precio por unidad: *"
+                                    TextColor="{StaticResource Primary}" />
+                                <Entry
+                                    Grid.Row="1"
+                                    Keyboard="Numeric"
+                                    Placeholder="0.00"
+                                    SelectionLength="1"
+                                    Text="{Binding Precio}" />
+                            </Grid>
+                            <Grid RowDefinitions="auto,auto" RowSpacing="4">
+                                <Label
+                                    Grid.Row="0"
+                                    FontSize="Subtitle"
+                                    Text="Cantidad unitaria: *"
+                                    TextColor="{StaticResource Primary}" />
+                                <Entry
+                                    Grid.Row="1"
+                                    Keyboard="Numeric"
+                                    Placeholder="0"
+                                    SelectionLength="1"
+                                    Text="{Binding Cantidadunidad}" />
+                            </Grid>
                             <Button
                                 Command="{Binding AgregarProductoToListaCommand}"
                                 FontSize="Subtitle"
-                                IsEnabled="{Binding SelectedProducto, Mode=OneWay, Converter={tk:IsNotNullConverter}}"
+                                IsVisible="{Binding EnableAgregarproductotolista, Mode=OneWay}"
                                 Text="Agregar producto seleccionado" />
                             <Button
                                 Command="{Binding EliminarProductoToListaCommand}"
@@ -298,16 +323,8 @@
                                                 <Label
                                                     Grid.Row="0"
                                                     FontAttributes="Bold"
-                                                    FontSize="Caption">
-                                                    <Label.FormattedText>
-                                                        <FormattedString>
-                                                            <Span Text="{Binding Articulos.Nombre, Mode=OneWay}" />
-                                                            <Span Text=" " />
-                                                            <Span Text="{Binding Articulos.Presentacion.Valor, Mode=OneWay, Converter={StaticResource DoubleCeroToNull}}" />
-                                                            <Span Text="{Binding Articulos.Presentacion.Unidad, Mode=OneWay, TargetNullValue=''}" />
-                                                        </FormattedString>
-                                                    </Label.FormattedText>
-                                                </Label>
+                                                    FontSize="Caption"
+                                                    Text="{Binding Articulo}" />
                                                 <Label Grid.Row="1" FontSize="Body">
                                                     <Label.FormattedText>
                                                         <FormattedString>
