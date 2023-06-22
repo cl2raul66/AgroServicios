@@ -162,9 +162,8 @@
                                         Title="Seleccione un proveedor"
                                         Grid.Row="1"
                                         Grid.Column="0"
-                                        ItemDisplayBinding="{Binding Nombre}"
-                                        ItemsSource="{Binding Proveedores}"
-                                        SelectedItem="{Binding SelectedProveedor}" />
+                                        ItemsSource="{Binding ProveedoresPicker, Mode=OneWay}"
+                                        SelectedItem="{Binding SelectedProveedorpicker}" />
                                     <Button
                                         Grid.Row="1"
                                         Grid.Column="1"
@@ -234,7 +233,7 @@
                                     Title="Seleccione un producto"
                                     Grid.Row="1"
                                     Grid.Column="0"
-                                    ItemsSource="{Binding ProductosPicker}"
+                                    ItemsSource="{Binding ProductosPicker, Mode=OneWay}"
                                     SelectedItem="{Binding SelectedProductopicker}" />
                                 <Button
                                     Grid.Row="1"

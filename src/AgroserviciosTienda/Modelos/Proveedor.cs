@@ -15,4 +15,9 @@ public class Proveedor
     {
         Nombre = nombre; Nit = nit; Telefono = telefono; EMail = email; Direccion = direccion; EsEmpresa = esempresa;
     }
+
+    public override string ToString()
+    {
+        return Nombre;
+    }
 }

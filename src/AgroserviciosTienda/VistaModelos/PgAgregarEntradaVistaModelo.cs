@@ -25,7 +25,7 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
 
         if (proveedoresServ.AnyContacto)
         {
-            Proveedores = new(proveedoresServ.GetAll);
+            ProveedoresPicker = new(proveedoresServ.GetAll);
         }
 
         if (inventarioServ.AnyInventario)
@@ -37,8 +37,8 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
         {
             if (m is not null)
             {
-                Proveedores.Insert(0, m);
-                SelectedProveedor = Proveedores[0];
+                ProveedoresPicker.Insert(0, m);
+                SelectedProveedorpicker = ProveedoresPicker[0];
             }
         });
 
@@ -61,10 +61,10 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     string noFactura;
 
     [ObservableProperty]
-    ObservableCollection<Proveedor> proveedores = new();
+    ObservableCollection<Proveedor> proveedoresPicker = new();
 
     [ObservableProperty]
-    Proveedor selectedProveedor;
+    Proveedor selectedProveedorpicker;
 
     [ObservableProperty]
     decimal costoFlete;
@@ -140,8 +140,8 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
         }
         else
         {
-            proveedoresServ.Insert(SelectedProveedor);
-            entradasServ.Insert(new(Fecha, ProductosLista.ToList(), NoFactura, SelectedProveedor, CostoFlete, CostoCarga));
+            proveedoresServ.Insert(SelectedProveedorpicker);
+            entradasServ.Insert(new(Fecha, ProductosLista.ToList(), NoFactura, SelectedProveedorpicker, CostoFlete, CostoCarga));
         }
 
         bool seAgrego = false;

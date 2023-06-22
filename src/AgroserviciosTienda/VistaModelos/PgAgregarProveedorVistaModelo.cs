@@ -2,12 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AgroserviciosTienda.VistaModelos;
 
@@ -54,7 +49,13 @@ public partial class PgAgregarProveedorVistaModelo : ObservableValidator
             return;
         }
 
-        var newProveedor = new Proveedor(Nombre.TrimEnd(), Nit.TrimEnd(), Telefono.TrimEnd(), Email.TrimEnd(), Direccion.TrimEnd(), EsEmpresa);
+        var newProveedor = new Proveedor(
+            Nombre.TrimEnd(),
+            Nit.TrimEnd(),
+            string.IsNullOrEmpty(Telefono) ? string.Empty : Telefono.TrimEnd(),
+            string.IsNullOrEmpty(Email) ? string.Empty : Email.TrimEnd(), 
+            string.IsNullOrEmpty(Direccion) ? string.Empty : Direccion.TrimEnd(), 
+            EsEmpresa);
 
         var resul = WeakReferenceMessenger.Default.Send(newProveedor);
         if (resul is not null)
