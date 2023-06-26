@@ -1,7 +1,10 @@
-﻿namespace AgroserviciosTienda.Modelos;
+﻿using LiteDB;
+
+namespace AgroserviciosTienda.Modelos;
 
 public class Proveedor
 {
+    [BsonId]
     public string Nombre { get; set; }
     public string Nit { get; set; }
     public string Telefono { get; set; }

@@ -8,6 +8,7 @@ namespace AgroserviciosTienda.Servicios;
 public class ProveedoresLiteDbServicio : IContactosRepositorio<Proveedor>
 {
     readonly ILiteCollection<Proveedor> collection;
+    LiteDatabase db;
 
     public ProveedoresLiteDbServicio()
     {
@@ -16,7 +17,7 @@ public class ProveedoresLiteDbServicio : IContactosRepositorio<Proveedor>
             Filename = Path.Combine(FileSystem.Current.AppDataDirectory, "Proveedores.db")
         };
 
-        var db = new LiteDatabase(cnx);
+        db = new(cnx);
         collection = db.GetCollection<Proveedor>();
     }
 
@@ -28,5 +29,7 @@ public class ProveedoresLiteDbServicio : IContactosRepositorio<Proveedor>
 
     public IEnumerable<Proveedor> GetByAny(Expression<Func<Proveedor, bool>> query) => collection.Find(query).OfType<Proveedor>();
 
-    public void Insert(Proveedor entity) => collection.Insert(entity);
+    public void Insert(Proveedor entity) => collection.Insert(entity.Nombre, entity);
+
+    public void Delete(string nombre) => collection.Delete(new BsonValue(nombre));
 }

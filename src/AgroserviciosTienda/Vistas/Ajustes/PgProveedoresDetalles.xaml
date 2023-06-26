@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AgroserviciosTienda.Vistas.Ajustes.PgProveedoresDetalles"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:modelo="clr-namespace:AgroserviciosTienda.Modelos"
+    xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
+    Title="Detalles - Proveedores"
+    x:DataType="vm:PgProveedoresDetallesVistaModelo"
+    Shell.NavBarIsVisible="False">
+
+    <Grid
+        Padding="16"
+        RowDefinitions="auto,*,auto"
+        RowSpacing="16">
+        <Frame
+            Padding="8,4"
+            BackgroundColor="{StaticResource Background}"
+            CornerRadius="8"
+            HorizontalOptions="Fill">
+            <Grid ColumnDefinitions="*,auto">
+                <Label
+                    Padding="8"
+                    FontSize="Subtitle"
+                    Text="Administrar proveedores"
+                    TextColor="{StaticResource Primary}"
+                    VerticalOptions="Center" />
+                <Button
+                    Grid.Column="1"
+                    Padding="2"
+                    BackgroundColor="Transparent"
+                    Command="{Binding GoToBackCommand}"
+                    FontFamily="icofont"
+                    FontSize="Subtitle"
+                    Text="{StaticResource Exit}"
+                    TextColor="{StaticResource Primary}" />
+            </Grid>
+        </Frame>
+        <Frame
+            Grid.Row="1"
+            Padding="6,8"
+            BackgroundColor="{StaticResource Background}">
+            <ScrollView>
+                <CollectionView
+                    ItemsSource="{Binding Proveedores, Mode=OneWay}"
+                    SelectedItem="{Binding SelectedProvvedor}"
+                    SelectionMode="Single">
+                    <CollectionView.EmptyView>
+                        <ContentView>
+                            <StackLayout
+                                HorizontalOptions="Center"
+                                Spacing="8"
+                                VerticalOptions="Center">
+                                <Image HeightRequest="56" WidthRequest="56">
+                                    <Image.Source>
+                                        <FontImageSource
+                                            FontFamily="icofont"
+                                            Glyph="{StaticResource Contacts}"
+                                            Color="{StaticResource Gray400}" />
+                                    </Image.Source>
+                                </Image>
+                                <Label
+                                    FontSize="Caption"
+                                    Text="No hay proveedores"
+                                    TextColor="{StaticResource Gray500}" />
+                            </StackLayout>
+                        </ContentView>
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="4" Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="modelo:Proveedor">
+                            <Border Grid.Row="1" Style="{StaticResource BorderItem}">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8" />
+                                </Border.StrokeShape>
+                                <Grid ColumnDefinitions="auto,*" ColumnSpacing="8">
+                                    <Label
+                                        FontFamily="icofont"
+                                        FontSize="Title"
+                                        Text="{StaticResource BuildingAlt}"
+                                        TextColor="{StaticResource Primary}"
+                                        VerticalOptions="Center" />
+                                    <VerticalStackLayout
+                                        Grid.Column="1"
+                                        Spacing="4"
+                                        VerticalOptions="Center">
+                                        <Label
+                                            FontSize="Subtitle"
+                                            Text="{Binding Nombre}"
+                                            TextColor="{StaticResource Primary}" />
+                                        <Label
+                                            FontSize="Subtitle"
+                                            IsVisible="{Binding Telefono, Mode=OneWay, Converter={tk:IsStringNotNullOrEmptyConverter}}"
+                                            Text="{Binding Telefono}"
+                                            TextColor="{StaticResource Secondary}" />
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ScrollView>
+        </Frame>
+        <Frame Grid.Row="2" Padding="12,16">
+            <VerticalStackLayout Spacing="16">
+                <Label
+                    Padding="8,0"
+                    FontSize="Subtitle"
+                    Text="Accesos rápidos:"
+                    TextColor="{StaticResource Primary}" />
+                <Button
+                    Command="{Binding VerAgregarproveedorCommand}"
+                    FontSize="Subtitle"
+                    Text="Agregar proveedor" />
+                <Button
+                    Command="{Binding EliminarproveedorCommand}"
+                    FontSize="Subtitle"
+                    IsEnabled="{Binding SelectedProvvedor, Mode=OneWay, Converter={tk:IsNotNullConverter}}"
+                    Text="Eliminar proveedor" />
+            </VerticalStackLayout>
+        </Frame>
+    </Grid>
+
+</ContentPage>

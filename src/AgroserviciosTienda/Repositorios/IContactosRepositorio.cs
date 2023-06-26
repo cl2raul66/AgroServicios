@@ -9,4 +9,5 @@ public interface IContactosRepositorio<T> where T : class
     IEnumerable<T> GetAll { get; }
     IEnumerable<T> GetByAny(Expression<Func<T, bool>> query);
     void Insert(T entity);
+    void Delete(string nombre);
 }

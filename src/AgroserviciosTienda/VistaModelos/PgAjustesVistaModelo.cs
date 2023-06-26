@@ -1,6 +1,7 @@
 ﻿using AgroserviciosTienda.Modelos;
 using AgroserviciosTienda.Repositorios;
 using AgroserviciosTienda.Vistas;
+using AgroserviciosTienda.Vistas.Ajustes;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -15,10 +16,30 @@ public partial class PgAjustesVistaModelo : ObservableRecipient
 
     public PgAjustesVistaModelo(IContactosRepositorio<Proveedor> contactosRepositorio)
     {
-        IsActive = true;
         proveedoresServ = contactosRepositorio;
     }
 
+    [RelayCommand]
+    private async Task VerAgregarproveedor()
+    {
+        IsActive = true;
+        await Shell.Current.GoToAsync(nameof(PgAgregarProveedor), true);
+    }
+    
+    [RelayCommand]
+    private async Task VerAdministrarroveedores()
+    {
+        IsActive = false;
+        await Shell.Current.GoToAsync(nameof(PgProveedoresDetalles), true);
+    }
+
+    [RelayCommand]
+    private async Task VerAdministrarmedidas()
+    {
+        await Shell.Current.GoToAsync(nameof(PgMedidasDetalles), true);
+    }
+
+    #region Extra
     protected override void OnActivated()
     {
         base.OnActivated();
@@ -32,20 +53,6 @@ public partial class PgAjustesVistaModelo : ObservableRecipient
             }
         });
     }
-
-    [RelayCommand]
-    private async Task VerAgregarproveedor()
-    {
-        await Shell.Current.GoToAsync(nameof(PgAgregarProveedor), true);
-    }
-
-    //[RelayCommand]
-    //private async Task VerAgregarproveedor()
-    //{
-    //    await Shell.Current.GoToAsync(nameof(PgAgregarProveedor), true);
-    //}
-
-    #region Extra
     async Task ViewToast(string mensaje)
     {
         CancellationTokenSource cancellationTokenSource = new();

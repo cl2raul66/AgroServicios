@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AgroserviciosTienda.Vistas.Ajustes.PgMedidasDetalles"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
+    Title="Detalles - Medidas"
+    Shell.NavBarIsVisible="False">
+
+    <Grid
+        Padding="16"
+        RowDefinitions="auto,*,auto"
+        RowSpacing="16">
+        <Frame
+            Padding="8,4"
+            BackgroundColor="{StaticResource Background}"
+            CornerRadius="8"
+            HorizontalOptions="Fill">
+            <Grid ColumnDefinitions="*,auto">
+                <Label
+                    Padding="8"
+                    FontSize="Subtitle"
+                    Text="Detalles - Medidas"
+                    TextColor="{StaticResource Primary}"
+                    VerticalOptions="Center" />
+                <Button
+                    Grid.Column="1"
+                    Padding="2"
+                    BackgroundColor="Transparent"
+                    Command="{Binding}"
+                    FontFamily="icofont"
+                    FontSize="Subtitle"
+                    Text="{StaticResource Exit}"
+                    TextColor="{StaticResource Primary}" />
+            </Grid>
+        </Frame>
+        <Frame
+            Grid.Row="1"
+            Padding="6,8"
+            BackgroundColor="{StaticResource Background}" />
+        <Frame Grid.Row="2" Padding="12,16">
+            <VerticalStackLayout Spacing="16">
+                <Label
+                    Padding="8,0"
+                    FontSize="Subtitle"
+                    Text="Accesos rápidos:"
+                    TextColor="{StaticResource Primary}" />
+                <Button
+                    Command="{Binding}"
+                    FontSize="Subtitle"
+                    Text="Agregar proveedor" />
+            </VerticalStackLayout>
+        </Frame>
+    </Grid>
+
+
+</ContentPage>

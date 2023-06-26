@@ -14,6 +14,28 @@
                 <ResourceDictionary Source="Resources/Styles/icofont.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <cvt:DoubleCeroToNullConverter x:Key="DoubleCeroToNull" />
+            <Style x:Key="BorderItem" TargetType="Border">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Padding" Value="8" />
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Tertiary}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="Padding" Value="6" />
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Tertiary}" />
+                                    <Setter Property="StrokeThickness" Value="2" />
+                                    <Setter Property="Stroke" Value="{StaticResource Primary}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

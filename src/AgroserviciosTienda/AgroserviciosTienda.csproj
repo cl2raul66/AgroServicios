@@ -66,6 +66,12 @@
 	  <MauiXaml Update="Resources\Styles\icofont.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Vistas\Ajustes\PgMedidasDetalles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Vistas\Ajustes\PgProveedoresDetalles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Vistas\Inventario\PgAgregarEntrada.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
