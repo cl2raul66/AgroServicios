@@ -6,6 +6,7 @@
     xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
     Title="Detalles - Medidas"
+    x:DataType="vm:PgMedidasDetallesVistaModelo"
     Shell.NavBarIsVisible="False">
 
     <Grid
@@ -28,31 +29,62 @@
                     Grid.Column="1"
                     Padding="2"
                     BackgroundColor="Transparent"
-                    Command="{Binding}"
+                    Command="{Binding GoToBackCommand}"
                     FontFamily="icofont"
                     FontSize="Subtitle"
                     Text="{StaticResource Exit}"
                     TextColor="{StaticResource Primary}" />
             </Grid>
         </Frame>
-        <Frame
-            Grid.Row="1"
-            Padding="6,8"
-            BackgroundColor="{StaticResource Background}" />
-        <Frame Grid.Row="2" Padding="12,16">
+        <ScrollView Grid.Row="1">
             <VerticalStackLayout Spacing="16">
-                <Label
-                    Padding="8,0"
-                    FontSize="Subtitle"
-                    Text="Accesos rápidos:"
-                    TextColor="{StaticResource Primary}" />
-                <Button
-                    Command="{Binding}"
-                    FontSize="Subtitle"
-                    Text="Agregar proveedor" />
+                <Frame Padding="12,16">
+                    <VerticalStackLayout Spacing="16">
+                        <Label
+                            Padding="8,0"
+                            FontSize="Subtitle"
+                            Text="Magnitudes:"
+                            TextColor="{StaticResource Primary}" />
+                        <CollectionView
+                            ItemsSource="{Binding MagnitudesTodas, Mode=OneTime}"
+                            SelectedItem="{Binding SelectedMagnitud, Mode=TwoWay}"
+                            SelectionMode="Single">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout ItemSpacing="4" Orientation="Vertical" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="x:String">
+                                    <Border Grid.Row="1" Style="{StaticResource BorderItem}">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="8" />
+                                        </Border.StrokeShape>
+                                        <Label
+                                            Padding="8,0"
+                                            FontAttributes="Bold"
+                                            FontSize="Body"
+                                            Text="{Binding .}"
+                                            TextColor="{StaticResource Primary}" />
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                        <Button
+                            Command="{Binding AgregarQuitarMagnitudCommand}"
+                            FontSize="Subtitle"
+                            IsVisible="{Binding SelectedMagnitud, Mode=OneWay, Converter={tk:IsNotNullConverter}}"
+                            Text="{Binding TextoAgregarQuitarMagnitud, Mode=OneWay}" />
+                        <Label FontSize="Caption" TextColor="{StaticResource Gray600}">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Magnitudes en uso: " />
+                                    <Span Text="{Binding VistaMagnitudesuso, Mode=OneWay}" TextColor="{StaticResource Secondary}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </VerticalStackLayout>
+                </Frame>
             </VerticalStackLayout>
-        </Frame>
+        </ScrollView>
     </Grid>
-
 
 </ContentPage>

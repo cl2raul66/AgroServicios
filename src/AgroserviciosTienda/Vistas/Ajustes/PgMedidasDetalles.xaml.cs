@@ -1,10 +1,11 @@
 using AgroserviciosTienda.Servicios;
+using AgroserviciosTienda.VistaModelos;
 
 namespace AgroserviciosTienda.Vistas.Ajustes;
 
 public partial class PgMedidasDetalles : ContentPage
 {
-	public PgMedidasDetalles(IMedidasServicio vm)
+	public PgMedidasDetalles(PgMedidasDetallesVistaModelo vm)
 	{
 		InitializeComponent();
 

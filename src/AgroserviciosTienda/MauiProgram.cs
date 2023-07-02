@@ -4,6 +4,7 @@ using AgroserviciosTienda.Servicios;
 using AgroserviciosTienda.VistaModelos;
 using AgroserviciosTienda.Vistas;
 using AgroserviciosTienda.Vistas.Ajustes;
+using Android.Preferences;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 
@@ -36,6 +37,7 @@ public static class MauiProgram
         builder.Services.AddTransient<PgAgregarProveedorVistaModelo>();
         builder.Services.AddTransient<PgAjustesVistaModelo>();
         builder.Services.AddTransient<PgProveedoresDetallesVistaModelo>();
+        builder.Services.AddTransient<PgMedidasDetallesVistaModelo>();
 
         builder.Services.AddTransient<PgInicio>();
         builder.Services.AddTransient<PgInventario>();
@@ -45,11 +47,11 @@ public static class MauiProgram
         builder.Services.AddTransient<PgVentas>();
         builder.Services.AddTransient<PgAjustes>();
         builder.Services.AddTransient<PgProveedoresDetalles>();
+        builder.Services.AddTransient<PgMedidasDetalles>();
 
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
-
 		return builder.Build();
 	}
 }

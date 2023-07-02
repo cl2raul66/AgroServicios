@@ -15,7 +15,7 @@ public partial class PgAgregarProductosEntradaVistaModelo : ObservableValidator
     public PgAgregarProductosEntradaVistaModelo(IMedidasServicio medidasServicio)
     {
         medidasServ = medidasServicio;
-        Medidas = medidasServ.TiposMedidas;
+        Medidas = medidasServ.MagnitudAll;
     }
 
     [ObservableProperty]
