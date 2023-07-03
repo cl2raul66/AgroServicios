@@ -78,7 +78,7 @@ public partial class PgMedidasDetallesVistaModelo : ObservableObject
     {
         VistaMagnitudesuso = medidasServ.MagnitudesUso.Count() == MagnitudesTodas.Count()
             ? "Todas"
-            : string.Join(',', medidasServ.MagnitudesUso);
+            : string.Join(", ", medidasServ.MagnitudesUso).TrimEnd();
     }
     #endregion
 }

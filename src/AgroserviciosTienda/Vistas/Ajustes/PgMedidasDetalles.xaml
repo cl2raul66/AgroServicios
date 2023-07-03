@@ -77,7 +77,10 @@
                             <Label.FormattedText>
                                 <FormattedString>
                                     <Span Text="Magnitudes en uso: " />
-                                    <Span Text="{Binding VistaMagnitudesuso, Mode=OneWay}" TextColor="{StaticResource Secondary}" />
+                                    <Span
+                                        FontAttributes="Bold"
+                                        Text="{Binding VistaMagnitudesuso, Mode=OneWay}"
+                                        TextColor="{StaticResource Secondary}" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
