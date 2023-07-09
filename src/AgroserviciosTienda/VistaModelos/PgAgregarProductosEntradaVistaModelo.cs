@@ -15,7 +15,7 @@ public partial class PgAgregarProductosEntradaVistaModelo : ObservableValidator
     public PgAgregarProductosEntradaVistaModelo(IMedidasServicio medidasServicio)
     {
         medidasServ = medidasServicio;
-        Medidas = medidasServ.AllMagnitud;
+        Magnitudes = new(medidasServ.AllMagnitud);
     }
 
     [ObservableProperty]
@@ -24,13 +24,13 @@ public partial class PgAgregarProductosEntradaVistaModelo : ObservableValidator
     string nombre;
 
     [ObservableProperty]
-    IEnumerable<string> magnitudes;
+    ObservableCollection<string> magnitudes;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Unidades))]
-    string presentacionMedida;
+    string selectedMagnitud;
 
-    public ObservableCollection<TipoUnidad> Unidades => new(medidasServ.AllUnidades(PresentacionMedida));
+    public ObservableCollection<TipoUnidad> Unidades => string.IsNullOrEmpty(SelectedMagnitud) ? new() : new(medidasServ.AllUnidades(SelectedMagnitud));
 
     [ObservableProperty]
     string presentacionUnidad;
@@ -61,7 +61,7 @@ public partial class PgAgregarProductosEntradaVistaModelo : ObservableValidator
         {
             CountAdd++;
             Nombre = string.Empty;
-            PresentacionMedida = null;
+            SelectedMagnitud = null;
             PresentacionUnidad = null;
             PresentacionValor = 0;
             Cantidadunidad = 0;
@@ -95,7 +95,7 @@ public partial class PgAgregarProductosEntradaVistaModelo : ObservableValidator
             return false;
         }
 
-        var newProductoEntrada = new ProductoEntrada(new() { Nombre = Nombre.TrimEnd(), Presentacion = new Empaque(PresentacionMedida, PresentacionUnidad, PresentacionValor) }, Cantidadunidad, Precio);
+        var newProductoEntrada = new ProductoEntrada(new() { Nombre = Nombre.TrimEnd(), Presentacion = new Empaque(SelectedMagnitud, PresentacionUnidad, PresentacionValor) }, Cantidadunidad, Precio);
         var resul = WeakReferenceMessenger.Default.Send(newProductoEntrada);
         return resul is not null;
     }

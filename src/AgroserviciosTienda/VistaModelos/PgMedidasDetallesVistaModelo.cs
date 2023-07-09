@@ -115,11 +115,6 @@ public partial class PgMedidasDetallesVistaModelo : ObservableObject
             Unidades = new(baseMedidasServ.AllUnidad(SelectedMagnitudesuso));
             GetVistaunidadesuso();
         }
-        
-        if (e.PropertyName == nameof(SelectedUnidad))
-        {
-            
-        }
     }
 
     void GetVistamagnitudesuso()

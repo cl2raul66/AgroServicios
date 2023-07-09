@@ -25,15 +25,21 @@
                     Text="Agregar - Productos"
                     TextColor="{StaticResource Primary}"
                     VerticalOptions="Center" />
-                <tk:AvatarView
-                    Grid.Column="1"
-                    BackgroundColor="{StaticResource Background}"
-                    BorderColor="{StaticResource Primary}"
-                    HeightRequest="28"
-                    IsVisible="{Binding CountAdd, Converter={StaticResource IntToBool}}"
-                    Text="{Binding CountAdd, Mode=OneWay}"
-                    TextColor="{StaticResource Primary}"
-                    WidthRequest="28" />
+                <Grid Grid.Column="1" IsVisible="{Binding CountAdd, Converter={StaticResource IntToBool}}">
+                    <Ellipse
+                        Fill="{StaticResource Background}"
+                        HeightRequest="28"
+                        Stroke="{StaticResource Primary}"
+                        StrokeThickness="2"
+                        WidthRequest="28" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="Micro"
+                        HorizontalOptions="Center"
+                        Text="{Binding CountAdd, Mode=OneWay}"
+                        TextColor="{StaticResource Secondary}"
+                        VerticalOptions="Center" />
+                </Grid>
             </Grid>
         </Frame>
         <ScrollView Grid.Row="1">
@@ -48,7 +54,6 @@
                                 TextColor="{StaticResource Primary}"
                                 VerticalOptions="Center" />
                             <Entry
-                                x:Name="EntProductoNombre"
                                 Grid.Row="1"
                                 ClearButtonVisibility="WhileEditing"
                                 Keyboard="Text"
@@ -103,8 +108,8 @@
                             <Picker
                                 Title="Seleccione presentación"
                                 Grid.Row="1"
-                                ItemsSource="{Binding Medidas, Mode=OneWay}"
-                                SelectedItem="{Binding PresentacionMedida}" />
+                                ItemsSource="{Binding Magnitudes, Mode=OneWay}"
+                                SelectedItem="{Binding SelectedMagnitud}" />
                         </Grid>
                         <Grid
                             ColumnSpacing="8"
