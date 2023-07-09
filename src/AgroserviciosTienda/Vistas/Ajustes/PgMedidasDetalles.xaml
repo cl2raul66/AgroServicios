@@ -3,6 +3,7 @@
     x:Class="AgroserviciosTienda.Vistas.Ajustes.PgMedidasDetalles"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:modelo="clr-namespace:AgroserviciosTienda.Modelos"
     xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
     Title="Detalles - Medidas"
@@ -86,6 +87,97 @@
                         </Label>
                     </VerticalStackLayout>
                 </Frame>
+                <Border
+                    Padding="12,16"
+                    BackgroundColor="{StaticResource Background}"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="FillAndExpand">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                    <VerticalStackLayout Spacing="16">
+                        <Label
+                            Padding="8,0"
+                            FontSize="Subtitle"
+                            Text="Magnitudes:"
+                            TextColor="{StaticResource Primary}" />
+                        <Picker
+                            Title="Sellecciona una magnitud"
+                            ItemsSource="{Binding MagnitudesUso, Mode=OneWay}"
+                            SelectedItem="{Binding SelectedMagnitudesuso}" />
+                        <Label
+                            Padding="8,0"
+                            FontSize="Subtitle"
+                            Text="Unidades:"
+                            TextColor="{StaticResource Primary}" />
+                        <CollectionView
+                            ItemsSource="{Binding Unidades, Mode=OneWay}"
+                            SelectedItem="{Binding SelectedUnidad, Mode=TwoWay}"
+                            SelectionMode="Single">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout ItemSpacing="4" Orientation="Vertical" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="x:String">
+                                    <Border Grid.Row="1" Style="{StaticResource BorderItem}">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="8" />
+                                        </Border.StrokeShape>
+                                        <Label
+                                            Padding="8,0"
+                                            FontAttributes="Bold"
+                                            FontSize="Body"
+                                            Text="{Binding .}"
+                                            TextColor="{StaticResource Primary}" />
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                        <Button
+                            Command="{Binding AgregarQuitarUnidadCommand}"
+                            FontSize="Subtitle"
+                            IsVisible="{Binding SelectedUnidad, Mode=OneWay, Converter={tk:IsNotNullConverter}}"
+                            Text="{Binding TextoAgregarQuitarUnidad, Mode=OneWay}" />
+                        <Grid RowDefinitions="auto,auto" RowSpacing="4">
+                            <Label
+                                FontSize="Caption"
+                                Text="Unidades en uso:"
+                                TextColor="{StaticResource Gray600}" />
+                            <ListView
+                                Grid.Row="1"
+                                HasUnevenRows="True"
+                                ItemsSource="{Binding VistaUnidadesuso, Mode=OneWay}"
+                                SelectionMode="None"
+                                SeparatorVisibility="None">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="modelo:UnidadUsoWiew">
+                                        <ViewCell>
+                                            <Label
+                                                Margin="0"
+                                                Padding="0,2"
+                                                FontSize="Caption"
+                                                TextColor="{StaticResource Gray600}"
+                                                VerticalOptions="Center">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding Key, Mode=OneWay}" />
+                                                        <Span Text="&#x0a;" />
+                                                        <Span
+                                                            FontAttributes="Bold"
+                                                            Text="{Binding Value, Mode=OneWay}"
+                                                            TextColor="{StaticResource Secondary}" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                        </ViewCell>
+
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
+
+                    </VerticalStackLayout>
+                </Border>
             </VerticalStackLayout>
         </ScrollView>
     </Grid>

@@ -25,6 +25,7 @@ public static class MauiProgram
                 fonts.AddFont("icofont.ttf", "icofont");
             });
 
+        builder.Services.AddSingleton<IBaseMedidasServicio, BaseMedidasServicio>();
         builder.Services.AddSingleton<IMedidasServicio, MedidasServicio>();
         builder.Services.AddSingleton<IEntradasRepositorio, EntradasLiteDbServicio>();
         builder.Services.AddSingleton<IInventarioRepositorio, InventarioLiteDbServicio>();

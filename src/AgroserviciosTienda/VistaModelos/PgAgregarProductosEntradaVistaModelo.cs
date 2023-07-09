@@ -15,7 +15,7 @@ public partial class PgAgregarProductosEntradaVistaModelo : ObservableValidator
     public PgAgregarProductosEntradaVistaModelo(IMedidasServicio medidasServicio)
     {
         medidasServ = medidasServicio;
-        Medidas = medidasServ.MagnitudAll;
+        Medidas = medidasServ.AllMagnitud;
     }
 
     [ObservableProperty]
@@ -30,7 +30,7 @@ public partial class PgAgregarProductosEntradaVistaModelo : ObservableValidator
     [NotifyPropertyChangedFor(nameof(Unidades))]
     string presentacionMedida;
 
-    public ObservableCollection<string> Unidades => new(medidasServ.Unidades(PresentacionMedida));
+    public ObservableCollection<TipoUnidad> Unidades => new(medidasServ.AllUnidades(PresentacionMedida));
 
     [ObservableProperty]
     string presentacionUnidad;
