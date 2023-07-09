@@ -24,7 +24,7 @@ public partial class PgAgregarProductosEntradaVistaModelo : ObservableValidator
     string nombre;
 
     [ObservableProperty]
-    IEnumerable<string> medidas;
+    IEnumerable<string> magnitudes;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Unidades))]
