@@ -2,9 +2,9 @@ using AgroserviciosTienda.VistaModelos;
 
 namespace AgroserviciosTienda.Vistas;
 
-public partial class PgMedidasDetalles : ContentPage
+public partial class PgClientesDetalles : ContentPage
 {
-	public PgMedidasDetalles(PgMedidasDetallesVistaModelo vm)
+	public PgClientesDetalles(PgClientesDetallesVistaModelo vm)
 	{
 		InitializeComponent();
 

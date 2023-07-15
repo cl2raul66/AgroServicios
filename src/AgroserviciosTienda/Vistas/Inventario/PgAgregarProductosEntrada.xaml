@@ -25,7 +25,7 @@
                     Text="Agregar - Productos"
                     TextColor="{StaticResource Primary}"
                     VerticalOptions="Center" />
-                <Grid Grid.Column="1" IsVisible="{Binding CountAdd, Converter={StaticResource IntToBool}}">
+                <Grid Grid.Column="1" IsVisible="{Binding CountAdd, Converter={tk:IntToBoolConverter}}">
                     <Ellipse
                         Fill="{StaticResource Background}"
                         HeightRequest="28"
@@ -109,7 +109,7 @@
                                 Title="Seleccione presentación"
                                 Grid.Row="1"
                                 ItemsSource="{Binding Magnitudes, Mode=OneWay}"
-                                SelectedItem="{Binding SelectedMagnitud}" />
+                                SelectedItem="{Binding SelectedMagnitud, Mode=TwoWay}" />
                         </Grid>
                         <Grid
                             ColumnSpacing="8"
@@ -124,7 +124,7 @@
                                 Title="Seleccione tipo de medida"
                                 Grid.Row="1"
                                 ItemsSource="{Binding Unidades, Mode=OneWay}"
-                                SelectedItem="{Binding PresentacionUnidad}" />
+                                SelectedItem="{Binding PresentacionUnidad, Mode=TwoWay}" />
                         </Grid>
                         <Grid
                             ColumnSpacing="8"

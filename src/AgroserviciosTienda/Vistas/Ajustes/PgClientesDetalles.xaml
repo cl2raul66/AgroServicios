@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="AgroserviciosTienda.Vistas.PgProveedoresDetalles"
+    x:Class="AgroserviciosTienda.Vistas.PgClientesDetalles"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:modelo="clr-namespace:AgroserviciosTienda.Modelos"
     xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
-    Title="Detalles - Proveedores"
-    x:DataType="vm:PgProveedoresDetallesVistaModelo"
+    Title="Detalles - Clientes"
+    x:DataType="vm:PgClientesDetallesVistaModelo"
     Shell.NavBarIsVisible="False">
 
     <Grid
@@ -23,7 +23,7 @@
                 <Label
                     Padding="8"
                     FontSize="Subtitle"
-                    Text="Administrar proveedores"
+                    Text="Administrar clientes"
                     TextColor="{StaticResource Primary}"
                     VerticalOptions="Center" />
                 <Button
@@ -43,8 +43,8 @@
             BackgroundColor="{StaticResource Background}">
             <ScrollView>
                 <CollectionView
-                    ItemsSource="{Binding Proveedores, Mode=OneWay}"
-                    SelectedItem="{Binding SelectedProvvedor}"
+                    ItemsSource="{Binding}"
+                    SelectedItem="{Binding}"
                     SelectionMode="Single">
                     <CollectionView.EmptyView>
                         <ContentView>
@@ -62,7 +62,7 @@
                                 </Image>
                                 <Label
                                     FontSize="Caption"
-                                    Text="No hay proveedores"
+                                    Text="No hay clientes"
                                     TextColor="{StaticResource Gray500}" />
                             </StackLayout>
                         </ContentView>
@@ -71,7 +71,7 @@
                         <LinearItemsLayout ItemSpacing="4" Orientation="Vertical" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="modelo:Proveedor">
+                        <DataTemplate x:DataType="modelo:Cliente">
                             <Border Grid.Row="1" Style="{StaticResource BorderItem}">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="8" />
@@ -81,6 +81,12 @@
                                         FontFamily="icofont"
                                         FontSize="Title"
                                         Text="{StaticResource BuildingAlt}"
+                                        TextColor="{StaticResource Primary}"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        FontFamily="icofont"
+                                        FontSize="Title"
+                                        Text="{StaticResource User}"
                                         TextColor="{StaticResource Primary}"
                                         VerticalOptions="Center" />
                                     <VerticalStackLayout
@@ -112,14 +118,14 @@
                     Text="Accesos rápidos:"
                     TextColor="{StaticResource Primary}" />
                 <Button
-                    Command="{Binding VerAgregarproveedorCommand}"
+                    Command="{Binding VerAgregarclienteCommand}"
                     FontSize="Subtitle"
-                    Text="Agregar proveedor" />
+                    Text="Agregar cliente" />
                 <Button
-                    Command="{Binding EliminarproveedorCommand}"
+                    Command="{Binding EliminarclienteCommand}"
                     FontSize="Subtitle"
-                    IsEnabled="{Binding SelectedProvvedor, Mode=OneWay, Converter={tk:IsNotNullConverter}}"
-                    Text="Eliminar proveedor" />
+                    IsEnabled="{Binding SelectedCliente, Mode=OneWay, Converter={tk:IsNotNullConverter}}"
+                    Text="Eliminar cliente" />
             </VerticalStackLayout>
         </Frame>
     </Grid>

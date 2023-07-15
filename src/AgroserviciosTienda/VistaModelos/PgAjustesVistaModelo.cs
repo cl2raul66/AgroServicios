@@ -1,7 +1,6 @@
 ﻿using AgroserviciosTienda.Modelos;
 using AgroserviciosTienda.Repositorios;
 using AgroserviciosTienda.Vistas;
-using AgroserviciosTienda.Vistas.Ajustes;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -20,23 +19,29 @@ public partial class PgAjustesVistaModelo : ObservableRecipient
     }
 
     [RelayCommand]
-    private async Task VerAgregarproveedor()
+    async Task VerAgregarproveedor()
     {
         IsActive = true;
         await Shell.Current.GoToAsync(nameof(PgAgregarProveedor), true);
     }
     
     [RelayCommand]
-    private async Task VerAdministrarroveedores()
+    async Task VerAdministrarroveedores()
     {
         IsActive = false;
         await Shell.Current.GoToAsync(nameof(PgProveedoresDetalles), true);
     }
 
     [RelayCommand]
-    private async Task VerAdministrarmedidas()
+    async Task VerAdministrarmedidas()
     {
         await Shell.Current.GoToAsync(nameof(PgMedidasDetalles), true);
+    }
+
+    [RelayCommand]
+    async Task VerAdministrarclientes()
+    {
+        await Shell.Current.GoToAsync(nameof(PgClientesDetalles), true);
     }
 
     #region Extra

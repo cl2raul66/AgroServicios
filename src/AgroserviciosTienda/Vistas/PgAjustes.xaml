@@ -73,8 +73,9 @@
                             <Grid RowDefinitions="auto,auto" RowSpacing="4">
                                 <Button
                                     Grid.Row="0"
+                                    Command="{Binding VerAdministrarmedidasCommand}"
                                     FontSize="Subtitle"
-                                    Text="Administrar medidas" Command="{Binding VerAdministrarmedidasCommand}"/>
+                                    Text="Administrar medidas" />
                                 <Label
                                     Grid.Row="1"
                                     FontSize="Caption"
@@ -124,6 +125,7 @@
                             <Grid RowDefinitions="auto,auto" RowSpacing="4">
                                 <Button
                                     Grid.Row="0"
+                                    Command="{Binding VerAdministrarclientesCommand}"
                                     FontSize="Subtitle"
                                     Text="Administrar cliente" />
                                 <Label

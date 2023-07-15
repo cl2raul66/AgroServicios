@@ -1,6 +1,6 @@
 using AgroserviciosTienda.VistaModelos;
 
-namespace AgroserviciosTienda.Vistas.Ajustes;
+namespace AgroserviciosTienda.Vistas;
 
 public partial class PgProveedoresDetalles : ContentPage
 {

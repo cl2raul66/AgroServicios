@@ -4,12 +4,7 @@ using AgroserviciosTienda.Vistas;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AgroserviciosTienda.VistaModelos;
 
@@ -46,6 +41,8 @@ public partial class PgProveedoresDetallesVistaModelo : ObservableRecipient
         {
             if (Proveedores.Remove(SelectedProvvedor))
             {
+                var deleteProvvedor = Proveedores.FirstOrDefault(x => x.Nombre == SelectedProvvedor.Nombre);
+                Proveedores.Remove(deleteProvvedor);
                 proveedoresServ.Delete(SelectedProvvedor.Nombre);
             }
         }
