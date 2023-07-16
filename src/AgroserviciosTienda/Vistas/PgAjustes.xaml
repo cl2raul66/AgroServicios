@@ -115,7 +115,8 @@
                                 <Button
                                     Grid.Row="0"
                                     FontSize="Subtitle"
-                                    Text="Agregar cliente" />
+                                    Text="Agregar cliente" 
+                                    Command="{Binding VerAgregarclienteCommand}"/>
                                 <Label
                                     Grid.Row="1"
                                     FontSize="Caption"

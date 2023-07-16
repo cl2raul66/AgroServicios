@@ -43,8 +43,8 @@
             BackgroundColor="{StaticResource Background}">
             <ScrollView>
                 <CollectionView
-                    ItemsSource="{Binding}"
-                    SelectedItem="{Binding}"
+                    ItemsSource="{Binding Clientes, Mode=OneWay}"
+                    SelectedItem="{Binding SelectedCliente, Mode=TwoWay}"
                     SelectionMode="Single">
                     <CollectionView.EmptyView>
                         <ContentView>
@@ -80,12 +80,14 @@
                                     <Label
                                         FontFamily="icofont"
                                         FontSize="Title"
+                                        IsVisible="{Binding EsEmpresa, Mode=OneWay}"
                                         Text="{StaticResource BuildingAlt}"
                                         TextColor="{StaticResource Primary}"
                                         VerticalOptions="Center" />
                                     <Label
                                         FontFamily="icofont"
                                         FontSize="Title"
+                                        IsVisible="{Binding EsEmpresa, Mode=OneWay, Converter={tk:InvertedBoolConverter}}"
                                         Text="{StaticResource User}"
                                         TextColor="{StaticResource Primary}"
                                         VerticalOptions="Center" />

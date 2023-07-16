@@ -114,15 +114,7 @@
                             AutoSize="TextChanges"
                             Placeholder="Escriba aquí"
                             Text="{Binding Direccion}"
-                            VerticalTextAlignment="Start">
-                            <!--<Editor.Keyboard>
-                                <Keyboard x:FactoryMethod="Create">
-                                    <x:Arguments>
-                                        <KeyboardFlags>All</KeyboardFlags>
-                                    </x:Arguments>
-                                </Keyboard>
-                            </Editor.Keyboard>-->
-                        </Editor>
+                            VerticalTextAlignment="Start" />
                     </Grid>
                     <Frame BackgroundColor="#ffa927" IsVisible="{Binding VisibleError}">
                         <Label

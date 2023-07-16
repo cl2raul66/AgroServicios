@@ -16,8 +16,7 @@ public partial class PgProveedoresDetallesVistaModelo : ObservableRecipient
     {
         IsActive = true;
         proveedoresServ = contactosRepositorio;
-
-        Proveedores = new(proveedoresServ.GetAll);
+        Cargarproveedores();
     }
 
     [ObservableProperty]
@@ -39,12 +38,9 @@ public partial class PgProveedoresDetallesVistaModelo : ObservableRecipient
 
         if (result)
         {
-            if (Proveedores.Remove(SelectedProvvedor))
-            {
-                var deleteProvvedor = Proveedores.FirstOrDefault(x => x.Nombre == SelectedProvvedor.Nombre);
-                Proveedores.Remove(deleteProvvedor);
-                proveedoresServ.Delete(SelectedProvvedor.Nombre);
-            }
+            proveedoresServ.Delete(SelectedProvvedor.Nombre);
+            SelectedProvvedor = null;
+            Cargarproveedores();
         }
     }
 
@@ -61,15 +57,16 @@ public partial class PgProveedoresDetallesVistaModelo : ObservableRecipient
         WeakReferenceMessenger.Default.Register<PgProveedoresDetallesVistaModelo, Proveedor>(this, (r, m) =>
         {
             if (m is not null)
-            {
-                if (Proveedores.Count == 0)
-                {
-                    Proveedores = new();
-                }
-                Proveedores.Insert(0, m);
+            {                
                 proveedoresServ.Insert(m);
+                Cargarproveedores();
             }
         });
+    }
+
+    void Cargarproveedores()
+    {
+        Proveedores = proveedoresServ.AnyContacto ? new(proveedoresServ.GetAll) : null;
     }
     #endregion
 }

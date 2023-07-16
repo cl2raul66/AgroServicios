@@ -1,12 +1,164 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AgroserviciosTienda.Vistas.PgAgregarCliente"
-             Title="PgAgregarCliente">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+<ContentPage
+    x:Class="AgroserviciosTienda.Vistas.PgAgregarCliente"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
+    Title="Agregar - Cliente"
+    x:DataType="vm:PgAgregarClienteVistaModelo"
+    Shell.NavBarIsVisible="False"
+    Shell.PresentationMode="ModalAnimated">
+
+    <Grid
+        Padding="16"
+        RowDefinitions="auto,*,auto"
+        RowSpacing="16">
+        <Frame
+            Padding="8,4"
+            CornerRadius="8"
+            HorizontalOptions="Fill">
+            <Grid ColumnDefinitions="*,auto">
+                <Label
+                    Padding="8"
+                    FontSize="Subtitle"
+                    Text="Agregar - Cliente"
+                    TextColor="{StaticResource Primary}"
+                    VerticalOptions="Center" />
+            </Grid>
+        </Frame>
+        <ScrollView Grid.Row="1">
+            <Border
+                Padding="12"
+                BackgroundColor="{StaticResource Background}"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="Start">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+
+                <VerticalStackLayout Spacing="16">
+                    <Grid RowDefinitions="auto,auto,auto" RowSpacing="0">
+                        <Label
+                            Grid.Row="0"
+                            FontSize="Subtitle"
+                            Text="Nombre: *"
+                            TextColor="{StaticResource Primary}" />
+                        <Entry
+                            Grid.Row="1"
+                            Keyboard="Text"
+                            Placeholder="Escriba aquí"
+                            Text="{Binding Nombre}" />
+                        <HorizontalStackLayout Grid.Row="2" Spacing="0">
+                            <Switch IsToggled="{Binding EsEmpresa, Mode=TwoWay}" />
+                            <Label Text="Es empresa:" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </Grid>
+                    <Grid
+                        ColumnSpacing="8"
+                        RowDefinitions="auto,auto"
+                        RowSpacing="0">
+                        <Label
+                            Grid.Row="0"
+                            FontSize="Subtitle"
+                            Text="Nit: *"
+                            TextColor="{StaticResource Primary}" />
+                        <Entry
+                            Grid.Row="1"
+                            Keyboard="Text"
+                            Text="{Binding Nit}"
+                            TextTransform="Uppercase" />
+                    </Grid>
+                    <Grid
+                        ColumnSpacing="8"
+                        RowDefinitions="auto,auto"
+                        RowSpacing="0">
+                        <Label
+                            Grid.Row="0"
+                            FontSize="Subtitle"
+                            Text="Teléfono:"
+                            TextColor="{StaticResource Primary}" />
+                        <Entry
+                            Grid.Row="1"
+                            Keyboard="Telephone"
+                            Placeholder="0000000"
+                            Text="{Binding Telefono}" />
+                    </Grid>
+                    <Grid
+                        ColumnSpacing="8"
+                        RowDefinitions="auto,auto"
+                        RowSpacing="8">
+                        <Label
+                            Grid.Row="0"
+                            FontSize="Subtitle"
+                            Text="Correo electrónico:"
+                            TextColor="{StaticResource Primary}" />
+                        <Entry
+                            Grid.Row="1"
+                            Keyboard="Email"
+                            Placeholder="direccion@servidor.com"
+                            Text="{Binding Email}"
+                            TextTransform="Lowercase" />
+                    </Grid>
+                    <Grid
+                        ColumnSpacing="8"
+                        RowDefinitions="auto,auto"
+                        RowSpacing="8">
+                        <Label
+                            Grid.Row="0"
+                            FontSize="Subtitle"
+                            Text="Dirección:"
+                            TextColor="{StaticResource Primary}" />
+                        <Editor
+                            Grid.Row="1"
+                            AutoSize="TextChanges"
+                            Placeholder="Escriba aquí"
+                            Text="{Binding Direccion}"
+                            VerticalTextAlignment="Start" />
+                    </Grid>
+                    <Frame BackgroundColor="#ffa927" IsVisible="{Binding VisibleError}">
+                        <Label
+                            CharacterSpacing="2"
+                            FontSize="Body"
+                            TextColor="Red">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span FontFamily="icofont" Text="{StaticResource InfoCircle}" />
+                                    <Span Text=" Rellene los requeridos (*)." />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </Frame>
+
+                </VerticalStackLayout>
+            </Border>
+        </ScrollView>
+        <Frame
+            Grid.Row="2"
+            Padding="8"
+            CornerRadius="8"
+            HorizontalOptions="Fill">
+            <Grid ColumnDefinitions="*,auto,*">
+                <Button
+                    Command="{Binding CancelarCommand}"
+                    FontSize="Subtitle"
+                    Text="Cancelar" />
+                <Label
+                    Grid.Column="1"
+                    Margin="8,0"
+                    FontFamily="icofont"
+                    FontSize="Title"
+                    Text="|"
+                    TextColor="{StaticResource Gray400}"
+                    VerticalOptions="Center" />
+                <Button
+                    Grid.Column="2"
+                    Command="{Binding GuardarCommand}"
+                    FontSize="Subtitle"
+                    LineBreakMode="MiddleTruncation"
+                    Text="Agregar y salir" />
+            </Grid>
+        </Frame>
+    </Grid>
+
 </ContentPage>

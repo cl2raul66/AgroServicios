@@ -39,6 +39,13 @@ public partial class PgAjustesVistaModelo : ObservableRecipient
     }
 
     [RelayCommand]
+    async Task VerAgregarcliente()
+    {
+        IsActive = true;
+        await Shell.Current.GoToAsync(nameof(PgAgregarCliente), true);
+    }
+
+    [RelayCommand]
     async Task VerAdministrarclientes()
     {
         await Shell.Current.GoToAsync(nameof(PgClientesDetalles), true);

@@ -80,7 +80,15 @@
                                     <Label
                                         FontFamily="icofont"
                                         FontSize="Title"
+                                        IsVisible="{Binding EsEmpresa, Mode=OneWay}"
                                         Text="{StaticResource BuildingAlt}"
+                                        TextColor="{StaticResource Primary}"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        FontFamily="icofont"
+                                        FontSize="Title"
+                                        IsVisible="{Binding EsEmpresa, Mode=OneWay, Converter={tk:InvertedBoolConverter}}"
+                                        Text="{StaticResource User}"
                                         TextColor="{StaticResource Primary}"
                                         VerticalOptions="Center" />
                                     <VerticalStackLayout

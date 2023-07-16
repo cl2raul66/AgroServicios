@@ -1,24 +1,23 @@
 ﻿using AgroserviciosTienda.Modelos;
+using AgroserviciosTienda.Repositorios;
 using AgroserviciosTienda.Vistas;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AgroserviciosTienda.VistaModelos;
 
 public partial class PgClientesDetallesVistaModelo : ObservableRecipient
 {
-    public PgClientesDetallesVistaModelo()
+    readonly IContactosRepositorio<Cliente> clientesServ;
+
+    public PgClientesDetallesVistaModelo(IContactosRepositorio<Cliente> contactosRepositorio)
     {
         IsActive = true;
 
-        Clientes = null;
+        clientesServ = contactosRepositorio;
+        Cargarclientes();
     }
 
     [ObservableProperty]
@@ -30,7 +29,7 @@ public partial class PgClientesDetallesVistaModelo : ObservableRecipient
     [RelayCommand]
     async Task VerAgregarcliente()
     {
-        await Shell.Current.GoToAsync(nameof(PgAgregarProveedor), true);
+        await Shell.Current.GoToAsync(nameof(PgAgregarCliente), true);
     }
 
     [RelayCommand]
@@ -40,10 +39,9 @@ public partial class PgClientesDetallesVistaModelo : ObservableRecipient
 
         if (result)
         {
-            if (Clientes.Remove(SelectedCliente))
-            {
-                //proveedoresServ.Delete(SelectedProvvedor.Nombre);
-            }
+            clientesServ.Delete(SelectedCliente.Nombre);
+            SelectedCliente = null;
+            Cargarclientes();
         }
     }
 
@@ -61,14 +59,15 @@ public partial class PgClientesDetallesVistaModelo : ObservableRecipient
         {
             if (m is not null)
             {
-                if (Clientes.Count == 0)
-                {
-                    Clientes = new();
-                }
-                Clientes.Insert(0, m);
-                //proveedoresServ.Insert(m);
+                clientesServ.Insert(m);
+                Cargarclientes();
             }
         });
+    }
+
+    void Cargarclientes()
+    {
+        Clientes = clientesServ.AnyContacto ? new(clientesServ.GetAll) : null;
     }
     #endregion
 }
