@@ -35,7 +35,7 @@ public partial class PgClientesDetallesVistaModelo : ObservableRecipient
     [RelayCommand]
     async Task Eliminarcliente()
     {
-        var result = await Application.Current.MainPage.DisplayAlert("Pregunta", $"¿Deseas eliminar ¨{SelectedCliente.Nombre}?", "Sí", "No");
+        var result = await Application.Current.MainPage.DisplayAlert("Pregunta", $"¿Deseas eliminar el cliente {SelectedCliente.Nombre}?", "Sí", "No");
 
         if (result)
         {

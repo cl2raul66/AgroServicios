@@ -34,7 +34,7 @@ public partial class PgProveedoresDetallesVistaModelo : ObservableRecipient
     [RelayCommand]
     async Task Eliminarproveedor()
     {
-        var result = await Application.Current.MainPage.DisplayAlert("Pregunta", $"¿Deseas eliminar ¨{SelectedProvvedor.Nombre}?", "Sí", "No");
+        var result = await Application.Current.MainPage.DisplayAlert("Pregunta", $"¿Deseas eliminar el proveedor {SelectedProvvedor.Nombre}?", "Sí", "No");
 
         if (result)
         {

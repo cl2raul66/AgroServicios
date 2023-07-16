@@ -12,10 +12,12 @@ namespace AgroserviciosTienda.VistaModelos;
 public partial class PgAjustesVistaModelo : ObservableRecipient
 {
     readonly IContactosRepositorio<Proveedor> proveedoresServ;
+    readonly IContactosRepositorio<Cliente> clientesServ;
 
-    public PgAjustesVistaModelo(IContactosRepositorio<Proveedor> contactosRepositorio)
+    public PgAjustesVistaModelo(IContactosRepositorio<Proveedor> proveedoresRepositorio, IContactosRepositorio<Cliente> clientesRepositorio)
     {
-        proveedoresServ = contactosRepositorio;
+        proveedoresServ = proveedoresRepositorio;
+        clientesServ = clientesRepositorio;
     }
 
     [RelayCommand]
@@ -62,6 +64,15 @@ public partial class PgAjustesVistaModelo : ObservableRecipient
             {
                 proveedoresServ.Insert(m);
                 _ = ViewToast($"Se agrego el proveedor: {m.Nombre}");
+            }
+        });
+
+        WeakReferenceMessenger.Default.Register<PgAjustesVistaModelo, Cliente>(this, (r, m) =>
+        {
+            if (m is not null)
+            {
+                clientesServ.Insert(m);
+                _ = ViewToast($"Se agrego el cliente: {m.Nombre}");
             }
         });
     }
