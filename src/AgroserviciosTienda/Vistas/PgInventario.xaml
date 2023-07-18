@@ -103,18 +103,6 @@
                                     HorizontalOptions="End"
                                     Text="{Binding Existencia, StringFormat='Existencia: {0}'}"
                                     TextColor="{StaticResource Secondary}" />
-                                <!--<Label
-                                    Grid.Row="1"
-                                    FontSize="Body"
-                                    HorizontalOptions="End"
-                                    TextColor="{StaticResource Secondary}">
-                                    <Label.FormattedText>
-                                        <FormattedString>
-                                            <Span Text="{Binding Articulo.Presentacion, StringFormat='Unidades: {0}', ConverterParameter=Existencia}" />
-                                            <Span Text="{Binding Existencia, StringFormat='Existencia: {0}'}" />
-                                        </FormattedString>
-                                    </Label.FormattedText>
-                                </Label>-->
                             </Grid>
                         </Border>
                     </DataTemplate>

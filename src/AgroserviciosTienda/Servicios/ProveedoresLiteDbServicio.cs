@@ -29,7 +29,13 @@ public class ProveedoresLiteDbServicio : IContactosRepositorio<Proveedor>
 
     public IEnumerable<Proveedor> GetByAny(Expression<Func<Proveedor, bool>> query) => collection.Find(query).OfType<Proveedor>();
 
-    public void Insert(Proveedor entity) => collection.Insert(entity.Nombre, entity);
+    public void Insert(Proveedor entity)
+    {
+        if (collection.FindOne(x => x.Nombre == entity.Nombre) is null)
+        {
+            collection.Insert(entity);
+        }
+    }
 
     public void Delete(string nombre) => collection.Delete(new BsonValue(nombre));
 }

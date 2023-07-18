@@ -124,7 +124,7 @@
                                 Title="Seleccione tipo de medida"
                                 Grid.Row="1"
                                 ItemsSource="{Binding Unidades, Mode=OneWay}"
-                                SelectedItem="{Binding PresentacionUnidad, Mode=TwoWay}" />
+                                SelectedItem="{Binding SelectedUnidad, Mode=TwoWay}" />
                         </Grid>
                         <Grid
                             ColumnSpacing="8"

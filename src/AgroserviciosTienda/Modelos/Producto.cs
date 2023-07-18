@@ -8,7 +8,7 @@ public class Producto
     public override string ToString()
     {
         return Presentacion?.Valor > 0
-            ? $"{Nombre} {Presentacion.Valor}{Presentacion.Unidad}"
+            ? $"{Nombre} {Presentacion.Valor} {Presentacion.Unidad}"
             : Nombre;
     }
 }

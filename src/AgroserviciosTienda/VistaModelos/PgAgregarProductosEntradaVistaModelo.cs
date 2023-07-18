@@ -8,6 +8,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AgroserviciosTienda.VistaModelos;
 
+[QueryProperty(nameof(Precio), nameof(Precio))]
+[QueryProperty(nameof(Cantidadunidad), nameof(Cantidadunidad))]
 public partial class PgAgregarProductosEntradaVistaModelo : ObservableValidator
 {
     readonly IMedidasServicio medidasServ;
@@ -33,7 +35,7 @@ public partial class PgAgregarProductosEntradaVistaModelo : ObservableValidator
     public ObservableCollection<TipoUnidad> Unidades => string.IsNullOrEmpty(SelectedMagnitud) ? new() : new(medidasServ.AllUnidades(SelectedMagnitud));
 
     [ObservableProperty]
-    string presentacionUnidad;
+    TipoUnidad selectedUnidad;
 
     [ObservableProperty]
     double presentacionValor;
@@ -62,7 +64,7 @@ public partial class PgAgregarProductosEntradaVistaModelo : ObservableValidator
             CountAdd++;
             Nombre = string.Empty;
             SelectedMagnitud = null;
-            PresentacionUnidad = null;
+            SelectedUnidad = null;
             PresentacionValor = 0;
             Cantidadunidad = 0;
             Precio = 0;
@@ -95,7 +97,7 @@ public partial class PgAgregarProductosEntradaVistaModelo : ObservableValidator
             return false;
         }
 
-        var newProductoEntrada = new ProductoEntrada(new() { Nombre = Nombre.TrimEnd(), Presentacion = new Empaque(SelectedMagnitud, PresentacionUnidad, PresentacionValor) }, Cantidadunidad, Precio);
+        var newProductoEntrada = new ProductoEntrada(new() { Nombre = Nombre.TrimEnd(), Presentacion = new Empaque(SelectedMagnitud, SelectedUnidad.Nombre, PresentacionValor) }, Cantidadunidad, Precio);
         var resul = WeakReferenceMessenger.Default.Send(newProductoEntrada);
         return resul is not null;
     }

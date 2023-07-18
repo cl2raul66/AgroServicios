@@ -51,34 +51,6 @@ public partial class PgInventarioVistaModelo : ObservableRecipient
     }
 
     #region Extra
-    //void GetInventario()
-    //{
-    //    var hoy = DateTime.Now;
-    //    var lunes = GetLunesOfSemana(hoy);
-    //    var entradas = entradasServ.GetByAny(x => x.Fecha >= lunes && x.Fecha <= hoy);
-    //    foreach (var item in entradas)
-    //    {
-    //        Almacen.Any(x=>x.Articulo==item.Productos.)
-    //    }
-    //    var existenciaPorProducto = entradas
-    //    .SelectMany(entrada => entrada.Productos)
-    //    .GroupBy(productoEntrada => productoEntrada.Articulos.Nombre)
-    //    .ToDictionary(
-    //        grouping => grouping.Key,
-    //        grouping => grouping.Sum(productoEntrada =>
-    //        {
-    //            double cantidadUnidad = productoEntrada.CantidadUnidad;
-    //            if (productoEntrada.Articulos.Presentacion != null)
-    //            {
-    //                double valorPresentacion = productoEntrada.Articulos.Presentacion.Valor;
-    //                double cantidadBase = productoEntrada.CantidadUnidad * valorPresentacion;
-    //                return cantidadBase;
-    //            }
-    //            return cantidadUnidad;
-    //        }));
-    //    Almacen = new(existenciaPorProducto.Select(kvp => new Inventario(kvp.Key, kvp.Value)));
-    //}
-
     void GetInventario()
     {
         Almacen = new(inventarioServ.GetAll);

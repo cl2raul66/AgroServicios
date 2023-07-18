@@ -48,6 +48,8 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
             {
                 ProductosPicker.Insert(0, m.Articulo);
                 AddProductoEntradaToLista(new(m.Articulo, m.CantidadUnidad, m.Precio));
+                Precio = null;
+                Cantidadunidad = null;
             }
         });
         ValidateAllProperties();
@@ -67,10 +69,10 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     Proveedor selectedProveedorpicker;
 
     [ObservableProperty]
-    decimal costoFlete;
+    string costoFlete;
 
     [ObservableProperty]
-    decimal costoCarga;
+    string costoCarga;
 
     [RelayCommand]
     private async Task VerAgregarproveedor()
@@ -87,10 +89,10 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     Producto selectedProductopicker;
 
     [ObservableProperty]
-    int cantidadunidad;
+    string cantidadunidad;
 
     [ObservableProperty]
-    double precio;
+    string precio;
 
     [ObservableProperty]
     double costoEntrada;
@@ -98,7 +100,21 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     [RelayCommand]
     async Task VerAgregarproductosentrada()
     {
-        await Shell.Current.GoToAsync(nameof(PgAgregarProductosEntrada), true);
+        var p = string.IsNullOrEmpty(Precio) ? 0.00 : double.Parse(Precio);
+        var cu = string.IsNullOrEmpty(Cantidadunidad) ? 0 : int.Parse(Cantidadunidad);
+        if (p > 0 || cu > 0)
+        {
+            await Shell.Current.GoToAsync(nameof(PgAgregarProductosEntrada), true, 
+                new Dictionary<string, object>() { 
+                    { nameof(Precio), p }, 
+                    { nameof(Cantidadunidad), cu } 
+                });
+        }
+        else
+        {
+            await Shell.Current.GoToAsync(nameof(PgAgregarProductosEntrada), true);
+        }
+
     }
     #endregion
 
@@ -141,7 +157,15 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
         else
         {
             proveedoresServ.Insert(SelectedProveedorpicker);
-            entradasServ.Insert(new(Fecha, ProductosLista.ToList(), NoFactura, SelectedProveedorpicker, CostoFlete, CostoCarga));
+            entradasServ.Insert(
+                new(
+                    Fecha,
+                    ProductosLista.ToList(),
+                    NoFactura,
+                    SelectedProveedorpicker,
+                    string.IsNullOrEmpty(CostoFlete) ? 0 : decimal.Parse(CostoFlete),
+                    string.IsNullOrEmpty(CostoCarga) ? 0 : decimal.Parse(CostoCarga)
+                ));
         }
 
         bool seAgrego = false;
@@ -170,13 +194,19 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     #region Extra
     void GetCostoTotal()
     {
-        CostoEntrada = ProductosLista?.Select(x => x.CantidadUnidad * x.Precio).Sum() ?? 0;
+        CostoEntrada = (ProductosLista?.Sum(x => x.CantidadUnidad * x.Precio) ?? 0.00)
+            + (string.IsNullOrEmpty(CostoFlete) ? 0.00 : double.Parse(CostoFlete))
+            + (string.IsNullOrEmpty(CostoCarga) ? 0.00 : double.Parse(CostoCarga));
+
         ValidateAllProperties();
     }
 
     void AddProductoEntradaToLista(ProductoEntrada newProductoentrada = null)
     {
-        newProductoentrada ??= new(SelectedProductopicker, Cantidadunidad, Precio);
+        newProductoentrada ??= new(
+            SelectedProductopicker,
+            string.IsNullOrEmpty(Cantidadunidad) ? 0 : int.Parse(Cantidadunidad), 
+            string.IsNullOrEmpty(Precio) ? 0.00 : double.Parse(Precio));
 
         if (ProductosLista?.Any() ?? false)
         {
@@ -199,8 +229,8 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
         if (SelectedProductopicker is not null)
         {
             SelectedProductopicker = null;
-            Precio = 0;
-            Cantidadunidad = 0;
+            Precio = null;
+            Cantidadunidad = null;
         }
 
         GetCostoTotal();
@@ -208,6 +238,7 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
 
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
     {
+        base.OnPropertyChanged(e);
         if (e.PropertyName == nameof(SelectedProductopicker))
         {
             if (SelectedProductopicker is not null)
@@ -218,14 +249,25 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
                 {
                     var cacheArticulo = JsonSerializer.Deserialize<ProductoEntradaArticuloCache>(cacheArticuloJson);
 
-                    Cantidadunidad = cacheArticulo.CantidadUnidad;
-                    Precio = cacheArticulo.Precio;
+                    Cantidadunidad = cacheArticulo.CantidadUnidad.ToString();
+                    Precio = cacheArticulo.Precio.ToString();
                 }
             }
 
-            EnableAgregarproductotolista = Precio > 0 && Cantidadunidad > 0 && SelectedProductopicker is not null;
+            EnableAgregarproductotolista = SelectedProductopicker is not null
+                && (string.IsNullOrEmpty(Precio) ? 0 : double.Parse(Precio)) > 0 
+                && (string.IsNullOrEmpty(Cantidadunidad) ? 0 : int.Parse(Cantidadunidad)) > 0;
         }
-        base.OnPropertyChanged(e);
+
+        if (e.PropertyName == nameof(CostoFlete))
+        {
+            GetCostoTotal();
+        }
+
+        if (e.PropertyName == nameof(CostoCarga))
+        {
+            GetCostoTotal();
+        }
     }
     #endregion
 }
