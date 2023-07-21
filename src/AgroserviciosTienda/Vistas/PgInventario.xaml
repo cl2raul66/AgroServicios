@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:modelo="clr-namespace:AgroserviciosTienda.Modelos"
+    xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
     Title="Inventario"
     x:DataType="vm:PgInventarioVistaModelo"
@@ -21,7 +22,7 @@
                 <Label
                     Padding="8"
                     FontSize="Subtitle"
-                    Text="Inventario"
+                    Text="{Binding Titulo, Mode=OneWay}"
                     TextColor="{StaticResource Primary}"
                     VerticalOptions="Center" />
                 <HorizontalStackLayout
@@ -32,10 +33,12 @@
                     <Button
                         Padding="2"
                         BackgroundColor="Transparent"
+                        Command="{Binding SelectedButtonStateCommand}"
+                        CommandParameter="Almacen"
                         FontFamily="icofont"
                         FontSize="Subtitle"
                         Text="{StaticResource ChartHistogramAlt}"
-                        TextColor="{StaticResource Primary}" />
+                        TextColor="{Binding SelectedAlmacen, Mode=OneWay, Converter={StaticResource SelectedToTexColor}}" />
                     <Label
                         FontFamily="icofont"
                         FontSize="Title"
@@ -45,10 +48,12 @@
                     <Button
                         Padding="2"
                         BackgroundColor="Transparent"
+                        Command="{Binding SelectedButtonStateCommand}"
+                        CommandParameter="Entradas"
                         FontFamily="icofont"
                         FontSize="Subtitle"
                         Text="{StaticResource Inbox}"
-                        TextColor="{StaticResource Secondary}" />
+                        TextColor="{Binding SelectedEntradas, Mode=OneWay, Converter={StaticResource SelectedToTexColor}}" />
                 </HorizontalStackLayout>
             </Grid>
         </Frame>
@@ -56,58 +61,133 @@
             Grid.Row="1"
             Padding="8"
             CornerRadius="8">
-            <CollectionView ItemsSource="{Binding Almacen, Mode=OneWay}" SelectionMode="None">
-                <CollectionView.EmptyView>
-                    <ContentView>
-                        <StackLayout
-                            HorizontalOptions="Center"
-                            Spacing="8"
-                            VerticalOptions="Center">
-                            <Image HeightRequest="56" WidthRequest="56">
-                                <Image.Source>
-                                    <FontImageSource
-                                        FontFamily="icofont"
-                                        Glyph="{StaticResource ChartHistogramAlt}"
-                                        Color="{StaticResource Gray400}" />
-                                </Image.Source>
-                            </Image>
-                            <Label
-                                FontSize="Caption"
-                                Text="No hay productos"
-                                TextColor="{StaticResource Gray500}" />
-                        </StackLayout>
-                    </ContentView>
-                </CollectionView.EmptyView>
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout ItemSpacing="4" Orientation="Vertical" />
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="modelo:Inventario">
-                        <Border
-                            Grid.Row="1"
-                            Padding="8"
-                            BackgroundColor="{StaticResource Tertiary}">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="8" />
-                            </Border.StrokeShape>
-                            <Grid RowDefinitions="auto,auto" RowSpacing="4">
+            <Grid>
+                <CollectionView
+                    IsVisible="{Binding SelectedAlmacen, Mode=OneWay}"
+                    ItemsSource="{Binding Almacen, Mode=OneWay}"
+                    SelectedItem="{Binding SelectedItemAlmacen}"
+                    SelectionMode="Single">
+                    <CollectionView.EmptyView>
+                        <ContentView>
+                            <StackLayout
+                                HorizontalOptions="Center"
+                                Spacing="8"
+                                VerticalOptions="Center">
+                                <Image HeightRequest="56" WidthRequest="56">
+                                    <Image.Source>
+                                        <FontImageSource
+                                            FontFamily="icofont"
+                                            Glyph="{StaticResource ChartHistogramAlt}"
+                                            Color="{StaticResource Gray400}" />
+                                    </Image.Source>
+                                </Image>
                                 <Label
-                                    Grid.Row="0"
-                                    FontAttributes="Bold"
                                     FontSize="Caption"
-                                    Text="{Binding Articulo}"
-                                    TextColor="{StaticResource Primary}" />
+                                    Text="No hay productos"
+                                    TextColor="{StaticResource Gray500}" />
+                            </StackLayout>
+                        </ContentView>
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="4" Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="modelo:Inventario">
+                            <Border
+                                Grid.Row="1"
+                                Padding="8"
+                                BackgroundColor="{StaticResource Tertiary}"
+                                Style="{StaticResource BorderItem}">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8" />
+                                </Border.StrokeShape>
+                                <Grid RowDefinitions="auto,auto" RowSpacing="4">
+                                    <Label
+                                        Grid.Row="0"
+                                        FontAttributes="Bold"
+                                        FontSize="Caption"
+                                        Text="{Binding Articulo}"
+                                        TextColor="{StaticResource Primary}" />
+                                    <Label
+                                        Grid.Row="1"
+                                        FontSize="Body"
+                                        HorizontalOptions="End"
+                                        Text="{Binding Existencia, StringFormat='Existencia: {0}'}"
+                                        TextColor="{StaticResource Secondary}" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <CollectionView
+                    IsVisible="{Binding SelectedEntradas, Mode=OneWay}"
+                    ItemsSource="{Binding Entradas, Mode=OneWay}"
+                    SelectionMode="None">
+                    <CollectionView.EmptyView>
+                        <ContentView>
+                            <StackLayout
+                                HorizontalOptions="Center"
+                                Spacing="8"
+                                VerticalOptions="Center">
+                                <Image HeightRequest="56" WidthRequest="56">
+                                    <Image.Source>
+                                        <FontImageSource
+                                            FontFamily="icofont"
+                                            Glyph="{StaticResource Inbox}"
+                                            Color="{StaticResource Gray400}" />
+                                    </Image.Source>
+                                </Image>
                                 <Label
-                                    Grid.Row="1"
-                                    FontSize="Body"
-                                    HorizontalOptions="End"
-                                    Text="{Binding Existencia, StringFormat='Existencia: {0}'}"
-                                    TextColor="{StaticResource Secondary}" />
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                                    FontSize="Caption"
+                                    Text="No hay entradas de productos"
+                                    TextColor="{StaticResource Gray500}" />
+                            </StackLayout>
+                        </ContentView>
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="4" Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="modelo:EntradaView">
+                            <Border
+                                Grid.Row="1"
+                                Padding="8"
+                                BackgroundColor="{StaticResource Tertiary}">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8" />
+                                </Border.StrokeShape>
+                                <Grid
+                                    ColumnDefinitions="*,auto"
+                                    ColumnSpacing="4"
+                                    RowDefinitions="auto,auto"
+                                    RowSpacing="4">
+                                    <Label
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        FontAttributes="Bold"
+                                        FontSize="Body"
+                                        Text="{Binding Fecha}"
+                                        TextColor="{StaticResource Primary}" />
+                                    <Label
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        FontSize="Body"
+                                        Text="{Binding CostoTotal, StringFormat='Costo: {0}'}"
+                                        TextColor="{StaticResource Primary}" />
+                                    <Label
+                                        Grid.Row="1"
+                                        Grid.RowSpan="2"
+                                        Grid.Column="0"
+                                        FontSize="Caption"
+                                        Text="{Binding Productos}"
+                                        TextColor="{StaticResource Secondary}" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+
         </Frame>
 
         <Frame Grid.Row="2" Padding="12,16">
@@ -121,6 +201,11 @@
                     Command="{Binding VerAgregarentradaCommand}"
                     FontSize="Subtitle"
                     Text="Agregar entrada de productos" />
+                <Button
+                    Command="{Binding}"
+                    FontSize="Subtitle"
+                    IsEnabled="{Binding SelectedItemAlmacen, Mode=OneWay, Converter={tk:IsNotNullConverter}}"
+                    Text="Poner precio inicial a producto" />
             </VerticalStackLayout>
         </Frame>
     </Grid>

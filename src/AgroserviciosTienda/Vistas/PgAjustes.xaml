@@ -114,9 +114,9 @@
                             <Grid RowDefinitions="auto,auto" RowSpacing="4">
                                 <Button
                                     Grid.Row="0"
+                                    Command="{Binding VerAgregarclienteCommand}"
                                     FontSize="Subtitle"
-                                    Text="Agregar cliente" 
-                                    Command="{Binding VerAgregarclienteCommand}"/>
+                                    Text="Agregar cliente" />
                                 <Label
                                     Grid.Row="1"
                                     FontSize="Caption"

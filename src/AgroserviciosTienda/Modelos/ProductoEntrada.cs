@@ -14,6 +14,11 @@ public class ProductoEntrada
         CantidadUnidad = cantidadunidad;
         Precio = precio;
     }
+
+    public override string ToString()
+    {
+        return Articulo.ToString();
+    }
 }
 
 

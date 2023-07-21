@@ -1,6 +1,5 @@
 ﻿using AgroserviciosTienda.Modelos;
 using AgroserviciosTienda.Repositorios;
-using AgroserviciosTienda.Utiles.Mensajes;
 using AgroserviciosTienda.Vistas;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -12,18 +11,74 @@ namespace AgroserviciosTienda.VistaModelos;
 public partial class PgInventarioVistaModelo : ObservableRecipient
 {
     readonly IInventarioRepositorio inventarioServ;
+    readonly IEntradasRepositorio entradasServ;
 
-    public PgInventarioVistaModelo(IInventarioRepositorio inventarioRepositorio)
+    public PgInventarioVistaModelo(IInventarioRepositorio inventarioRepositorio, IEntradasRepositorio entradasRepositorio)
     {
         IsActive = true;
         inventarioServ = inventarioRepositorio;
+        entradasServ = entradasRepositorio;
 
         if (inventarioServ.AnyInventario)
         {
             GetInventario();
         }
+
+        if (entradasServ.AnyEntrada)
+        {
+            GetEntradas();
+        }
+
+        SelectedAlmacen = true;
     }
 
+    public string Titulo => SelectedAlmacen ? "Inventario" : "Entradas";
+
+    [ObservableProperty]
+    ObservableCollection<Inventario> almacen;
+
+    [ObservableProperty]
+    Inventario selectedItemAlmacen;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(Titulo))]
+    bool selectedAlmacen;
+
+    [ObservableProperty]
+    ObservableCollection<EntradaView> entradas;
+
+    [ObservableProperty]
+    bool selectedEntradas;
+
+    [RelayCommand]
+    async Task VerAgregarentrada()
+    {
+        await Shell.Current.GoToAsync(nameof(PgAgregarEntrada), true);
+    }
+
+    [RelayCommand]
+    async Task SelectedButtonState(string selectedButton)
+    {
+        switch (selectedButton)
+        {
+            case "Almacen":
+                SelectedAlmacen = true;
+                SelectedEntradas = false;
+                break;
+            case "Entradas":
+                SelectedAlmacen = false;
+                SelectedEntradas = true;
+                break;
+            default:
+                SelectedAlmacen = true;
+                SelectedEntradas = false;
+                break;
+        }
+        SelectedItemAlmacen = null;
+        await Task.CompletedTask;
+    }
+
+    #region Extra
     protected override void OnActivated()
     {
         WeakReferenceMessenger.Default.Register<PgInventarioVistaModelo, string>(this, (r, m) =>
@@ -37,23 +92,19 @@ public partial class PgInventarioVistaModelo : ObservableRecipient
             if (seAgrego)
             {
                 GetInventario();
+                GetEntradas();
             }
         });
     }
 
-    [ObservableProperty]
-    ObservableCollection<Inventario> almacen;
-
-    [RelayCommand]
-    async Task VerAgregarentrada()
-    {
-        await Shell.Current.GoToAsync(nameof(PgAgregarEntrada), true);
-    }
-
-    #region Extra
     void GetInventario()
     {
         Almacen = new(inventarioServ.GetAll);
+    }
+
+    void GetEntradas()
+    {
+        Entradas = new(entradasServ.GetAll.Select(x => new EntradaView(x)));
     }
 
     DateTime GetLunesOfSemana(DateTime fecha)

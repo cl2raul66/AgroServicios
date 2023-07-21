@@ -104,10 +104,10 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
         var cu = string.IsNullOrEmpty(Cantidadunidad) ? 0 : int.Parse(Cantidadunidad);
         if (p > 0 || cu > 0)
         {
-            await Shell.Current.GoToAsync(nameof(PgAgregarProductosEntrada), true, 
-                new Dictionary<string, object>() { 
-                    { nameof(Precio), p }, 
-                    { nameof(Cantidadunidad), cu } 
+            await Shell.Current.GoToAsync(nameof(PgAgregarProductosEntrada), true,
+                new Dictionary<string, object>() {
+                    { nameof(Precio), p },
+                    { nameof(Cantidadunidad), cu }
                 });
         }
         else
@@ -205,7 +205,7 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
     {
         newProductoentrada ??= new(
             SelectedProductopicker,
-            string.IsNullOrEmpty(Cantidadunidad) ? 0 : int.Parse(Cantidadunidad), 
+            string.IsNullOrEmpty(Cantidadunidad) ? 0 : int.Parse(Cantidadunidad),
             string.IsNullOrEmpty(Precio) ? 0.00 : double.Parse(Precio));
 
         if (ProductosLista?.Any() ?? false)
@@ -248,14 +248,20 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
                 if (!string.IsNullOrEmpty(cacheArticuloJson))
                 {
                     var cacheArticulo = JsonSerializer.Deserialize<ProductoEntradaArticuloCache>(cacheArticuloJson);
+                    if (string.IsNullOrEmpty(Cantidadunidad))
+                    {
+                        Cantidadunidad = cacheArticulo.CantidadUnidad.ToString();
+                    }
+                    if (string.IsNullOrEmpty(Precio))
+                    {
+                        Precio = cacheArticulo.Precio.ToString();
+                    }
 
-                    Cantidadunidad = cacheArticulo.CantidadUnidad.ToString();
-                    Precio = cacheArticulo.Precio.ToString();
                 }
             }
 
             EnableAgregarproductotolista = SelectedProductopicker is not null
-                && (string.IsNullOrEmpty(Precio) ? 0 : double.Parse(Precio)) > 0 
+                && (string.IsNullOrEmpty(Precio) ? 0 : double.Parse(Precio)) > 0
                 && (string.IsNullOrEmpty(Cantidadunidad) ? 0 : int.Parse(Cantidadunidad)) > 0;
         }
 
