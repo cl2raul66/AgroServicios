@@ -101,16 +101,30 @@
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="8" />
                                 </Border.StrokeShape>
-                                <Grid RowDefinitions="auto,auto" RowSpacing="4">
+                                <Grid
+                                    ColumnDefinitions="*,*"
+                                    ColumnSpacing="4"
+                                    RowDefinitions="auto,auto"
+                                    RowSpacing="4">
                                     <Label
                                         Grid.Row="0"
-                                        FontAttributes="Bold"
-                                        FontSize="Caption"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="2"
+                                        FontSize="Body"
                                         Text="{Binding Articulo}"
                                         TextColor="{StaticResource Primary}" />
                                     <Label
                                         Grid.Row="1"
-                                        FontSize="Body"
+                                        Grid.Column="0"
+                                        FontAttributes="Bold"
+                                        FontSize="Caption"
+                                        Text="{Binding PrecioInicial, StringFormat='Precio inicial: {0}'}"
+                                        TextColor="{StaticResource Secondary}" />
+                                    <Label
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        FontAttributes="Bold"
+                                        FontSize="Caption"
                                         HorizontalOptions="End"
                                         Text="{Binding Existencia, StringFormat='Existencia: {0}'}"
                                         TextColor="{StaticResource Secondary}" />
@@ -202,9 +216,10 @@
                     FontSize="Subtitle"
                     Text="Agregar entrada de productos" />
                 <Button
-                    Command="{Binding}"
+                    Command="{Binding VerEstablecerprecioinicialproductoCommand}"
                     FontSize="Subtitle"
                     IsEnabled="{Binding SelectedItemAlmacen, Mode=OneWay, Converter={tk:IsNotNullConverter}}"
+                    IsVisible="{Binding SelectedAlmacen, Mode=OneWay}"
                     Text="Poner precio inicial a producto" />
             </VerticalStackLayout>
         </Frame>

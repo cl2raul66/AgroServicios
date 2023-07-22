@@ -57,6 +57,12 @@ public partial class PgInventarioVistaModelo : ObservableRecipient
     }
 
     [RelayCommand]
+    async Task VerEstablecerprecioinicialproducto()
+    {
+        await Shell.Current.GoToAsync(nameof(PgEstablecerPrecioInicialProducto), true);
+    }
+
+    [RelayCommand]
     async Task SelectedButtonState(string selectedButton)
     {
         switch (selectedButton)
