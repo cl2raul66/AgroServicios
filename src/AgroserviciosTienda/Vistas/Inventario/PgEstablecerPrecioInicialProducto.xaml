@@ -57,7 +57,7 @@
                                 FontSize="Subtitle"
                                 HorizontalTextAlignment="End"
                                 Text="{Binding Precioanterior, Mode=OneWay, StringFormat='{0:m2}'}"
-                                TextColor="{StaticResource Gray400}"
+                                TextColor="{StaticResource Secondary}"
                                 VerticalOptions="Center" />
                         </Grid>
                         <Grid
@@ -71,12 +71,26 @@
                                 TextColor="{StaticResource Primary}" />
                             <Entry
                                 Grid.Row="1"
+                                HorizontalTextAlignment="End"
                                 Keyboard="Numeric"
                                 Placeholder="0.00"
                                 SelectionLength="1"
                                 Text="{Binding Precioinicial}" />
                         </Grid>
                     </VerticalStackLayout>
+                </Frame>
+                <Frame BackgroundColor="#ffa927" IsVisible="{Binding VisibleError, Mode=OneWay}">
+                    <Label
+                        CharacterSpacing="2"
+                        FontSize="Body"
+                        TextColor="Red">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span FontFamily="icofont" Text="{StaticResource InfoCircle}" />
+                                <Span Text=" Debe agregar un precio inicial." />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
                 </Frame>
             </VerticalStackLayout>
         </ScrollView>
@@ -100,7 +114,7 @@
                     VerticalOptions="Center" />
                 <Button
                     Grid.Column="2"
-                    Command="{Binding}"
+                    Command="{Binding GuardarCommand}"
                     Text="Guardar" />
             </Grid>
         </Frame>

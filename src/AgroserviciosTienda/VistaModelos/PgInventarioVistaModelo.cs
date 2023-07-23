@@ -59,7 +59,7 @@ public partial class PgInventarioVistaModelo : ObservableRecipient
     [RelayCommand]
     async Task VerEstablecerprecioinicialproducto()
     {
-        await Shell.Current.GoToAsync(nameof(PgEstablecerPrecioInicialProducto), true);
+        await Shell.Current.GoToAsync(nameof(PgEstablecerPrecioInicialProducto), true, new Dictionary<string, object> { { "inventario", SelectedItemAlmacen } });
     }
 
     [RelayCommand]
@@ -99,6 +99,15 @@ public partial class PgInventarioVistaModelo : ObservableRecipient
             {
                 GetInventario();
                 GetEntradas();
+            }
+        });
+
+        WeakReferenceMessenger.Default.Register<PgInventarioVistaModelo, Inventario>(this, (r, m) =>
+        {
+            if (m is not null)
+            {
+                inventarioServ.Upset(m);
+                GetInventario();
             }
         });
     }

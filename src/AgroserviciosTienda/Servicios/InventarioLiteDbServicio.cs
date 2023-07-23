@@ -30,9 +30,11 @@ public class InventarioLiteDbServicio : IInventarioRepositorio
     public void Upset(Inventario entity)
     {
         var any = collection.FindOne(x => x.Articulo == entity.Articulo);
-        Inventario newInventario = any is null
+        Inventario newInventario = entity.Id is null
             ? new(entity.Articulo, entity.Existencia, ObjectId.NewObjectId().ToString())
-            : new(entity.Articulo, entity.Existencia + any.Existencia, any.Id);
-        collection.Upsert(newInventario.Id, newInventario);
+            : (entity.PrecioInicial == 0 
+            ? new(entity.Articulo, entity.Existencia + any.Existencia, any.Id)
+            : entity);
+        var r = collection.Upsert(newInventario.Id, newInventario);
     }
 }
