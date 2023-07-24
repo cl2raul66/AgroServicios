@@ -3,13 +3,16 @@
     x:Class="AgroserviciosTienda.Vistas.PgVentas"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:modelo="clr-namespace:AgroserviciosTienda.Modelos"
+    xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
     Title="Ventas"
     Shell.NavBarIsVisible="False">
 
     <Grid
         Padding="16"
         RowDefinitions="auto,*,auto"
-        RowSpacing="24">
+        RowSpacing="16">
         <Frame
             Padding="8,4"
             BackgroundColor="{StaticResource Background}"
@@ -23,6 +26,78 @@
                     TextColor="{StaticResource Primary}"
                     VerticalOptions="Center" />
             </Grid>
+        </Frame>
+        <Frame
+            Grid.Row="1"
+            Padding="8"
+            CornerRadius="8">
+            <CollectionView
+                IsVisible="{Binding SelectedEntradas, Mode=OneWay}"
+                ItemsSource="{Binding Entradas, Mode=OneWay}"
+                SelectionMode="None">
+                <CollectionView.EmptyView>
+                    <ContentView>
+                        <StackLayout
+                            HorizontalOptions="Center"
+                            Spacing="8"
+                            VerticalOptions="Center">
+                            <Image HeightRequest="56" WidthRequest="56">
+                                <Image.Source>
+                                    <FontImageSource
+                                        FontFamily="icofont"
+                                        Glyph="{StaticResource SaleDiscount}"
+                                        Color="{StaticResource Gray400}" />
+                                </Image.Source>
+                            </Image>
+                            <Label
+                                FontSize="Caption"
+                                Text="No hay ventas"
+                                TextColor="{StaticResource Gray500}" />
+                        </StackLayout>
+                    </ContentView>
+                </CollectionView.EmptyView>
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="4" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="modelo:VentaView">
+                        <Border
+                            Grid.Row="1"
+                            Padding="8"
+                            BackgroundColor="{StaticResource Tertiary}">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8" />
+                            </Border.StrokeShape>
+                            <Grid
+                                ColumnDefinitions="*,auto"
+                                ColumnSpacing="4"
+                                RowDefinitions="auto,auto"
+                                RowSpacing="4">
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    FontAttributes="Bold"
+                                    FontSize="Body"
+                                    Text="{Binding Fecha, Mode=OneWay}"
+                                    TextColor="{StaticResource Primary}" />
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    FontSize="Body"
+                                    Text="{Binding TotalVenta, StringFormat='Importe total: {0}'}"
+                                    TextColor="{StaticResource Primary}" />
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="0"
+                                    FontSize="Caption"
+                                    Text="{Binding Productos}"
+                                    TextColor="{StaticResource Secondary}" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </Frame>
         <Frame Grid.Row="2" Padding="12,16">
             <VerticalStackLayout Spacing="16">
