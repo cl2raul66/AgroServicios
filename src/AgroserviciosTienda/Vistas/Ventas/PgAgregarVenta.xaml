@@ -32,7 +32,7 @@
                         Padding="0"
                         Spacing="0">
                         <Button
-                            Command="{Binding}"
+                            Command="{Binding GuardarCommand}"
                             FontFamily="icofont"
                             FontSize="Subtitle"
                             Text="{StaticResource Save}"
@@ -67,7 +67,7 @@
                         <Button
                             Padding="2"
                             BackgroundColor="Transparent"
-                            Command="{Binding}"
+                            Command="{Binding CancelarCommand}"
                             FontFamily="icofont"
                             FontSize="Subtitle"
                             Text="{StaticResource UiClose}"
@@ -81,7 +81,7 @@
                 FontAttributes="Bold"
                 FontSize="Caption"
                 HorizontalOptions="End"
-                Text="Importe total: {0:F2}"
+                Text="{Binding ImporteVenta, StringFormat='Importe total: {0:F2}'}"
                 TextColor="{StaticResource Secondary}"
                 VerticalOptions="Center" />
         </VerticalStackLayout>
@@ -99,7 +99,7 @@
                             FontSize="Subtitle"
                             Text="Fecha:"
                             TextColor="{StaticResource Primary}" />
-                        <DatePicker Grid.Row="1" Date="{Binding}" />
+                        <DatePicker Grid.Row="1" Date="{Binding Fecha, Mode=OneWay}" />
                     </Grid>
                 </Frame>
                 <Border
@@ -134,7 +134,7 @@
                                     <Entry
                                         Grid.Row="1"
                                         Keyboard="Text"
-                                        Text="{Binding}" />
+                                        Text="{Binding NoFactura}" />
                                 </Grid>
                                 <Grid
                                     ColumnDefinitions="*,auto"
@@ -149,13 +149,13 @@
                                         Title="Seleccione un cliente"
                                         Grid.Row="1"
                                         Grid.Column="0"
-                                        ItemsSource="{Binding}"
-                                        SelectedItem="{Binding}" />
+                                        ItemsSource="{Binding Clientespicker, Mode=OneWay}"
+                                        SelectedItem="{Binding SelectedClientepicker}" />
                                     <Button
                                         Grid.Row="1"
                                         Grid.Column="1"
                                         BackgroundColor="{StaticResource Tertiary}"
-                                        Command="{Binding}"
+                                        Command="{Binding VerAgregarclienteCommand}"
                                         FontFamily="icofont"
                                         Text="{StaticResource Plus}"
                                         TextColor="{StaticResource Primary}"
@@ -184,51 +184,31 @@
                                 <Picker
                                     Title="Seleccione un producto"
                                     Grid.Row="1"
-                                    ItemsSource="{Binding}"
-                                    SelectedItem="{Binding}" />
+                                    ItemsSource="{Binding Productospicker, Mode=OneWay}"
+                                    SelectedItem="{Binding SelectedProductopicker}" />
+                            </Grid>
+                            <Grid ColumnDefinitions="auto,auto" ColumnSpacing="4">
+                                <CheckBox Grid.Column="0" IsChecked="{Binding VentaAgranel, Mode=TwoWay}" />
+                                <Label
+                                    Grid.Column="1"
+                                    FontSize="Subtitle"
+                                    Text="Venta a granel (fraccionada)"
+                                    TextColor="{StaticResource Primary}"
+                                    VerticalOptions="Center" />
                             </Grid>
                             <Grid
-                                ColumnDefinitions="*,*"
-                                ColumnSpacing="4"
+                                IsVisible="{Binding VentaAgranel, Mode=OneWay}"
                                 RowDefinitions="auto,auto"
                                 RowSpacing="4">
                                 <Label
                                     Grid.Row="0"
                                     FontSize="Subtitle"
-                                    Text="Presentación del producto:"
-                                    TextColor="{StaticResource Primary}" />
-                                <Grid
-                                    Grid.Row="1"
-                                    Grid.Column="0"
-                                    ColumnDefinitions="auto,auto"
-                                    ColumnSpacing="4">
-                                    <RadioButton Grid.Column="0" />
-                                    <Label
-                                        Grid.Column="1"
-                                        FontSize="Subtitle"
-                                        Text="Por unidad"
-                                        TextColor="{StaticResource Primary}" />
-                                </Grid>
-                                <Grid
-                                    Grid.Row="1"
-                                    Grid.Column="1"
-                                    ColumnDefinitions="auto,auto"
-                                    ColumnSpacing="4">
-                                    <RadioButton Grid.Column="0" />
-                                    <Label
-                                        Grid.Column="1"
-                                        FontSize="Subtitle"
-                                        Text="A granel"
-                                        TextColor="{StaticResource Primary}" />
-                                </Grid>
-                            </Grid>
-                            <Grid RowDefinitions="auto,auto" RowSpacing="4">
-                                <Label
-                                    Grid.Row="0"
-                                    FontSize="Subtitle"
                                     Text="Unidad:"
                                     TextColor="{StaticResource Primary}" />
-                                <Picker Grid.Row="1" Title="Seleccionar unidad"/>
+                                <Picker
+                                    Title="Seleccionar unidad"
+                                    Grid.Row="1"
+                                    ItemsSource="{Binding TiposUnidad, Mode=OneWay}" />
                             </Grid>
                             <Grid RowDefinitions="auto,auto" RowSpacing="4">
                                 <Label
@@ -241,37 +221,37 @@
                                     Keyboard="Numeric"
                                     Placeholder="0"
                                     PlaceholderColor="{StaticResource Gray400}"
-                                    Text="{Binding}" />
+                                    Text="{Binding Cantidad}" />
                             </Grid>
                             <Grid RowDefinitions="auto,auto" RowSpacing="4">
                                 <Label
                                     Grid.Row="0"
                                     FontSize="Subtitle"
-                                    Text="Precio por unidad: *"
+                                    Text="Precio: *"
                                     TextColor="{StaticResource Primary}" />
                                 <Entry
                                     Grid.Row="1"
                                     Keyboard="Numeric"
                                     Placeholder="0.00"
                                     PlaceholderColor="{StaticResource Gray400}"
-                                    Text="{Binding}" />
+                                    Text="{Binding Precio}" />
                             </Grid>
 
                             <Button
-                                Command="{Binding}"
+                                Command="{Binding AgregarProductoToListaCommand}"
                                 FontSize="Subtitle"
-                                IsVisible="{Binding}"
+                                IsVisible="{Binding EnableAgregarproductotolista, Mode=OneWay}"
                                 Text="Agregar producto seleccionado" />
                             <Button
-                                Command="{Binding }"
+                                Command="{Binding EliminarProductoToListaCommand}"
                                 FontSize="Subtitle"
-                                IsVisible="{Binding}"
+                                IsVisible="{Binding CurrentproductoLista, Mode=OneWay, Converter={tk:IsNotNullConverter}}"
                                 Text="Eliminar producto de la lista" />
                         </VerticalStackLayout>
                         <ScrollView Grid.Row="1" VerticalScrollBarVisibility="Default">
                             <CollectionView
-                                ItemsSource="{Binding}"
-                                SelectedItem="{Binding}"
+                                ItemsSource="{Binding ProductosLista, Mode=OneWay}"
+                                SelectedItem="{Binding CurrentproductoLista}"
                                 SelectionMode="Single">
                                 <CollectionView.EmptyView>
                                     <ContentView>

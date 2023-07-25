@@ -26,6 +26,6 @@ public partial class PgInicioVistaModelo : ObservableRecipient
     [RelayCommand]
     async Task VerRealizarventa()
     {
-        await Shell.Current.GoToAsync($"//{nameof(PgVentas)}", true);
+        await Shell.Current.GoToAsync($"//{nameof(PgVentas)}/{nameof(PgAgregarVenta)}", true);
     }
 }

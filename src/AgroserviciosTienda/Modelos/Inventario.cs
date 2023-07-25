@@ -16,4 +16,9 @@ public class Inventario
         Id = id;
         PrecioInicial = 0;
     }
+
+    public override string ToString()
+    {
+        return Articulo.ToString();
+    }
 }
