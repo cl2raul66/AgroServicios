@@ -62,10 +62,10 @@ public partial class PgAgregarVentaVistaModelo : ObservableValidator
     [NotifyPropertyChangedFor(nameof(TiposUnidad))]
     bool ventaAgranel = false;
 
-    public ObservableCollection<TipoUnidad> TiposUnidad => 
-        SelectedProductopicker is null && !VentaAgranel 
-        ? new() 
-        : new (medidasServ.AllUnidades(SelectedProductopicker.Articulo.Presentacion.Medida));
+    public ObservableCollection<TipoUnidad> TiposUnidad =>
+        SelectedProductopicker is null && !VentaAgranel
+        ? new()
+        : new(medidasServ.AllUnidades(SelectedProductopicker.Articulo.Presentacion.Medida));
 
     [ObservableProperty]
     string cantidad;
@@ -172,15 +172,6 @@ public partial class PgAgregarVentaVistaModelo : ObservableValidator
             ProductosLista = new() { newProductoVenta };
         }
 
-        //var cacheArticulo = new ProductoEntradaArticuloCache(
-        //    newProductoVenta.CantidadUnidad,
-        //    newProductoVenta.Precio
-        //);
-
-        //string articulo = $"Cache_{newProductoentrada.Articulo.ToString().Replace(' ', '%')}";
-
-        //Preferences.Default.Set(articulo, JsonSerializer.Serialize(cacheArticulo));
-
         if (SelectedProductopicker is not null)
         {
             SelectedProductopicker = null;
@@ -191,35 +182,34 @@ public partial class PgAgregarVentaVistaModelo : ObservableValidator
         GetCostoTotal();
     }
 
+    void GetEnableagregarproductotolista()
+    {
+        EnableAgregarproductotolista = SelectedProductopicker is not null
+            && (string.IsNullOrEmpty(Precio) ? 0 : double.Parse(Precio)) > 0
+            && (string.IsNullOrEmpty(Cantidad) ? 0 : int.Parse(Cantidad)) > 0;
+    }
+
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
     {
         base.OnPropertyChanged(e);
         if (e.PropertyName == nameof(SelectedProductopicker))
         {
             if (SelectedProductopicker is not null)
-            {
-                //string articulo = $"Cache_{SelectedProductopicker.ToString().TrimEnd().Replace(' ', '%')}";
-                //string cacheArticuloJson = Preferences.Default.Get(articulo, string.Empty);
-                //if (!string.IsNullOrEmpty(cacheArticuloJson))
-                //{
-                //    var cacheArticulo = JsonSerializer.Deserialize<ProductoEntradaArticuloCache>(cacheArticuloJson);
-                //    if (string.IsNullOrEmpty(Cantidadunidad))
-                //    {
-                //        Cantidadunidad = cacheArticulo.CantidadUnidad.ToString();
-                //    }
-                //    if (string.IsNullOrEmpty(Precio))
-                //    {
-                //        Precio = cacheArticulo.Precio.ToString();
-                //    }
-
-                //}
-
+            {   
                 Precio = SelectedProductopicker.PrecioInicial.ToString();
             }
 
-            EnableAgregarproductotolista = SelectedProductopicker is not null
-                && (string.IsNullOrEmpty(Precio) ? 0 : double.Parse(Precio)) > 0
-                && (string.IsNullOrEmpty(Cantidad) ? 0 : int.Parse(Cantidad)) > 0;
+            GetEnableagregarproductotolista();
+        }
+
+        if (e.PropertyName == nameof(Cantidad))
+        {
+            GetEnableagregarproductotolista();
+        }
+
+        if (e.PropertyName == nameof(Precio))
+        {
+            GetEnableagregarproductotolista();
         }
     }
     #endregion

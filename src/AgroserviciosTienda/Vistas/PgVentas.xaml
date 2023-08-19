@@ -7,6 +7,7 @@
     xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
     Title="Ventas"
+    x:DataType="vm:PgVentasVistaModelo"
     Shell.NavBarIsVisible="False">
 
     <Grid
@@ -18,7 +19,7 @@
             BackgroundColor="{StaticResource Background}"
             CornerRadius="8"
             HorizontalOptions="Fill">
-            <Grid ColumnDefinitions="*,auto">
+            <Grid>
                 <Label
                     Padding="8"
                     FontSize="Subtitle"
@@ -31,10 +32,7 @@
             Grid.Row="1"
             Padding="8"
             CornerRadius="8">
-            <CollectionView
-                IsVisible="{Binding SelectedEntradas, Mode=OneWay}"
-                ItemsSource="{Binding Entradas, Mode=OneWay}"
-                SelectionMode="None">
+            <CollectionView ItemsSource="{Binding Ventas, Mode=OneWay}" SelectionMode="None">
                 <CollectionView.EmptyView>
                     <ContentView>
                         <StackLayout
@@ -106,7 +104,10 @@
                     FontSize="Subtitle"
                     Text="Accesos rápidos:"
                     TextColor="{StaticResource Primary}" />
-                <Button FontSize="Subtitle" Text="Realizar venta de productos" />
+                <Button
+                    Command="{Binding VerAgregarVentaCommand}"
+                    FontSize="Subtitle"
+                    Text="Realizar venta de productos" />
             </VerticalStackLayout>
         </Frame>
     </Grid>

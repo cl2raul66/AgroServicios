@@ -18,7 +18,7 @@
             BackgroundColor="{StaticResource Background}"
             CornerRadius="8"
             HorizontalOptions="Fill">
-            <Grid ColumnDefinitions="*,auto">
+            <Grid>
                 <Label
                     Padding="8"
                     FontSize="Subtitle"

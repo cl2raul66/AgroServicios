@@ -2,6 +2,7 @@
 using AgroserviciosTienda.Repositorios;
 using AgroserviciosTienda.Vistas;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 
@@ -22,6 +23,7 @@ public partial class PgVentasVistaModelo : ObservableRecipient
     [ObservableProperty]
     ObservableCollection<VentaView> ventas;
 
+    [RelayCommand]
     async Task VerAgregarVenta()
     {
         await Shell.Current.GoToAsync(nameof(PgAgregarVenta), true);

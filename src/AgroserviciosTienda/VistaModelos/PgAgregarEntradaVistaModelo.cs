@@ -217,14 +217,14 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
             ProductosLista = new() { newProductoentrada };
         }
 
-        var cacheArticulo = new ProductoEntradaArticuloCache(
-            newProductoentrada.CantidadUnidad,
-            newProductoentrada.Precio
-        );
+        //var cacheArticulo = new ProductoEntradaArticuloCache(
+        //    newProductoentrada.CantidadUnidad,
+        //    newProductoentrada.Precio
+        //);
 
-        string articulo = $"Cache_{newProductoentrada.Articulo.ToString().Replace(' ', '%')}";
+        //string articulo = $"Cache_{newProductoentrada.Articulo.ToString().Replace(' ', '%')}";
 
-        Preferences.Default.Set(articulo, JsonSerializer.Serialize(cacheArticulo));
+        //Preferences.Default.Set(articulo, JsonSerializer.Serialize(cacheArticulo));
 
         if (SelectedProductopicker is not null)
         {

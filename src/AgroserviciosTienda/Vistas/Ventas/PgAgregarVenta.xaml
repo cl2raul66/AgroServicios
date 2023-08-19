@@ -218,6 +218,8 @@
                                     TextColor="{StaticResource Primary}" />
                                 <Entry
                                     Grid.Row="1"
+                                    ClearButtonVisibility="WhileEditing"
+                                    HorizontalTextAlignment="End"
                                     Keyboard="Numeric"
                                     Placeholder="0"
                                     PlaceholderColor="{StaticResource Gray400}"
@@ -231,6 +233,8 @@
                                     TextColor="{StaticResource Primary}" />
                                 <Entry
                                     Grid.Row="1"
+                                    ClearButtonVisibility="WhileEditing"
+                                    HorizontalTextAlignment="End"
                                     Keyboard="Numeric"
                                     Placeholder="0.00"
                                     PlaceholderColor="{StaticResource Gray400}"
