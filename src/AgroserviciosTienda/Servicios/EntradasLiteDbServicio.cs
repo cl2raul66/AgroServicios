@@ -32,4 +32,12 @@ public class EntradasLiteDbServicio : IEntradasRepositorio
     public IEnumerable<Entrada> GetByAny(Expression<Func<Entrada, bool>> query) => collection.Find(query);
 
     public void Insert(Entrada entity) => collection.Insert(entity);
+
+    public ProductoEntrada GetProductoentrada(Producto entity)
+    {
+        return collection
+            .Include(x => x.Productos)
+            .FindAll().SelectMany(x => x.Productos)
+            .LastOrDefault(x => x.ToString() == entity.ToString());
+    }
 }

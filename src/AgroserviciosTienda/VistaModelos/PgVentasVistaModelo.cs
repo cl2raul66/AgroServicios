@@ -11,17 +11,24 @@ namespace AgroserviciosTienda.VistaModelos;
 public partial class PgVentasVistaModelo : ObservableRecipient
 {
     readonly IVentasRepositorio ventasServ;
+    readonly IInventarioRepositorio inventarioServ;
 
-    public PgVentasVistaModelo(IVentasRepositorio ventasRepositorio)
+    public PgVentasVistaModelo(IVentasRepositorio ventasRepositorio, IInventarioRepositorio inventarioRepositorio)
     {
         IsActive = true;
 
         ventasServ = ventasRepositorio;
+        inventarioServ = inventarioRepositorio;
+
         GetVentas();
+
     }
 
     [ObservableProperty]
     ObservableCollection<VentaView> ventas;
+
+    [ObservableProperty]
+    bool enableVeragregarventa;
 
     [RelayCommand]
     async Task VerAgregarVenta()
@@ -33,7 +40,8 @@ public partial class PgVentasVistaModelo : ObservableRecipient
     protected override void OnActivated()
     {
         base.OnActivated();
-        WeakReferenceMessenger.Default.Register<PgVentasVistaModelo,Venta>(this, (r, m) => {
+        WeakReferenceMessenger.Default.Register<PgVentasVistaModelo, Venta>(this, (r, m) =>
+        {
             if (m is not null)
             {
                 ventasServ.Insert(m);
@@ -44,9 +52,17 @@ public partial class PgVentasVistaModelo : ObservableRecipient
 
     void GetVentas()
     {
-        Ventas = ventasServ.AnyVenta 
+        Ventas = ventasServ.AnyVenta
             ? new(ventasServ.GetAll.Select(x => new VentaView(x)))
             : null;
+
+        EnableVeragregarventa = inventarioServ.AnyInventario;
+
+        //var r = WeakReferenceMessenger.Default.Send<object, string>(Ventas is not null && Ventas.Count > 0, nameof(EnableVeragregarventa));
+        //if (r is bool v)
+        //{
+        //    EnableVeragregarventa = v;
+        //}
     }
     #endregion
 }

@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
+using static Android.Provider.CalendarContract;
 
 namespace AgroserviciosTienda.VistaModelos;
 
@@ -115,6 +116,7 @@ public partial class PgInventarioVistaModelo : ObservableRecipient
     void GetInventario()
     {
         Almacen = new(inventarioServ.GetAll);
+        _ = WeakReferenceMessenger.Default.Send<object, string>(Almacen is not null && Almacen.Count > 0, "EnableVeragregarventa");
     }
 
     void GetEntradas()

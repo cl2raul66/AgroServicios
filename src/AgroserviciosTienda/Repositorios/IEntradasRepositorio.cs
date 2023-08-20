@@ -9,6 +9,7 @@ public interface IEntradasRepositorio
     IEnumerable<Entrada> GetAll { get; }
     IEnumerable<Entrada> GetByAny(Expression<Func<Entrada, bool>> query);
     Entrada Get(Expression<Func<Entrada, bool>> query);
+    ProductoEntrada GetProductoentrada(Producto entity);
 
     bool AnyEntrada { get; }
 }

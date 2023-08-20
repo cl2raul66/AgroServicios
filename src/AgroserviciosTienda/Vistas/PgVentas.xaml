@@ -107,6 +107,7 @@
                 <Button
                     Command="{Binding VerAgregarVentaCommand}"
                     FontSize="Subtitle"
+                    IsEnabled="{Binding EnableVeragregarventa, Mode=OneWay}"
                     Text="Realizar venta de productos" />
             </VerticalStackLayout>
         </Frame>

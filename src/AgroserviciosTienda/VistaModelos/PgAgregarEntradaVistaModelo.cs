@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text.Json;
 
 namespace AgroserviciosTienda.VistaModelos;
@@ -217,15 +218,6 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
             ProductosLista = new() { newProductoentrada };
         }
 
-        //var cacheArticulo = new ProductoEntradaArticuloCache(
-        //    newProductoentrada.CantidadUnidad,
-        //    newProductoentrada.Precio
-        //);
-
-        //string articulo = $"Cache_{newProductoentrada.Articulo.ToString().Replace(' ', '%')}";
-
-        //Preferences.Default.Set(articulo, JsonSerializer.Serialize(cacheArticulo));
-
         if (SelectedProductopicker is not null)
         {
             SelectedProductopicker = null;
@@ -243,20 +235,15 @@ public partial class PgAgregarEntradaVistaModelo : ObservableValidator
         {
             if (SelectedProductopicker is not null)
             {
-                string articulo = $"Cache_{SelectedProductopicker.ToString().TrimEnd().Replace(' ', '%')}";
-                string cacheArticuloJson = Preferences.Default.Get(articulo, string.Empty);
-                if (!string.IsNullOrEmpty(cacheArticuloJson))
-                {
-                    var cacheArticulo = JsonSerializer.Deserialize<ProductoEntradaArticuloCache>(cacheArticuloJson);
-                    if (string.IsNullOrEmpty(Cantidadunidad))
-                    {
-                        Cantidadunidad = cacheArticulo.CantidadUnidad.ToString();
-                    }
-                    if (string.IsNullOrEmpty(Precio))
-                    {
-                        Precio = cacheArticulo.Precio.ToString();
-                    }
+                var pEntrada = entradasServ.GetProductoentrada(SelectedProductopicker);
 
+                if (string.IsNullOrEmpty(Cantidadunidad))
+                {
+                    Cantidadunidad = pEntrada?.CantidadUnidad.ToString() ?? string.Empty;
+                }
+                if (string.IsNullOrEmpty(Precio))
+                {
+                    Precio = pEntrada?.Precio.ToString() ?? string.Empty;
                 }
             }
 
