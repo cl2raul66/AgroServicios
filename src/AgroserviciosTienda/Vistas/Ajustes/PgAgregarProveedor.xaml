@@ -129,7 +129,6 @@
                             </Label.FormattedText>
                         </Label>
                     </Frame>
-
                 </VerticalStackLayout>
             </Border>
         </ScrollView>

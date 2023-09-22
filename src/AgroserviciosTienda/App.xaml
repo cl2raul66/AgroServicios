@@ -15,6 +15,7 @@
             </ResourceDictionary.MergedDictionaries>
             <cvt:DoubleCeroToNullConverter x:Key="DoubleCeroToNull" />
             <cvt:SelectedToTexColorConverter x:Key="SelectedToTexColor" />
+            <cvt:TipoAlertaStringToColorConverter x:Key="TipoAlertaStringToColor" />
             <Style x:Key="BorderItem" TargetType="Border">
                 <Setter Property="VisualStateManager.VisualStateGroups">
                     <VisualStateGroupList>

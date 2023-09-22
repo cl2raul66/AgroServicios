@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AgroserviciosTienda.Vistas.PgAlertas"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
+    Title="{Binding Titulo, Mode=OneWay}"
+    x:DataType="vm:PgAlertasVistaModelo"
+    BackgroundColor="Transparent"
+    Shell.NavBarIsVisible="False">
+
+    <Frame Padding="12,16">
+        <VerticalStackLayout Spacing="16">
+            <Grid
+                Padding="8,0"
+                ColumnDefinitions="auto,*"
+                ColumnSpacing="4">
+                <Label
+                    Grid.Column="0"
+                    FontFamily="icofont"
+                    FontSize="Subtitle"
+                    IsVisible="true"
+                    Text=""
+                    TextColor="{Binding Titulo, Mode=OneWay, Converter={StaticResource TipoAlertaStringToColor}}" />
+                <Label
+                    Grid.Column="0"
+                    FontFamily="icofont"
+                    FontSize="Subtitle"
+                    IsVisible="false"
+                    TextColor="{Binding Titulo, Mode=OneWay, Converter={StaticResource TipoAlertaStringToColor}}" />
+                <Label
+                    Grid.Column="0"
+                    FontFamily="icofont"
+                    FontSize="Subtitle"
+                    IsVisible="false"
+                    TextColor="{Binding Titulo, Mode=OneWay, Converter={StaticResource TipoAlertaStringToColor}}" />
+                <Label
+                    Grid.Column="1"
+                    FontSize="Subtitle"
+                    Text="{Binding Titulo, Mode=OneWay}"
+                    TextColor="{Binding Titulo, Mode=OneWay, Converter={StaticResource TipoAlertaStringToColor}}" />
+            </Grid>
+            <Label
+                Padding="8,0"
+                FontSize="Subtitle"
+                TextColor="{Binding Titulo, Mode=OneWay, Converter={StaticResource TipoAlertaStringToColor}}">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span FontFamily="icofont" Text="{Binding Titulo, Mode=OneWay}" />
+                        <Span Text=" " />
+                        <Span Text="{Binding Titulo, Mode=OneWay}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label
+                Padding="8,0"
+                FontSize="Body"
+                Text="{Binding Mensaje, Mode=OneWay}"
+                TextColor="{Binding Titulo, Mode=OneWay, Converter={StaticResource TipoAlertaStringToColor}}" />
+            <Button
+                Command="{Binding CerrarCommand}"
+                FontSize="Subtitle"
+                Text="Cerrar" />
+        </VerticalStackLayout>
+    </Frame>
+
+</ContentPage>

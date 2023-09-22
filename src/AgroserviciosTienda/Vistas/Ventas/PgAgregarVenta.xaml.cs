@@ -1,3 +1,4 @@
+using AgroserviciosTienda.Utiles;
 using AgroserviciosTienda.VistaModelos;
 
 namespace AgroserviciosTienda.Vistas;
@@ -9,5 +10,5 @@ public partial class PgAgregarVenta : ContentPage
 		InitializeComponent();
 
 		BindingContext = vm;
-	}
+    }
 }

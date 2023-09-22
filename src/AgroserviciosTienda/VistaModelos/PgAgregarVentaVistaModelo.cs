@@ -56,10 +56,12 @@ public partial class PgAgregarVentaVistaModelo : ObservableValidator
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(TiposUnidad))]
+    [NotifyPropertyChangedFor(nameof(CurrentExistencia))]
     Inventario selectedProductopicker;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(TiposUnidad))]
+    [NotifyPropertyChangedFor(nameof(CurrentExistencia))]
     bool ventaAgranel = false;
 
     public ObservableCollection<TipoUnidad> TiposUnidad =>
@@ -89,10 +91,30 @@ public partial class PgAgregarVentaVistaModelo : ObservableValidator
     [ObservableProperty]
     bool enableAgregarproductotolista;
 
+    public double CurrentExistencia
+    {
+        get
+        {
+            double resul = 0;
+            var i = inventarioServ.GetAll.FirstOrDefault(x => x.ToString() == (SelectedProductopicker?.ToString() ?? string.Empty));
+            // nota: en caso que VentaAgranel es true, cambiar i.Existencia ya que esa no es la operación correcta
+            if (i is not null)
+            {
+                resul = VentaAgranel ? i.Existencia : i.Existencia / i.Articulo.Presentacion.Valor;
+            }
+
+            return resul;
+        }
+    }
+
     [RelayCommand]
     async Task AgregarProductoToLista()
     {
-        AddProductoVentaToLista();
+        if (CurrentExistencia > (string.IsNullOrEmpty(Cantidad) ? 0 : int.Parse(Cantidad)))
+        {
+            AddProductoVentaToLista();
+        }
+
         await Task.CompletedTask;
     }
 
@@ -151,7 +173,7 @@ public partial class PgAgregarVentaVistaModelo : ObservableValidator
     #region Extra
     void GetCostoTotal()
     {
-        ImporteVenta = (ProductosLista?.Sum(x => x.CantidadUnidad * x.Precio) ?? 0.00);
+        ImporteVenta = ProductosLista?.Sum(x => x.CantidadUnidad * x.Precio) ?? 0.00;
 
         ValidateAllProperties();
     }
@@ -184,9 +206,10 @@ public partial class PgAgregarVentaVistaModelo : ObservableValidator
 
     void GetEnableagregarproductotolista()
     {
+        var c = string.IsNullOrEmpty(Cantidad) ? 0 : int.Parse(Cantidad);
         EnableAgregarproductotolista = SelectedProductopicker is not null
             && (string.IsNullOrEmpty(Precio) ? 0 : double.Parse(Precio)) > 0
-            && (string.IsNullOrEmpty(Cantidad) ? 0 : int.Parse(Cantidad)) > 0;
+            && c <= CurrentExistencia && c > 0;
     }
 
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
@@ -194,8 +217,13 @@ public partial class PgAgregarVentaVistaModelo : ObservableValidator
         base.OnPropertyChanged(e);
         if (e.PropertyName == nameof(SelectedProductopicker))
         {
-            if (SelectedProductopicker is not null)
-            {   
+            //if (SelectedProductopicker is not null && SelectedProductopicker.PrecioInicial > 0)
+            //{   
+            //    Precio = SelectedProductopicker.PrecioInicial.ToString();
+            //}
+
+            if (SelectedProductopicker?.PrecioInicial > 0)
+            {
                 Precio = SelectedProductopicker.PrecioInicial.ToString();
             }
 

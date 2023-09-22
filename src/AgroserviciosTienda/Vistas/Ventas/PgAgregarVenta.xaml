@@ -3,8 +3,10 @@
     x:Class="AgroserviciosTienda.Vistas.PgAgregarVenta"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:AgroserviciosTienda.Vistas"
     xmlns:modelo="clr-namespace:AgroserviciosTienda.Modelos"
     xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:tool="clr-namespace:AgroserviciosTienda.Utiles"
     xmlns:vm="clr-namespace:AgroserviciosTienda.VistaModelos"
     Title="Agregar - Venta"
     x:DataType="vm:PgAgregarVentaVistaModelo"
@@ -170,7 +172,7 @@
                     Padding="12"
                     BackgroundColor="{StaticResource Background}"
                     HorizontalOptions="Fill"
-                    VerticalOptions="FillAndExpand">
+                    VerticalOptions="Fill">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="8" />
                     </Border.StrokeShape>
@@ -187,7 +189,11 @@
                                     ItemsSource="{Binding Productospicker, Mode=OneWay}"
                                     SelectedItem="{Binding SelectedProductopicker}" />
                             </Grid>
-                            <Grid ColumnDefinitions="auto,auto" ColumnSpacing="4">
+                            <Grid
+                                ColumnDefinitions="auto,auto"
+                                ColumnSpacing="4"
+                                IsEnabled="False"
+                                IsVisible="{Binding SelectedProductopicker, Mode=OneWay, Converter={tk:IsNotNullConverter}}">
                                 <CheckBox Grid.Column="0" IsChecked="{Binding VentaAgranel, Mode=TwoWay}" />
                                 <Label
                                     Grid.Column="1"
@@ -210,12 +216,24 @@
                                     Grid.Row="1"
                                     ItemsSource="{Binding TiposUnidad, Mode=OneWay}" />
                             </Grid>
-                            <Grid RowDefinitions="auto,auto" RowSpacing="4">
+                            <Grid
+                                IsVisible="{Binding SelectedProductopicker, Mode=OneWay, Converter={tk:IsNotNullConverter}}"
+                                RowDefinitions="auto,auto"
+                                RowSpacing="4">
                                 <Label
                                     Grid.Row="0"
                                     FontSize="Subtitle"
                                     Text="Cantidad: *"
                                     TextColor="{StaticResource Primary}" />
+                                <Label
+                                    x:Name="LblExistencia"
+                                    Margin="0,0,4,0"
+                                    FontAttributes="Bold"
+                                    FontSize="Caption"
+                                    HorizontalOptions="End"
+                                    Text="{Binding CurrentExistencia, StringFormat='Existencia: {0:F2}'}"
+                                    TextColor="{StaticResource Secondary}"
+                                    VerticalOptions="Center" />
                                 <Entry
                                     Grid.Row="1"
                                     ClearButtonVisibility="WhileEditing"
@@ -223,9 +241,21 @@
                                     Keyboard="Numeric"
                                     Placeholder="0"
                                     PlaceholderColor="{StaticResource Gray400}"
-                                    Text="{Binding Cantidad}" />
+                                    Text="{Binding Cantidad}">
+                                    <Entry.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding Cantidad}"
+                                            TargetType="Entry"
+                                            Value="{Binding CurrentExistencia}">
+                                            <Setter Property="BackgroundColor" Value="#44f4684d" />
+                                        </DataTrigger>
+                                    </Entry.Triggers>
+                                </Entry>
                             </Grid>
-                            <Grid RowDefinitions="auto,auto" RowSpacing="4">
+                            <Grid
+                                IsVisible="{Binding SelectedProductopicker, Mode=OneWay, Converter={tk:IsNotNullConverter}}"
+                                RowDefinitions="auto,auto"
+                                RowSpacing="4">
                                 <Label
                                     Grid.Row="0"
                                     FontSize="Subtitle"
@@ -283,7 +313,7 @@
                                 </CollectionView.ItemsLayout>
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate x:DataType="modelo:ProductoVenta">
-                                        <Border Grid.Row="1" Style="{StaticResource BorderItem}">
+                                        <Border Style="{StaticResource BorderItem}" Grid.Row="1">
                                             <Border.StrokeShape>
                                                 <RoundRectangle CornerRadius="8" />
                                             </Border.StrokeShape>

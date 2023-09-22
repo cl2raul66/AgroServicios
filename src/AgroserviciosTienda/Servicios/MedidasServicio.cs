@@ -62,4 +62,6 @@ public class MedidasServicio : IMedidasServicio
     }
 
     public bool ExisteUnidad(string magnitud, TipoUnidad unidad) => collection.FindOne(x => x.Nombre == magnitud).Unidades.Any(x => x.Equals(unidad));
+
+     
 }

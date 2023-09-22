@@ -88,6 +88,9 @@
 	  <MauiXaml Update="Vistas\Inventario\PgEstablecerPrecioInicialProducto.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Vistas\Alertas\PgAlertas.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Vistas\Ventas\PgAgregarVenta.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
