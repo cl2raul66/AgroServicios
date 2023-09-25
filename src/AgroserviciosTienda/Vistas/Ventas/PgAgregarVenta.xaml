@@ -214,7 +214,8 @@
                                 <Picker
                                     Title="Seleccionar unidad"
                                     Grid.Row="1"
-                                    ItemsSource="{Binding TiposUnidad, Mode=OneWay}" />
+                                    ItemsSource="{Binding TiposUnidad, Mode=OneWay}"
+                                    SelectedItem="{Binding SelectedTipounidad}" />
                             </Grid>
                             <Grid
                                 IsVisible="{Binding SelectedProductopicker, Mode=OneWay, Converter={tk:IsNotNullConverter}}"

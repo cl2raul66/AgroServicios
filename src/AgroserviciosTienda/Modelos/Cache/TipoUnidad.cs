@@ -5,7 +5,7 @@ public record TipoUnidad
     public string Nombre { get; init; }
     public string Abreviatura { get; init; }
 
-    public TipoUnidad()
+    public TipoUnidad(string nombre)
     {
         Nombre = string.Empty;
         Abreviatura = string.Empty;

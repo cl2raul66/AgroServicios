@@ -6,7 +6,6 @@ namespace AgroserviciosTienda.Servicios;
 public interface IMedidasServicio
 {
     IEnumerable<string> AllMagnitud { get; }
-
     bool AgregarMagnitud(string magnitud);
     bool AgregarUnidad(string magnitud, TipoUnidad unidad);
     IEnumerable<TipoUnidad> AllUnidades(string magnitud);
@@ -14,6 +13,7 @@ public interface IMedidasServicio
     bool QuitarMagnitud(string magnitud);
     bool QuitarUnidad(string magnitud, TipoUnidad unidad);
     bool ExisteUnidad(string magnitud, TipoUnidad unidad);
+    double ConvertirExistencia(string magnitud, string unidadBase, double valor, string unidadDestino);
 }
 
 public class MedidasServicio : IMedidasServicio
@@ -63,5 +63,9 @@ public class MedidasServicio : IMedidasServicio
 
     public bool ExisteUnidad(string magnitud, TipoUnidad unidad) => collection.FindOne(x => x.Nombre == magnitud).Unidades.Any(x => x.Equals(unidad));
 
-     
+    public double ConvertirExistencia(string magnitud, string unidadBase, double valor, string unidadDestino)
+    {
+        var ub = AllUnidades(magnitud).First(x => x.Abreviatura == unidadBase).Nombre;
+        return baseMedidasServ.GetConverter(magnitud, ub, unidadDestino, valor);
+    }
 }

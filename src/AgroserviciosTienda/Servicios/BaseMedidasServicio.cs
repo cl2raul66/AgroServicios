@@ -12,12 +12,18 @@ public interface IBaseMedidasServicio
     IEnumerable<string> AllNombresMagnitud { get; }
     bool ExisteMagnitud(string magnitud);
     IEnumerable<TipoUnidad> AllUnidad(string magnitud);
+    double GetConverter(string magnitud, string unidadBase, string unidadDestino, double valor);
 }
 
 public class BaseMedidasServicio : IBaseMedidasServicio
 {
     readonly ILiteCollection<Magnitud> collection;
     readonly CultureInfo culture = new("es-ES");
+
+    Dictionary<string, string> areaUnidades;
+    Dictionary<string, string> masaUnidades;
+    Dictionary<string, string> longitudUnidades;
+    Dictionary<string, string> volumenUnidades;
 
     public BaseMedidasServicio()
     {
@@ -29,9 +35,7 @@ public class BaseMedidasServicio : IBaseMedidasServicio
         LiteDatabase db = new(cnx);
         collection = db.GetCollection<Magnitud>();
 
-        if (collection.Count() == 0)
-        {
-            Dictionary<string, string> areaUnidades = new()
+        areaUnidades = new()
             {
                 {"Acre","Acre"},
                 {"Hectare","Hectárea"},
@@ -43,7 +47,7 @@ public class BaseMedidasServicio : IBaseMedidasServicio
                 {"SquareYard","Yarda cuadrada"}
             };
 
-            Dictionary<string, string> masaUnidades = new()
+        masaUnidades = new()
             {
                 {"Gram","Gramo"},
                 {"Milligram","Miligramo"},
@@ -52,7 +56,7 @@ public class BaseMedidasServicio : IBaseMedidasServicio
                 {"Ounce","Onza"}
             };
 
-            Dictionary<string, string> longitudUnidades = new()
+        longitudUnidades = new()
             {
                 {"Centimeter","Centímetro"},
                 {"Meter","Metro"},
@@ -62,7 +66,7 @@ public class BaseMedidasServicio : IBaseMedidasServicio
                 {"Yard","Yarda"}
             };
 
-            Dictionary<string, string> volumenUnidades = new()
+        volumenUnidades = new()
             {
                 {"Milliliter","Mililitro"},
                 {"Liter","Litro"},
@@ -73,12 +77,18 @@ public class BaseMedidasServicio : IBaseMedidasServicio
                 {"UsGallon","Galón"},
                 {"UsOunce","Onza"}
             };
+
+        if (collection.Count() == 0)
+        {
             var _areaUnidades = areaUnidades.Select(x => new TipoUnidad(x.Value, Area.GetAbbreviation(Enum.Parse<AreaUnit>(x.Key), culture))).ToArray();
             collection.Insert(new Magnitud("Area", _areaUnidades));
+
             var _masaUnidades = masaUnidades.Select(x => new TipoUnidad(x.Value, Mass.GetAbbreviation(Enum.Parse<MassUnit>(x.Key), culture))).ToArray();
             collection.Insert(new Magnitud("Masa", _masaUnidades));
+
             var _longitudUnidades = longitudUnidades.Select(x => new TipoUnidad(x.Value, Length.GetAbbreviation(Enum.Parse<LengthUnit>(x.Key), culture))).ToArray();
             collection.Insert(new Magnitud("Longitud", _longitudUnidades));
+
             var _volumenUnidades = volumenUnidades.Select(x => new TipoUnidad(x.Value, Volume.GetAbbreviation(Enum.Parse<VolumeUnit>(x.Key), culture))).ToArray();
             collection.Insert(new Magnitud("Volumen", _volumenUnidades));
         }
@@ -91,4 +101,47 @@ public class BaseMedidasServicio : IBaseMedidasServicio
     public IEnumerable<Magnitud> AllMagnitud => collection.FindAll();
 
     public IEnumerable<TipoUnidad> AllUnidad(string magnitud) => collection.FindOne(x => x.Nombre == magnitud).Unidades;
+
+    public double GetConverter(string magnitud, string unidadBase, string unidadDestino, double valor)
+    {
+        var m = magnitud switch
+        {
+            "Area" => typeof(Area),
+            "Masa" => typeof(Mass),
+            "Longitud" => typeof(Length),
+            "Volumen" => typeof(Volume),
+            _ => null
+        };
+
+        var ub = magnitud switch
+        {
+            "Area" => Enum.Parse(typeof(AreaUnit), areaUnidades.First(x => x.Value == unidadBase).Key),
+            "Masa" => Enum.Parse(typeof(MassUnit), masaUnidades.First(x => x.Value == unidadBase).Key),
+            "Longitud" => Enum.Parse(typeof(LengthUnit), longitudUnidades.First(x => x.Value == unidadBase).Key),
+            "Volumen" => Enum.Parse(typeof(VolumeUnit), volumenUnidades.First(x => x.Value == unidadBase).Key),
+            _ => null
+        };
+
+        if (ub is null)
+        {
+            return 0;
+        }
+
+        var ud = magnitud switch
+        {
+            "Area" => Enum.Parse(typeof(AreaUnit), areaUnidades.First(x => x.Value == unidadDestino).Key),
+            "Masa" => Enum.Parse(typeof(MassUnit), masaUnidades.First(x => x.Value == unidadDestino).Key),
+            "Longitud" => Enum.Parse(typeof(LengthUnit), longitudUnidades.First(x => x.Value == unidadDestino).Key),
+            "Volumen" => Enum.Parse(typeof(VolumeUnit), volumenUnidades.First(x => x.Value == unidadDestino).Key),
+            _ => null
+        };
+
+        if (ud is null)
+        {
+            return 0;
+        }
+
+        var quantity = Quantity.From(valor, ub as Enum);
+        return quantity.As(ud as Enum);
+    }
 }

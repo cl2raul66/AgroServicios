@@ -2,9 +2,11 @@
 using AgroserviciosTienda.Repositorios;
 using AgroserviciosTienda.Servicios;
 using AgroserviciosTienda.Vistas;
+using Android.Telephony;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Maui.Controls.Compatibility.Platform.Android;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -55,19 +57,18 @@ public partial class PgAgregarVentaVistaModelo : ObservableValidator
     ObservableCollection<Inventario> productospicker;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(TiposUnidad))]
-    [NotifyPropertyChangedFor(nameof(CurrentExistencia))]
     Inventario selectedProductopicker;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(TiposUnidad))]
     [NotifyPropertyChangedFor(nameof(CurrentExistencia))]
     bool ventaAgranel = false;
 
-    public ObservableCollection<TipoUnidad> TiposUnidad =>
-        SelectedProductopicker is null && !VentaAgranel
-        ? new()
-        : new(medidasServ.AllUnidades(SelectedProductopicker.Articulo.Presentacion.Medida));
+    [ObservableProperty]
+    ObservableCollection<TipoUnidad> tiposUnidad;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CurrentExistencia))]
+    TipoUnidad selectedTipounidad;
 
     [ObservableProperty]
     string cantidad;
@@ -100,9 +101,21 @@ public partial class PgAgregarVentaVistaModelo : ObservableValidator
             // nota: en caso que VentaAgranel es true, cambiar i.Existencia ya que esa no es la operación correcta
             if (i is not null)
             {
-                resul = VentaAgranel ? i.Existencia : i.Existencia / i.Articulo.Presentacion.Valor;
+                resul = i.Existencia;
+                if (!VentaAgranel)
+                {
+                    resul = i.Existencia / i.Articulo.Presentacion.Valor;
+                }
+                else if (SelectedTipounidad is not null && !i.Articulo.Presentacion.Unidad.Equals(SelectedTipounidad.Abreviatura))
+                {
+                    resul = medidasServ.ConvertirExistencia(
+                        i.Articulo.Presentacion.Medida,
+                        i.Articulo.Presentacion.Unidad,
+                        i.Existencia,
+                        SelectedTipounidad.Nombre
+                        );
+                }
             }
-
             return resul;
         }
     }
@@ -217,17 +230,22 @@ public partial class PgAgregarVentaVistaModelo : ObservableValidator
         base.OnPropertyChanged(e);
         if (e.PropertyName == nameof(SelectedProductopicker))
         {
-            //if (SelectedProductopicker is not null && SelectedProductopicker.PrecioInicial > 0)
-            //{   
-            //    Precio = SelectedProductopicker.PrecioInicial.ToString();
-            //}
-
             if (SelectedProductopicker?.PrecioInicial > 0)
             {
                 Precio = SelectedProductopicker.PrecioInicial.ToString();
             }
 
-            GetEnableagregarproductotolista();
+            TiposUnidad = SelectedProductopicker is not null
+                ? new(medidasServ.AllUnidades(SelectedProductopicker.Articulo.Presentacion.Medida))
+                : new();
+        }
+
+        if (e.PropertyName == nameof(TiposUnidad))
+        {
+            if (TiposUnidad?.Count > 0)
+            {
+                SelectedTipounidad = tiposUnidad.FirstOrDefault(x => x.Abreviatura == selectedProductopicker.Articulo.Presentacion.Unidad);
+            }
         }
 
         if (e.PropertyName == nameof(Cantidad))

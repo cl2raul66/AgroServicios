@@ -1,14 +1,8 @@
 ﻿using AgroserviciosTienda.Modelos;
-using AgroserviciosTienda.Vistas;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AgroserviciosTienda.VistaModelos;
 
@@ -24,8 +18,7 @@ public partial class PgEstablecerPrecioInicialProductoVistaModelo : ObservableVa
 
     [ObservableProperty]
     [Required]
-    [Range(1, 999.99)]
-    decimal precioinicial;
+    string precioinicial;
 
     public string Producto => CurrentInventario?.Articulo.ToString() ?? "None";
 
@@ -42,7 +35,7 @@ public partial class PgEstablecerPrecioInicialProductoVistaModelo : ObservableVa
     async Task Guardar()
     {
         ValidateAllProperties();
-        if (HasErrors)
+        if (HasErrors || !decimal.TryParse(Precioinicial, out decimal pi))
         {
             VisibleError = true;
             await Task.Delay(5000);
@@ -50,7 +43,7 @@ public partial class PgEstablecerPrecioInicialProductoVistaModelo : ObservableVa
             return;
         }
 
-        CurrentInventario.PrecioInicial = Precioinicial;
+        CurrentInventario.PrecioInicial = pi;
         WeakReferenceMessenger.Default.Send(CurrentInventario);
 
         await Cancelar();
